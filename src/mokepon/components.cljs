@@ -6,17 +6,18 @@
 (defn on-take-chikapu [state]
   (swap! state update-in [:team] #(conj % chikapu)))
 
-(defn team-view [team]
+(defn team-view [team header]
   (if (= (count team) 0)
     nil
     (sab/html
      [:div
-      [:div "Your posse:"]
-      [:ul [:li "Chikapu"]]])))
+      [:div header]
+      [:ul (for [x team] [:li (:name x)])]])))
 
-(defn ask-mommy-view [team take-chikapu-handler]
-  (if (not= (count team) 0)
-    nil
+
+
+(defn ask-mommy-view [team team-at-home take-chikapu-handler]
+  (if (and (= (count team) 0) (= (count team-at-home) 0))
     (sab/html
      [:div
       [:p "Your mom feels pity for your sorry ass."]
@@ -24,15 +25,19 @@
       [:p "\"Make something of yourself, you worthless millenial!\" she says to you."]
       [:a {:href "javascript:;"
            :on-click take-chikapu-handler}
-       "Take Chikapu."]])))
+       "Take Chikapu."]])
+    nil))
 
-(defn home-view [team take-chikapu-handler]
+(defn home-view [team team-at-home take-chikapu-handler]
   (sab/html
    [:div
     [:div "You are currently being worthless at your home."]
     [:hr]
-    (ask-mommy-view team take-chikapu-handler)
-    (team-view team)]))
+    (ask-mommy-view team team-at-home take-chikapu-handler)
+    (team-view team-at-home "Chillin' at the crib:")
+    (team-view team "Your posse:")]))
 
 (defn rpg-container [state]
-  (home-view (:team @state) #(on-take-chikapu state)))
+  (home-view (:team @state)
+             (:team-at-home @state)
+             #(on-take-chikapu state)))

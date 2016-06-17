@@ -2,7 +2,8 @@
   (:require [sablono.core :as sab]
             [mokepon.components :refer [rpg-container]]))
 
-(defonce app-state (atom {:team []}))
+(defonce app-state (atom {:team-at-home []
+                          :team []}))
 
 (defn render! []
   (.render js/React
