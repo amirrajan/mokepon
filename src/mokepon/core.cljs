@@ -1,12 +1,12 @@
 (ns mokepon.core
   (:require [sablono.core :as sab]
-            [mokepon.components :refer [like-seymore]]))
+            [mokepon.components :refer [rpg-container]]))
 
-(defonce app-state (atom { :likes 0 }))
+(defonce app-state (atom {:team []}))
 
 (defn render! []
   (.render js/React
-           (like-seymore app-state)
+           (rpg-container app-state)
            (.getElementById js/document "app")))
 
 (add-watch app-state :on-change (fn [_ _ _ _] (render!)))
