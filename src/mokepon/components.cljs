@@ -24,7 +24,11 @@
        "Take Chikapu."]])
     nil))
 
-(defn home-view [team
+(defn adventures-view [location]
+  ())
+
+(defn home-view [location
+                 team
                  team-at-home
                  take-chikapu-handler]
   (sab/html
@@ -33,9 +37,14 @@
     [:hr]
     (ask-mommy-view team team-at-home take-chikapu-handler)
     (team-view team-at-home "Chillin' at the crib:")
-    (team-view team "Your posse:")]))
+    (team-view team "Your posse:")
+    (adventures-view location)]))
 
 (defn rpg-view [state take-chikapu-handler]
-  (home-view (:team state)
-             (:team-at-home state)
-             take-chikapu-handler))
+  (cond
+    (= (:location state) "home")
+    (home-view
+     (:location state)
+     (:team state)
+     (:team-at-home state)
+     take-chikapu-handler)))

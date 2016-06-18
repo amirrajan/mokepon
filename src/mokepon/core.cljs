@@ -4,8 +4,12 @@
 
 (def chikapu {:name "Chikapu"})
 
-(defonce app-state (atom {:team-at-home []
-                          :team []}))
+(def new-game
+  {:team-at-home []
+   :team []
+   :location "home"})
+
+(defonce app-state (atom new-game))
 
 (defn on-take-chikapu [state]
   (swap! state update-in [:team] #(conj % chikapu)))
