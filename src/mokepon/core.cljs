@@ -2,12 +2,16 @@
   (:require [sablono.core :as sab]
             [mokepon.components :refer [rpg-view]]))
 
+(defn alert [message] #(.alert js/window message))
+
 (def chikapu {:name "Chikapu"})
 
 (def new-game
   {:team-at-home []
    :team []
-   :location :home})
+   :location :home
+   :chosen nil
+   :battling nil})
 
 (defonce app-state (atom new-game))
 
@@ -15,11 +19,15 @@
   (swap! state update-in [:team] #(conj % chikapu)))
 
 (defn on-go-to-location [state]
-  (fn [loc]
-    (swap!
-     state
-     update-in [:location]
-     (fn [_] loc))))
+  (fn [loc] (swap! state update-in [:location] (fn [_] loc))))
+
+(defn on-find-trouble [state]
+  (cond
+    (= (:location @state) :forest)
+    (alert "find trouble forest")
+
+    (= (:location @state) :canyon)
+    (alert "find trouble forest")))
 
 (defn rpg-container []
   (sab/html

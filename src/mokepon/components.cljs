@@ -1,58 +1,53 @@
 (ns mokepon.components
   (:require [sablono.core :as sab]))
 
+(defn a [text on-click] [:a {:href "javascript:;" :on-click on-click} text])
+
+(def todo #(.alert js/window "todo"))
+
+(defn section [& elements] [:div elements [:hr]])
+
 (defn team-view [team header]
   (if (not= (count team) 0)
-    [:div
+    (section
      [:div header]
-     [:ul (for [x team] [:li {:key (:name x)} (:name x)])]
-     [:hr]]))
+     [:ul (for [x team] [:li {:key (:name x)} (:name x)])])))
 
-(defn ask-mommy-view [team
-                      team-at-home
-                      take-chikapu-handler]
+(defn ask-mommy-view [team team-at-home take-chikapu-handler]
   (if (and (empty? team) (empty? team-at-home))
-    [:div
+    (section
      [:p "Your mom feels pity for your sorry ass."]
      [:p "From her extended arm, a Chikapu whimpers, hanging by the scruff of its neck."]
      [:p "\"Make something of yourself, you worthless millenial!\" she says to you."]
-     [:a {:href "javascript:;" :on-click take-chikapu-handler} "Take Chikapu."]]))
+     (a "Take Chikapu." take-chikapu-handler))))
 
 (defn adventures-view [location team go-to-location-handler]
   (if (not (empty? team))
     [:div
-     [:div
+     (section
       [:p "There is a rock face jutting out. It looks freaking scary."]
-      [:a {:href "javascript:;"
-           :on-click #(go-to-location-handler :canyon)}
-       "Go be awesome in the canyon."]
-      [:hr]]
-     [:div
+      (a "Go be awesome in the canyon." #(go-to-location-handler :canyon)))
+     (section
       [:p "There is a line of trees off in the distance."]
-      [:a {:href "javascript:;"
-           :on-click #(go-to-location-handler :forest)}
-       "Go be awesome in the forest."]
-      [:hr]]]))
+      (a "Go be awesome in the forest." #(go-to-location-handler :forest)))]))
 
 (defn forest-view [team go-to-location-handler]
   [:div
-   [:p "You are currently being awesome in the forest."]
-   [:hr]
+   (section [:p "You are currently chillin' like a villian in the forest."])
    (team-view team "Your posse:")
-   [:a {:href "javascript:;" :on-click #(go-to-location-handler :home)} "Go look for some trouble."]
-   [:br]
-   [:a {:href "javascript:;" :on-click #(go-to-location-handler :home)} "Go home."]
-   [:hr]])
+   (section
+    (a "Go look for some trouble." todo)
+    [:br]
+    (a "Go home." #(go-to-location-handler :home)))])
 
 (defn canyon-view [team go-to-location-handler]
   [:div
-   [:p "You are currently being awesome in the canyon."]
-   [:hr]
+   (section [:p "You are currently chillin' like a villian in the canyon."])
    (team-view team "Your posse:")
-   [:a {:href "javascript:;" :on-click #(go-to-location-handler :home)} "Go look for some trouble."]
-   [:br]
-   [:a {:href "javascript:;" :on-click #(go-to-location-handler :home)} "Go home."]
-   [:hr]])
+   (section
+    (a "Go look for some trouble." todo)
+    [:br]
+    (a "Go home." #(go-to-location-handler :home)))])
 
 (defn home-view [location
                  team
@@ -60,30 +55,39 @@
                  take-chikapu-handler
                  go-to-location-handler]
   [:div
-   [:div "You are currently being worthless at your home."]
-   [:hr]
+   (section [:p "You are currently being worthless at your mother's home."])
    (ask-mommy-view team team-at-home take-chikapu-handler)
    (team-view team-at-home "Chillin' at the crib:")
    (team-view team "Your posse:")
    (adventures-view location team go-to-location-handler)])
 
+(defn title-view []
+  (section
+   [:h1 {:style {:line-height "0"}} "Moképon"]
+   [:h2 {:style {:line-height "0.8" :margin "0"}}"Catching them all just got real."]))
+
 (defn rpg-view [state take-chikapu-handler go-to-location-handler]
-  (cond
-    (= (:location state) :home)
-    (home-view
-     (:location state)
-     (:team state)
-     (:team-at-home state)
-     take-chikapu-handler
-     go-to-location-handler)
+  (let [{:keys [location team team-at-home]} state]
+    [:div
+     (title-view)
+     (cond
+       (= location :home)
+       (home-view
+        location
+        team
+        team-at-home
+        take-chikapu-handler
+        go-to-location-handler)
 
-    (= (:location state) :forest)
-    (forest-view (:team state)
-                 go-to-location-handler)
+       (= location :forest)
+       (forest-view
+        team
+        go-to-location-handler)
 
-    (= (:location state) :canyon)
-    (canyon-view (:team state)
-                 go-to-location-handler)
+       (= location :canyon)
+       (canyon-view
+        team
+        go-to-location-handler)
 
-    :else
-    [:div "else"]))
+       :else
+       [:div (str "Location " location "not handled.")])]))

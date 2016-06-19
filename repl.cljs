@@ -7,4 +7,6 @@
 (:location @app-state)
 
 ((on-go-to-location app-state) :forest)
+((on-go-to-location app-state) :canyon)
 ((on-go-to-location app-state) :home)
+(.alert js/window "todo")
