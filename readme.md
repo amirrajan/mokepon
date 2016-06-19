@@ -1,4 +1,4 @@
-# Mokepon
+# Moképon
 
 Catching them all just got real.
 
