@@ -20,7 +20,6 @@ Catching them all just got real.
 - Throw these lines in your `init.el`:
 
 ```
-
 (add-hook
  'clojurescript-mode-hook
  (lambda ()
@@ -33,14 +32,13 @@ Catching them all just got real.
   (interactive)
   (run-clojure "lein figwheel"))
 
-;;research this, it breaks autocompletion
-in clojurescript
+;;research this, it breaks autocompletion in clojurescript
 ;(add-hook 'cider-repl-mode-hook #'company-mode)
 ```
 
 - First time you open a `.cljs` file run: `M-x figwheel-repl` and `M-x
   cider-jack-in-clojurescript`
-- An process will be started which will be the figwheel repl (cider is
+- A process will be started which will be the figwheel repl (cider is
   used for autocompletion).
 - You can use `repl.cljs` to interact with the applications (send data
-  from that buffer to the process using `M-x inf-clojure-eval-last-sexp`.
+  from that buffer to the process using `M-x inf-clojure-eval-last-sexp`).
