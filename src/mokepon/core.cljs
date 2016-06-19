@@ -22,9 +22,10 @@
      (fn [_] loc))))
 
 (defn rpg-container []
- (rpg-view @app-state
-           #(on-take-chikapu app-state)
-           (on-go-to-location app-state)))
+  (sab/html
+   (rpg-view @app-state
+             #(on-take-chikapu app-state)
+             (on-go-to-location app-state))))
 
 (defn render! []
   (.render js/React
