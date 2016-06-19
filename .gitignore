@@ -2,3 +2,6 @@
 /main.js
 out/
 target/
+/npm-debug.log
+/.nrepl-port
+/.lein-repl-history
