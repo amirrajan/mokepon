@@ -1,6 +1,6 @@
 # Mokepon
 
-Gotta catch em' all just got real.
+Catching them all just got real.
 
 ## Running The Game
 
