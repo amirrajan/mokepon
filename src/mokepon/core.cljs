@@ -6,6 +6,10 @@
 
 (def chikapu {:name "Chikapu"})
 
+(def sulbabaur {:name "Sulbabaur"})
+
+(def deogude {:name "Deogude"})
+
 (def new-game
   {:team-at-home []
    :team []
@@ -21,13 +25,16 @@
 (defn on-go-to-location [state]
   (fn [loc] (swap! state update-in [:location] (fn [_] loc))))
 
+(defn set-battle [state chosen battling]
+  (merge state {:chosen chosen :battling battling}))
+
 (defn on-find-trouble [state]
   (cond
     (= (:location @state) :forest)
-    (alert "find trouble forest")
+    (swap! app-state merge {:chosen chikapu :battling sulbabaur})
 
     (= (:location @state) :canyon)
-    (alert "find trouble forest")))
+    (swap! app-state merge {:chosen chikapu :battling deogude})))
 
 (defn rpg-container []
   (sab/html
