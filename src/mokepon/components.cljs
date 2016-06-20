@@ -5,6 +5,7 @@
 
 (def todo #(.alert js/window "todo"))
 
+
 (defn section [& elements] [:div elements [:hr]])
 
 (defn team-view [team header]
@@ -64,7 +65,7 @@
 (defn title-view []
   (section
    [:h1 {:style {:line-height "0"}} "Moképon"]
-   [:h2 {:style {:line-height "0.8" :margin "0"}}"Catching them all just got real."]))
+   [:h2 {:style {:line-height "0.8" :margin "0"}}"Catching them all just got real, yo"]))
 
 (defn rpg-view [state take-chikapu-handler go-to-location-handler]
   (let [{:keys [location team team-at-home]} state]
