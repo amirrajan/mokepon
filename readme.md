@@ -36,8 +36,16 @@ Catching them all just got real.
 ;(add-hook 'cider-repl-mode-hook #'company-mode)
 ```
 
-- First time you open a `.cljs` file run: `M-x figwheel-repl` and `M-x
-  cider-jack-in-clojurescript`
+- In `~/.lein/profiles.clj` add the following lines:
+```
+{:user {:plugins [[cider/cider-nrepl "0.12.0-snapshot"]]
+        :dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}
+```
+- In a seperate buffer, run `lein deps`, then `lein repl`. You'll be
+  provided with a repl prompt that gives you a host (which should be
+  `127.0.0.1` and a port number.
+- In emacs, first time you open a `.cljs` file run: `M-x figwheel-repl` and `M-x
+  cider-connect`. You'll be prompted for a host followed by a port number.
 - A process will be started which will be the figwheel repl (cider is
   used for autocompletion).
 - You can use `repl.cljs` to interact with the applications (send data
