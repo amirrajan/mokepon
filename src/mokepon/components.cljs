@@ -32,16 +32,44 @@
       [:p "There is a line of trees off in the distance."]
       (a "Go be awesome in the forest." #(go-to-location-handler :forest)))]))
 
-(defn forest-view [team go-to-location-handler]
+(defn battle-view [chosen battling]
   [:div
-   (section [:p "You are currently chillin' like a villian in the forest."])
-   (team-view team "Your posse:")
-   (section
-    (a "Go look for some trouble." todo)
-    [:br]
-    (a "Go home." #(go-to-location-handler :home)))])
+   [:div
+    [:h2 (str (:name battling) "(hp: 100)" )]
+    [:hr]
+    [:p "Whipping vines and shit."]
+    [:hr]
+    [:div {:style {:background (str "linear-gradient(90deg, green, white " 50 "%, white)") :border "solid 1px black" :width "100%" :height "10px"}}]
+    [:hr]]
+   [:div
+    [:h2 (str (:name chosen) "(hp: 100)" )]
+    [:hr]
+    [:p "Whipping vines and shit."]
+    [:hr]
+    [:div {:style {:background (str "linear-gradient(90deg, green, white " 50 "%, white)") :border "solid 1px black" :width "100%" :height "10px"}}]
+    [:hr]
+    [:div
+     [:a "Attack."]
+     [:br]
+     [:a "Throw dat ball."]
+     [:hr]]
+    [:div
+     [:div "Chikapu attacked for 10."]
+     [:div "Sulbabaur attacked for 10."]
+     [:hr]]]])
 
-(defn canyon-view [team go-to-location-handler]
+(defn forest-view [team chosen battling go-to-location-handler]
+   (if (nil? battling)
+     [:div
+      (section [:p "You are currently chillin' like a villian in the forest."])
+      (team-view team "Your posse:")
+      (section
+       (a "Go look for some trouble." todo)
+       [:br]
+       (a "Go home." #(go-to-location-handler :home)))]
+     (battle-view chosen battling)))
+
+(defn canyon-view [team battling chosen go-to-location-handler]
   [:div
    (section [:p "You are currently chillin' like a villian in the canyon."])
    (team-view team "Your posse:")
@@ -68,7 +96,7 @@
    [:h2 {:style {:line-height "0.8" :margin "0"}}"Catching them all just got real, yo"]))
 
 (defn rpg-view [state take-chikapu-handler go-to-location-handler]
-  (let [{:keys [location team team-at-home]} state]
+  (let [{:keys [location team team-at-home battling chosen]} state]
     [:div
      (title-view)
      (cond
@@ -81,14 +109,10 @@
         go-to-location-handler)
 
        (= location :forest)
-       (forest-view
-        team
-        go-to-location-handler)
+       (forest-view team chosen battling go-to-location-handler)
 
        (= location :canyon)
-       (canyon-view
-        team
-        go-to-location-handler)
+       (canyon-view team chosen battling go-to-location-handler)
 
        :else
        [:div (str "Location " location "not handled.")])]))
