@@ -5,7 +5,6 @@
 
 (def todo #(.alert js/window "todo"))
 
-
 (defn section [& elements] [:div elements [:hr]])
 
 (defn team-view [team header]

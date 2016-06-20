@@ -128,3 +128,80 @@ etc. Here is the same `multiply-all-by-two` but using the `#()` short hand.
 
 (multiply-all-by-two [1 2 3]) ;;yields [2 4 6]
 ```
+
+## JavaScript Interop
+
+```
+window.alert("hodor");
+console.log("hodor");
+console.log({ a: "value 1", b: "value 2"});
+
+(.alert js/window "hodor")
+(.log js/console "hodor")
+(.log js/console (clj->js #{a: "value 1" b: "value 2"}))
+```
+
+All interop is under the `js/` prefix. You have to use `clj->js` to
+convert from a Clojure data structure to a JavaScript data
+structure. You wont be doing this often, but it's good to know.
+
+## ES2015 Classes + JSX vs Namespaced Functions + Sablono
+
+```
+import { Component } from 'react';
+
+export class PeopleView extends Component {
+  sayHello() {
+    console.log('Hello');
+  }
+
+  renderPerson(person) {
+    return (
+      <div>
+        <p>{person.firstName} {person.lastName}</p>
+        <a href="javascript:;" onClick={this.sayHello.bind(this)}>Say Hello</a>
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div>
+        {this.renderPerson(this.props.person1)}
+        {this.renderPerson(this.props.person2)}
+      </div>
+    );
+  }
+}
+
+<PeopleView
+  person1={{firstName: "Jane", lastName: "Doe"}}
+  person2={{firstName: "John", lastName: "Doe"}}
+/>
+```
+
+Here is the ClojureScript version using a library called Sablono
+(the library converts arrays of elements into React components).
+
+```
+(ns people-view
+  (:require [sablono.core :as sab])
+
+(defn say-hello []
+  (.log js/console "Hello"))
+
+(defn person-view [person]
+  [:div
+    [:p (str (:first-name person) " " (:last-name person))]
+    [:a {:href "javascript:;" :on-click say-hello} "Say Hello"]])
+
+(defn people-view [person-1 person-2]
+  (sab/html
+    [:div
+      (render-person person-1)
+      (render-person person-2)]))
+
+(people-view
+  {:first-name "Jane" :last-name "Doe"}
+  {:first-name "John" :last-name "Doe"})
+```
