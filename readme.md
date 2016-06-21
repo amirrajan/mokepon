@@ -16,10 +16,12 @@ Catching them all just got real, yo.
 ### Running The Game + Emacs
 
 - Instead of running `rlwrap lein figwheel`, do the following.
-- Install plugins: `cider`, `inf-clojure`, and `company-mode`.
+- Install plugins: `cider`, `company-mode`.
 - Throw these lines in your `init.el`:
 
-```
+```elisp
+(add-hook 'cider-repl-mode-hook #'company-mode)
+
 (add-hook
  'clojurescript-mode-hook
  (lambda ()
@@ -28,16 +30,18 @@ Catching them all just got real, yo.
      (paredit-mode)
      (modify-syntax-entry ?- "w"))))
 
-(defun figwheel-repl ()
+(defun user/cider-send-to-repl ()
   (interactive)
-  (run-clojure "lein figwheel"))
-
-;;research this, it breaks autocompletion in clojurescript
-;(add-hook 'cider-repl-mode-hook #'company-mode)
+  (let ((s (buffer-substring-no-properties
+            (nth 0 (cider-last-sexp 'bounds))
+            (nth 1 (cider-last-sexp 'bounds)))))
+    (with-current-buffer (cider-current-connection)
+      (insert s)
+      (cider-repl-return))))
 ```
 
 - In `~/.lein/profiles.clj` add the following lines:
-```
+```clojure
 {:user {:plugins [[cider/cider-nrepl "0.12.0-snapshot"]]
         :dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}
 ```
@@ -57,32 +61,41 @@ Catching them all just got real, yo.
 
 ## JavaScript to ClojureScript
 
-Here are some examples of how to mentally translate JavaScript (JSX, ES2015)
-in ClojureScript.
+Here are some examples of how to tally translate ES2016 + JSX
+to ClojureScript + Sablono.
 
 ## Defining a Function
 
-```
+```javascript
 function sayHello(name, otherName) {
   return `${name} says hello to ${otherName}`;
 }
+```
 
+```clojure
 (defn say-hello [name other-name]
   (str name " says hello to " other-name))
 ```
 
-- Names in Clojure are kebab cased as opposed to camel cased.
-- Functions in Clojure implicitly return the last symbolic
-  expression. Basically, the last parenthetical set.
+- Names in ClojureScript are `kebab-cased` as opposed to `camelCased`.
+- Functions in ClojureScript implicitly return the last symbolic
+  expression (an sexp is basically the last parenthetical set).
 - There are only four types of delimiters in Clojure. The token
-  delimiter is a space ` `, and the block delimiter is the
-  closing pair of `)`, `}`, `]`.
+  delimiter is a space ` `, and the block delimiter can be any
+  closing pair: `)`, `}`, `]`.
 - Clojure's `str` function joins multiple strings together.
-
+- You really need to get used to editing with plugins similar to
+  `paredit`. Balancing parenthesis are not fun, using a plugin will
+  make _manipulating_ s-expressions trivial (lisp dialects are _not_
+  about _not_ about manipulating closing parens):
+  - Emacs had `paredit` built in.
+  - [Vim](https://github.com/vim-scripts/paredit.vim)
+  - [Sublime Text](https://github.com/odyssomay/paredit)
+  - [Atom](https://atom.io/packages/lisp-paredit)
 
 ## Defining a Hash/Dictionary
 
-```
+```javascript
 function newPerson(firstName, lastName) {
   return {
     firstName: firstName,
@@ -90,7 +103,9 @@ function newPerson(firstName, lastName) {
     fullName: firstName + ' ' + lastName
   };
 }
+```
 
+```clojure
 (defn new-person [first-name, last-name]
   {:first-name first-name
    :last-name last-name
@@ -98,12 +113,16 @@ function newPerson(firstName, lastName) {
 ```
 
 - Dictionaries in Clojure are denoted by the `{}` literal. The key
-  values are just paired items between the `{}`. You can add `,` if
-  you want, but Clojure just considers `,` as white space.
+  values are just _paired items_ between the `{}` (you'll get a
+  compiler error if you have a `{}` with an odd number of itimes). You
+  can add `,` if you want, but ClojureScript just considers `,` as
+  whitespace. - For accessing dictionary values: in JavaScript you
+  would do `person.firstName`, in ClojureScript it's `(:first-name
+  person)`.
 
 ## Anonymous Functions
 
-```
+```javascript
 function multipleAllByTwo(array) {
   return _.map(array, function(value) {
     return value * 2;
@@ -111,18 +130,26 @@ function multipleAllByTwo(array) {
 }
 
 multipleAllByTwo([1, 2, 3]); //yields [2, 4, 6]
+```
 
+```clojure
 (defn multiply-all-by-two [array]
   (map array (fn [value] (* value 2))))
 
 (multiply-all-by-two [1 2 3]) ;;yields [2 4 6]
 ```
 
-Anonymous functions can be written with the following short hand. You
-can use `#()` as a short hand. Parameters named `%`, `%2`, `%3`,
-etc. Here is the same `multiply-all-by-two` but using the `#()` short hand.
+Anonymous functions can be written with the following shorthand. You
+can use `#()` instead of `(fn [arg1 arg2])`. Parameters names for the
+`#()` short hand are `%`, `%2`, `%3`, etc. Here is the same
+`multiply-all-by-two` but using the `#()` shorthand.
 
-```
+```clojure
+;;before
+(defn multiply-all-by-two [array]
+  (map array (fn [value] (* value 2))))
+
+;;after
 (defn multiply-all-by-two [array]
   (map array #(* % 2)))
 
@@ -131,11 +158,13 @@ etc. Here is the same `multiply-all-by-two` but using the `#()` short hand.
 
 ## JavaScript Interop
 
-```
+```javascript
 window.alert("hodor");
 console.log("hodor");
 console.log({ a: "value 1", b: "value 2"});
+```
 
+```clojure
 (.alert js/window "hodor")
 (.log js/console "hodor")
 (.log js/console (clj->js #{a: "value 1" b: "value 2"}))
@@ -147,19 +176,17 @@ structure. You wont be doing this often, but it's good to know.
 
 ## ES2015 Classes + JSX vs Namespaced Functions + Sablono
 
-```
+```javascript
 import { Component } from 'react';
 
 export class PeopleView extends Component {
-  sayHello() {
-    console.log('Hello');
-  }
+  sayHello() { console.log('Hello'); }
 
   renderPerson(person) {
     return (
       <div>
         <p>{person.firstName} {person.lastName}</p>
-        <a href="javascript:;" onClick={this.sayHello.bind(this)}>Say Hello</a>
+        <a href="#" onClick={this.sayHello.bind(this)}>Say Hello</a>
       </div>
     );
   }
@@ -183,7 +210,7 @@ export class PeopleView extends Component {
 Here is the ClojureScript version using a library called Sablono
 (the library converts arrays of elements into React components).
 
-```
+```clojure
 (ns people-view
   (:require [sablono.core :as sab])
 
@@ -193,7 +220,7 @@ Here is the ClojureScript version using a library called Sablono
 (defn person-view [person]
   [:div
     [:p (str (:first-name person) " " (:last-name person))]
-    [:a {:href "javascript:;" :on-click say-hello} "Say Hello"]])
+    [:a {:href "#" :on-click say-hello} "Say Hello"]])
 
 (defn people-view [person-1 person-2]
   (sab/html
