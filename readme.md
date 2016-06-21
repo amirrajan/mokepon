@@ -17,7 +17,7 @@ Catching them all just got real, yo.
 
 - Instead of running `rlwrap lein figwheel`, do the following.
 - Install plugins: `cider`, `company-mode`.
-- Throw these lines in your `init.el`:
+- Throw these lines into your `init.el`:
 
 ```elisp
 (add-hook 'cider-repl-mode-hook #'company-mode)
@@ -45,19 +45,13 @@ Catching them all just got real, yo.
 {:user {:plugins [[cider/cider-nrepl "0.12.0-snapshot"]]
         :dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}
 ```
-- In a seperate buffer, run `lein deps`, then `lein repl`. You'll be
-  provided with a repl prompt that gives you a host (which should be
-  `127.0.0.1` and a port number.
-- In emacs, first time you open a `.cljs` file run: `M-x figwheel-repl` and `M-x
-  cider-connect`. You'll be prompted for a host followed by a port number.
-- A process will be started which will be the figwheel repl (cider is
-  used for autocompletion).
-- You can use `repl.cljs` to interact with the applications (send data
-  from that buffer to the process using `M-x inf-clojure-eval-last-sexp`).
+- In emacs, first time you open a `.cljs` file run: `M-x cider-jack-in-clojurescript`.
+- You can use `repl.cljs` to interact with the applications.
+- To send a block to the browser use `M-x user/cider-send-to-repl`.
+- To view the output of a block within in Emacs use `M-x cider-eval-last-sexp`.
 - If you don't get autocompletion, make sure `cider-mode` is enabled
   for the current buffer (you may want to start and stop it again for
   good measure).
-
 
 ## JavaScript to ClojureScript
 
