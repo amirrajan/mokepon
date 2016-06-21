@@ -4,19 +4,6 @@
 
 (defn alert [message] #(.alert js/window message))
 
-(def chikapu {:name "Chikapu"})
-
-(def sulbabaur {:name "Sulbabaur"})
-
-(def deogude {:name "Deogude"})
-
-(def new-game
-  {:team-at-home []
-   :team []
-   :location :home
-   :chosen nil
-   :battling nil})
-
 (defonce app-state (atom new-game))
 
 (defn on-take-chikapu [state]

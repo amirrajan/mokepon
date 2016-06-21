@@ -31,31 +31,41 @@
       [:p "There is a line of trees off in the distance."]
       (a "Go be awesome in the forest." #(go-to-location-handler :forest)))]))
 
-(defn battle-view [chosen battling]
+(defn progress-bar-view [percentage]
+  (if (= percentage 100)
+    [:div
+     {:style {:background "green"
+              :border "solid 1px black"
+              :width "100%"
+              :height "10px"}}]
+    [:div
+     {:style {:background (str "linear-gradient(90deg, green, white " percentage "%, white)")
+              :border "solid 1px black"
+              :width "100%"
+              :height "10px"}}]))
+
+(defn battler-view [mokepon full-active-turn]
   [:div
+   [:h2 (str (:name mokepon) " (hp: " (:hp mokepon) ")" )]
+   [:hr]
+   [:p (:battle-text mokepon)]
+   [:hr]
+   (progress-bar-view (/ (:at mokepon) full-active-turn))
+   [:hr]])
+
+(defn battle-view [chosen battling full-active-turn]
+  [:div
+   (battler-view battling full-active-turn)
+   (battler-view chosen full-active-turn)
    [:div
-    [:h2 (str (:name battling) "(hp: 100)" )]
-    [:hr]
-    [:p "Whipping vines and shit."]
-    [:hr]
-    [:div {:style {:background (str "linear-gradient(90deg, green, white " 50 "%, white)") :border "solid 1px black" :width "100%" :height "10px"}}]
+    [:a "Attack."]
+    [:br]
+    [:a "Throw dat ball."]
     [:hr]]
    [:div
-    [:h2 (str (:name chosen) "(hp: 100)" )]
-    [:hr]
-    [:p "Whipping vines and shit."]
-    [:hr]
-    [:div {:style {:background (str "linear-gradient(90deg, green, white " 50 "%, white)") :border "solid 1px black" :width "100%" :height "10px"}}]
-    [:hr]
-    [:div
-     [:a "Attack."]
-     [:br]
-     [:a "Throw dat ball."]
-     [:hr]]
-    [:div
-     [:div "Chikapu attacked for 10."]
-     [:div "Sulbabaur attacked for 10."]
-     [:hr]]]])
+    [:div "Chikapu attacked for 10."]
+    [:div "Sulbabaur attacked for 10."]
+    [:hr]]])
 
 (defn forest-view [team chosen battling go-to-location-handler]
    (if (nil? battling)
@@ -66,7 +76,7 @@
        (a "Go look for some trouble." todo)
        [:br]
        (a "Go home." #(go-to-location-handler :home)))]
-     (battle-view chosen battling)))
+     (battle-view chosen battling 1800)))
 
 (defn canyon-view [team battling chosen go-to-location-handler]
   [:div
