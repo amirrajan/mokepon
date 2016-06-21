@@ -1,40 +1,40 @@
 (ns mokepon.core
   (:require [sablono.core :as sab]
+            [mokepon.monsters :refer [chikapu sulbabaur deogude]]
+            [mokepon.rpg :refer [new-game]]
             [mokepon.components :refer [rpg-view]]))
 
 (defn alert [message] #(.alert js/window message))
 
 (defonce app-state (atom new-game))
 
-  ;; tickBattle() {
-  ;;   if (this._isBattleOver()) {
-  ;;     this.saveGame();
-  ;;     return;
-  ;;   }
+;;tickBattle() {
+;;  if (this._isBattleOver()) {
+;;    this.saveGame();
+;;    return;
+;;  }
+;;  this.tickBattleCore();
+;;}
 
-  ;;   this.tickBattleCore();
-  ;; }
+;;tickBattleCore() {
+;;  this.setState(
+;;    tickBattle(
+;;      this.state.chosen,
+;;      this.state.battling,
+;;      this.state.team,
+;;      this.state.playByPlay));
 
-  ;; tickBattleCore() {
-  ;;   this.setState(
-  ;;     tickBattle(
-  ;;       this.state.chosen,
-  ;;       this.state.battling,
-  ;;       this.state.team,
-  ;;       this.state.playByPlay));
+;;  setTimeout(bind(() => {
+;;    this.tickBattle();
+;;  }, this), 250);
+;;}
 
-  ;;   setTimeout(bind(() => {
-  ;;     this.tickBattle();
-  ;;   }, this), 250);
-  ;; }
+;;(defn on-tick-battle []
+;;  (if (not= (is-battle-over))
+;;    (tick-battle-core)))
 
-(defn on-tick-battle []
-  (if (not= (is-battle-over))
-    (tick-battle-core)))
-
-(defn on-tick-battle-core []
-
-  (.setTimeout js/window tick-battle 250))
+;;(defn on-tick-battle-core []
+;;  (.setTimeout js/window tick-battle 250))
 
 (defn on-take-chikapu [state]
   (swap! state update-in [:team] #(conj % chikapu)))

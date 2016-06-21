@@ -1,4 +1,4 @@
-(ns mokepon.core)
+(ns mokepon.monsters)
 
 (def chikapu
   {:name "Chikapu"

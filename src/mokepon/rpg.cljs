@@ -1,4 +1,4 @@
-(ns mokepon.core)
+(ns mokepon.rpg)
 
 (def new-game
   {:team-at-home []
@@ -7,19 +7,15 @@
    :chosen nil
    :battling nil})
 
-(defn is-battle-over [chosen battling]
-  (cond (nil? chosen) true
-        (nil? battling) true
-        (<= (:hp chosen) 0) true
-        (<= (:hp battling) 0) true
-        (:captured battling) true
-        :else false))
+;; (defn is-battle-over [chosen battling]
+;;   (cond (nil? chosen) true
+;;         (nil? battling) true
+;;         (<= (:hp chosen) 0) true
+;;         (<= (:hp battling) 0) true
+;;         (:captured battling) true
+;;         :else false))
 
-(def active-turn-threshold 1800)
-
-(defn tick-mokepon [mokepon]
-  )
-
+;; (def active-turn-threshold 1800)
 
 ;; export function tickBattle(chosen, battling, team, playByPlay) {
 ;;   chosen = tickPokemon(chosen);
