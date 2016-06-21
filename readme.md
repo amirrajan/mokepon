@@ -45,7 +45,7 @@ Catching them all just got real, yo.
 {:user {:plugins [[cider/cider-nrepl "0.12.0-snapshot"]]
         :dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}
 ```
-- In emacs, first time you open a `.cljs` file run: `M-x cider-jack-in-clojurescript`.
+- In Emacs, first time you open a `.cljs` file run: `M-x cider-jack-in-clojurescript`.
 - You can use `repl.cljs` to interact with the applications.
 - To send a block to the browser use `M-x user/cider-send-to-repl`.
 - To view the output of a block within in Emacs use `M-x cider-eval-last-sexp`.
