@@ -74,10 +74,10 @@ function sayHello(name, otherName) {
 - Names in ClojureScript are `kebab-cased` as opposed to `camelCased`.
 - Functions in ClojureScript implicitly return the last symbolic
   expression (an sexp is basically the last parenthetical set).
-- There are only four types of delimiters in Clojure. The token
+- There are only four types of delimiters in ClojureScript. The token
   delimiter is a space ` `, and the block delimiter can be any
   closing pair: `)`, `}`, `]`.
-- Clojure's `str` function joins multiple strings together.
+- ClojureScript's `str` function joins multiple strings together.
 - You really need to get used to editing with plugins similar to
   `paredit`. Balancing parenthesis are not fun, using a plugin will
   make _manipulating_ s-expressions trivial (lisp dialects are
@@ -106,7 +106,7 @@ function newPerson(firstName, lastName) {
    :full-name (str first-name " " last-name)})
 ```
 
-- Dictionaries in Clojure are denoted by the `{}` literal. The key
+- Dictionaries in ClojureScript are denoted by the `{}` literal. The key
   values are just _paired items_ between the `{}` (you'll get a
   compiler error if you have a `{}` with an odd number of itimes). You
   can add `,` if you want, but ClojureScript just considers `,` as
@@ -165,7 +165,7 @@ console.log({ a: "value 1", b: "value 2"});
 ```
 
 All interop is under the `js/` prefix. You have to use `clj->js` to
-convert from a Clojure data structure to a JavaScript data
+convert from a ClojureScript data structure to a JavaScript data
 structure. You wont be doing this often, but it's good to know.
 
 ## ES2015 Classes + JSX vs Namespaced Functions + Sablono
