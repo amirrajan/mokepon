@@ -80,8 +80,8 @@ function sayHello(name, otherName) {
 - Clojure's `str` function joins multiple strings together.
 - You really need to get used to editing with plugins similar to
   `paredit`. Balancing parenthesis are not fun, using a plugin will
-  make _manipulating_ s-expressions trivial (lisp dialects are _not_
-  about _not_ about manipulating closing parens):
+  make _manipulating_ s-expressions trivial (lisp dialects are
+  _not_ about manipulating closing parens like most devs think):
   - Emacs had `paredit` built in.
   - [Vim](https://github.com/vim-scripts/paredit.vim)
   - [Sublime Text](https://github.com/odyssomay/paredit)
