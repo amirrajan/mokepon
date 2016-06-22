@@ -58,9 +58,9 @@
    (battler-view battling full-active-turn)
    (battler-view chosen full-active-turn)
    [:div
-    [:a "Attack."]
+    [:a "Attack!"]
     [:br]
-    [:a "Throw dat ball."]
+    [:a "Throw Mokébox!"]
     [:hr]]
    [:div
     [:div "Chikapu attacked for 10."]
@@ -102,7 +102,7 @@
 (defn title-view []
   (section
    [:h1 {:style {:line-height "0"}} "Moképon"]
-   [:h2 {:style {:line-height "0.8" :margin "0"}}"Catching them all just got real, yo"]))
+   [:h2 {:style {:line-height "0.8" :margin "0"}}"Catching 'em all just got real, yo"]))
 
 (defn rpg-view [state take-chikapu-handler go-to-location-handler]
   (let [{:keys [location team team-at-home battling chosen]} state]

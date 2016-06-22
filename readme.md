@@ -1,6 +1,20 @@
 # Moképon
 
-Catching them all just got real, yo.
+Catching 'em all just got real, yo.
+
+## A Moment of Shock
+
+>Gasp! You're using a lisp dialect?! Are you insane??? Do you see all
+>those parenthesis?!
+
+Watch this video: [Simple Made Easy](https://www.infoq.com/presentations/Simple-Made-Easy)
+
+And this one: [Value of Values](https://www.infoq.com/presentations/Value-Values)
+
+And this one: [Design, Composition, and Performance](https://www.infoq.com/presentations/Design-Composition-Performance)
+
+If the ideas presented in these videos don't jibe with you, then
+hacking on this super awesome game probably isn't for you.
 
 ## Running The Game
 
@@ -55,7 +69,7 @@ Catching them all just got real, yo.
 
 ## JavaScript to ClojureScript
 
-Here are some examples of how to tally translate ES2016 + JSX
+Here are some examples of how to translate ES2016 + JSX
 to ClojureScript + Sablono.
 
 ## Defining a Function
@@ -108,9 +122,10 @@ function newPerson(firstName, lastName) {
 
 - Dictionaries in ClojureScript are denoted by the `{}` literal. The key
   values are just _paired items_ between the `{}` (you'll get a
-  compiler error if you have a `{}` with an odd number of itimes). You
+  compiler error if you have a `{}` with an odd number of items). You
   can add `,` if you want, but ClojureScript just considers `,` as
-  whitespace. - For accessing dictionary values: in JavaScript you
+  whitespace.
+- For accessing dictionary values: in JavaScript you
   would do `person.firstName`, in ClojureScript it's `(:first-name
   person)`.
 
@@ -197,6 +212,7 @@ All interop is under the `js/` prefix. You have to use `clj->js` to
 convert from a ClojureScript data structure to a JavaScript data
 structure. You wont be doing this often, but it's good to know.
 
+
 ## ES2015 Classes + JSX vs Namespaced Functions + Sablono
 
 ```javascript
@@ -256,9 +272,143 @@ Here is the ClojureScript version using a library called Sablono
   {:first-name "John" :last-name "Doe"})
 ```
 
+### Application State - Defining Atoms
+
+With respect to front end application state (and in this case
+`React`), you need some means of storing said application state
+globally. React solves this with various different techniques, such as
+using a Flux architecture (eg. Redux), or using a "container"
+`React.Component` where everything is stored in the top level
+`state` property (and updated via `setState`).
+
+ClojureScript has a concept of an `atom` which is a transactional
+object that can be passed by _reference_. In ClojureScript everything is
+immutable, so being able to pass something by reference is a unique
+trait.
+
+Instead of using a React component's `props` attribute (and
+`setState`). We can use an `atom` defined top level:
+
+```clojure
+(def app-state
+  (atom {:team-at-home []
+         :team []
+         :location :home
+         :chosen nil
+         :battling nil}))
+```
+
+Aside: Using `def` is similar to using `var`/`let` in JavaScript. Infact, defining a
+function `(defn say-hello [param] )` is shorthand for `(def say-hello (fn [params] ))`.
+
+In JavaScript + React, when you what a control hierarchy to render, you would
+create a method similar to `addPerson` which calls `setState` (calling
+this method eventually makes the React control hierarchy rerender):
+
+```javascript
+import { Component } from 'react';
+
+export class PeopleView extends Component {
+  constructor() {
+    super();
+    this.state = {
+      people: [
+        { firstName: 'Jane', lastName: 'Doe' },
+        { firstName: 'John', lastName: 'Doe' },
+      ]
+    };
+  }
+
+  addPerson(firstName, lastName) {
+    this.setState({
+        people: this.state.people.concat({
+          firstName: firstName,
+          lastName: lastName
+        });
+      });
+  }
+}
+```
+
+In ClojureScript, instead of using `setState`, you can use an `atom`
+and its `swap!` function:
+
+```clojure
+(def app-state
+  (atom
+    {:people [{:first-name "Jane"
+               :last-name "Doe"}
+              {:first-name "Jane"
+               :last-name "Doe"}]}))
+
+(defn on-add-person [first-name last-name]
+  (swap! app-state
+         merge
+         {:people (conj (:people @app-state)
+                        {:first-name first-name
+                        :last-name last-name})}))
+```
+
+To get the value from an `atom`, you must first dereference it. This
+is done by preceding the `atom` with an `@` sign. If we want to create
+a new application state from an existing one, you would do something
+like this:
+
+Given an `atom` called `app-state` with the following value:
+
+```clojure
+(def app-state
+  (atom
+    {:people [{:first-name "Jane"
+               :last-name "Doe"}
+              {:first-name "Jane"
+               :last-name "Doe"}]}))
+```
+
+You would concatenate the new person using the `conj` ClojureScript
+function, with the value currently in the `app-state` (dereferencing
+the current value using `@`).
+
+```clojure
+{:people
+  (conj (:people @app-state)
+        {:first-name "Baby"
+         :last-name "Doe"})}
+```
+
+To update `app-state` atomcially, we use `swap!`, giving it the `atom`
+as the first parameter, what function we want to run on the `atom` (in
+this case it's `merge`), and what value we want to merge in. Putting
+all that together we get:
+
+```clojure
+(defn on-add-person [first-name last-name]
+  (swap! app-state
+         merge
+         {:people (conj (:people @app-state)
+                        {:first-name first-name
+                        :last-name last-name})}))
+```
+
+As soon as `swap!` is called. Sablono propagates those changes
+throughout all the React components.
+
+Aside: Details of `merge` and `conj` along with other ClojureScript
+functions are covered in the next section.
+
 ## You Don't Need Lodash When Using ClojureScript
 
 Let's go through some Lodash functions and see how those look on
 ClojureScript:
 
 ### `map`
+
+todo
+
+### `merge`
+
+todo
+
+### `conj`
+
+todo
