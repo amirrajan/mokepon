@@ -7,48 +7,43 @@
    :chosen nil
    :battling nil})
 
-;; (defn is-battle-over [chosen battling]
-;;   (cond (nil? chosen) true
-;;         (nil? battling) true
-;;         (<= (:hp chosen) 0) true
-;;         (<= (:hp battling) 0) true
-;;         (:captured battling) true
-;;         :else false))
+(defn battle-over? [chosen battling]
+  (cond (nil? chosen) true
+        (nil? battling) true
+        (<= (:hp chosen) 0) true
+        (<= (:hp battling) 0) true
+        (:captured battling) true
+        :else false))
 
-;; (def active-turn-threshold 1800)
+(def active-turn-threshold 1800)
 
-;; export function tickBattle(chosen, battling, team, playByPlay) {
-;;   chosen = tickPokemon(chosen);
-;;   battling = tickPokemon(battling);
+(defn active-turn-percentage [monster]
+  (if (>= (:at monster) active-turn-threshold) 1
+      (/ (:at monster) active-turn-threshold)))
 
-;;   if (battling.canAttack) {
-;;     chosen.hp -= 10;
-;;     battling.at -= activeTurnThreshold();
-;;     battling.canAttack = false;
-;;     playByPlay = playByPlay.concat(`${battling.name} attacks ${chosen.name} for 10.`);
+(defn can-attack? [monster]
+  (>= (:at monster) active-turn-threshold))
 
-;;     if (chosen.hp <= 0) {
-;;       playByPlay = playByPlay.concat(`${chosen.name} has fallen. Mauled and bloody. Pokeguts everywhere.`);
-;;       team = remove(team, chosen);
-;;     }
-;;   }
+(defn is-dead? [monster] (<= (:hp monster) 0))
 
-;;   return {
-;;     chosen,
-;;     battling,
-;;     team,
-;;     playByPlay
-;;   };
-;; }
+(defn tick-monster [monster]
+  (if (not (can-attack? monster))
+    (merge monster {:at (+ (:at monster) (:speed monster))})
+    monster))
 
-;; function tickPokemon(pokemon) {
-;;   if (!pokemon.canAttack) pokemon.at += pokemon.speed;
+(defn apply-ai-attack [chosen battling]
+  (if (can-attack? battling)
+    {:chosen (merge chosen {:hp (- (:hp chosen) 10)})
+     :attack-occured? true}
+    {:chosen chosen :attack-occured? false}))
 
-;;   if (pokemon.at >= activeTurnThreshold()) {
-;;     pokemon.canAttack = true;
-;;   } else {
-;;     pokemon.canAttack = false;
-;;   }
-
-;;   return pokemon;
-;; }
+(defn tick-battle [chosen battling]
+  (let [chosen-ticked (tick-monster chosen)
+        battling-ticked (tick-monster battling)
+        battle-result (apply-ai-attack chosen-ticked battling-ticked)]
+    {:chosen (:chosen battle-result)
+     :battling battling-ticked
+     :play-by-play (cond (is-dead? (:chosen battle-result))
+                         (str (:name chosen) " has fallen. Mauled and bloody.")
+                         (:attack-occured? battle-result)
+                         (str (:name battling) " attacks " (:name chosen) " for 10."))}))

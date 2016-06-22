@@ -44,13 +44,13 @@
               :width "100%"
               :height "10px"}}]))
 
-(defn battler-view [mokepon full-active-turn]
+(defn battler-view [monster full-active-turn]
   [:div
-   [:h2 (str (:name mokepon) " (hp: " (:hp mokepon) ")" )]
+   [:h2 (str (:name monster) " (hp: " (:hp monster) ")" )]
    [:hr]
-   [:p (:battle-text mokepon)]
+   [:p (:battle-text monster)]
    [:hr]
-   (progress-bar-view (/ (:at mokepon) full-active-turn))
+   (progress-bar-view (/ (:at monster) full-active-turn))
    [:hr]])
 
 (defn battle-view [chosen battling full-active-turn]

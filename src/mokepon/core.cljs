@@ -1,40 +1,19 @@
 (ns mokepon.core
   (:require [sablono.core :as sab]
             [mokepon.monsters :refer [chikapu sulbabaur deogude]]
-            [mokepon.rpg :refer [new-game]]
+            [mokepon.rpg :refer [new-game battle-over?]]
             [mokepon.components :refer [rpg-view]]))
 
 (defn alert [message] #(.alert js/window message))
 
 (defonce app-state (atom new-game))
 
-;;tickBattle() {
-;;  if (this._isBattleOver()) {
-;;    this.saveGame();
-;;    return;
-;;  }
-;;  this.tickBattleCore();
-;;}
+(defn on-tick-battle-core [state]
+  )
 
-;;tickBattleCore() {
-;;  this.setState(
-;;    tickBattle(
-;;      this.state.chosen,
-;;      this.state.battling,
-;;      this.state.team,
-;;      this.state.playByPlay));
-
-;;  setTimeout(bind(() => {
-;;    this.tickBattle();
-;;  }, this), 250);
-;;}
-
-;;(defn on-tick-battle []
-;;  (if (not= (is-battle-over))
-;;    (tick-battle-core)))
-
-;;(defn on-tick-battle-core []
-;;  (.setTimeout js/window tick-battle 250))
+(defn on-tick-battle [state]
+  (if (not (battle-over? (:chosen @state) (:battling @state)))
+    (on-tick-battle-core [state])))
 
 (defn on-take-chikapu [state]
   (swap! state update-in [:team] #(conj % chikapu)))
@@ -48,10 +27,14 @@
 (defn on-find-trouble [state]
   (cond
     (= (:location @state) :forest)
-    (swap! app-state merge {:chosen chikapu :battling sulbabaur})
+    (do
+      (swap! state merge {:chosen chikapu :battling sulbabaur})
+      (on-tick-battle state))
 
     (= (:location @state) :canyon)
-    (swap! app-state merge {:chosen chikapu :battling deogude})))
+    (do
+      (swap! state merge {:chosen chikapu :battling deogude})
+      (on-tick-battle state))))
 
 (defn rpg-container []
   (sab/html

@@ -114,6 +114,35 @@ function newPerson(firstName, lastName) {
   would do `person.firstName`, in ClojureScript it's `(:first-name
   person)`.
 
+## Defining Local Variables
+
+```javascript
+function newPerson(firstName, middleName, lastName) {
+  let fullName = firstName + ' ' + lastName;
+  let middleInitial = middleName[0];
+  return {
+    firstName: firstName,
+    lastName: lastName,
+    middleName: middleName,
+    fullName: firstName + ' ' + lastName
+  };
+}
+```
+
+```clojure
+(defn new-person [first-name middle-name last-name]
+  (let [full-name (str first-name " " middle-name " " last-name)
+        middle-initial (first middle-name)]
+    {:first-name first-name
+     :middle-name middle-name
+     :middle-initial middle-initial
+     :last-name last-name
+     :full-name full-name}))
+```
+
+The `let` binding takes in an array of pairs (similar to a map
+`{}`). An odd numbered array will give you a compiler error.
+
 ## Anonymous Functions
 
 ```javascript
@@ -135,7 +164,7 @@ multipleAllByTwo([1, 2, 3]); //yields [2, 4, 6]
 
 Anonymous functions can be written with the following shorthand. You
 can use `#()` instead of `(fn [arg1 arg2])`. Parameters names for the
-`#()` short hand are `%`, `%2`, `%3`, etc. Here is the same
+`#()` shorthand are `%`, `%2`, `%3`, etc. Here is the same
 `multiply-all-by-two` but using the `#()` shorthand.
 
 ```clojure
@@ -226,3 +255,10 @@ Here is the ClojureScript version using a library called Sablono
   {:first-name "Jane" :last-name "Doe"}
   {:first-name "John" :last-name "Doe"})
 ```
+
+## You Don't Need Lodash When Using ClojureScript
+
+Let's go through some Lodash functions and see how those look on
+ClojureScript:
+
+### `map`
