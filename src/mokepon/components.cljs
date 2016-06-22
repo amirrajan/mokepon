@@ -32,14 +32,14 @@
       (a "Go be awesome in the forest." #(go-to-location-handler :forest)))]))
 
 (defn progress-bar-view [percentage]
-  (if (= percentage 100)
+  (if (>= percentage 1)
     [:div
      {:style {:background "green"
               :border "solid 1px black"
               :width "100%"
               :height "10px"}}]
     [:div
-     {:style {:background (str "linear-gradient(90deg, green, white " percentage "%, white)")
+     {:style {:background (str "linear-gradient(90deg, green, white " (* 100 percentage) "%, white)")
               :border "solid 1px black"
               :width "100%"
               :height "10px"}}]))

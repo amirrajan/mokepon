@@ -1,7 +1,7 @@
 (ns mokepon.core
   (:require [sablono.core :as sab]
             [mokepon.monsters :refer [chikapu sulbabaur deogude]]
-            [mokepon.rpg :refer [new-game battle-over?]]
+            [mokepon.rpg :refer [new-game battle-over? tick-battle]]
             [mokepon.components :refer [rpg-view]]))
 
 (defn alert [message] #(.alert js/window message))
@@ -9,11 +9,17 @@
 (defonce app-state (atom new-game))
 
 (defn on-tick-battle-core [state]
-  )
+  (swap!
+   app-state
+   merge
+   (tick-battle (:chosen @state) (:battling @state))))
 
 (defn on-tick-battle [state]
   (if (not (battle-over? (:chosen @state) (:battling @state)))
-    (on-tick-battle-core [state])))
+    (do
+      (on-tick-battle-core state)
+      (.setTimeout js/window #(on-tick-battle state) 250))
+    (.log js/console "battle ended")))
 
 (defn on-take-chikapu [state]
   (swap! state update-in [:team] #(conj % chikapu)))

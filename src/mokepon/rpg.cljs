@@ -40,10 +40,16 @@
 (defn tick-battle [chosen battling]
   (let [chosen-ticked (tick-monster chosen)
         battling-ticked (tick-monster battling)
-        battle-result (apply-ai-attack chosen-ticked battling-ticked)]
+        battle-result (apply-ai-attack chosen-ticked
+                                       battling-ticked)]
     {:chosen (:chosen battle-result)
      :battling battling-ticked
-     :play-by-play (cond (is-dead? (:chosen battle-result))
-                         (str (:name chosen) " has fallen. Mauled and bloody.")
-                         (:attack-occured? battle-result)
-                         (str (:name battling) " attacks " (:name chosen) " for 10."))}))
+     :play-by-play
+     (cond (is-dead? (:chosen battle-result))
+           (str (:name chosen)
+                " has fallen. Mauled and bloody.")
+           (:attack-occured? battle-result)
+           (str (:name battling)
+                " attacks "
+                (:name chosen)
+                " for 10."))}))
