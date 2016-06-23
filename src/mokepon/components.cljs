@@ -1,7 +1,11 @@
 (ns mokepon.components
   (:require [sablono.core :as sab]))
 
-(defn a [text on-click] [:a {:href "javascript:;" :on-click on-click} text])
+(defn a [text on-click]
+  [:a {:href "javascript:;" :on-click on-click} text])
+
+(defn disabled-a [text]
+  [:a {:href "javascript:;" :style {:color "#a0a0a0" :cursor "default"}} text])
 
 (def todo #(.alert js/window "todo"))
 
@@ -53,21 +57,27 @@
    (progress-bar-view (/ (:at monster) full-active-turn))
    [:hr]])
 
-(defn battle-view [chosen battling full-active-turn]
+(defn battle-view [chosen chosen-can-attack? battling active-turn-threshold attack-handler]
   [:div
-   (battler-view battling full-active-turn)
-   (battler-view chosen full-active-turn)
-   [:div
-    [:a "Attack!"]
-    [:br]
-    [:a "Throw Mokébox!"]
-    [:hr]]
+   (battler-view battling active-turn-threshold)
+   (battler-view chosen active-turn-threshold)
+   (if chosen-can-attack?
+     [:div
+      (a "Attack!" attack-handler)
+      [:br]
+      (a "Throw Mokébox!" todo)
+      [:hr]]
+     [:div
+      (disabled-a "Attack!")
+      [:br]
+      (disabled-a "Throw Mokébox!")
+      [:hr]])
    [:div
     [:div "Chikapu attacked for 10."]
     [:div "Sulbabaur attacked for 10."]
     [:hr]]])
 
-(defn forest-view [team chosen battling go-to-location-handler]
+(defn forest-view [team chosen chosen-can-attack? battling go-to-location-handler attack-handler]
    (if (nil? battling)
      [:div
       (section [:p "You are currently chillin' like a villian in the forest."])
@@ -76,9 +86,9 @@
        (a "Go look for some trouble." todo)
        [:br]
        (a "Go home." #(go-to-location-handler :home)))]
-     (battle-view chosen battling 1800)))
+     (battle-view chosen chosen-can-attack? battling 1800 attack-handler)))
 
-(defn canyon-view [team battling chosen go-to-location-handler]
+(defn canyon-view [team chosen chosen-can-attack? battling go-to-location-handler attack-handler]
   [:div
    (section [:p "You are currently chillin' like a villian in the canyon."])
    (team-view team "Your posse:")
@@ -104,8 +114,9 @@
    [:h1 {:style {:line-height "0"}} "Moképon"]
    [:h2 {:style {:line-height "0.8" :margin "0"}}"Catching 'em all just got real, yo"]))
 
-(defn rpg-view [state take-chikapu-handler go-to-location-handler]
-  (let [{:keys [location team team-at-home battling chosen]} state]
+(defn rpg-view [state take-chikapu-handler go-to-location-handler can-attack? attack-handler]
+  (let [{:keys [location team team-at-home battling chosen]} state
+        chosen-can-attack? (can-attack? chosen)]
     [:div
      (title-view)
      (cond
@@ -118,10 +129,10 @@
         go-to-location-handler)
 
        (= location :forest)
-       (forest-view team chosen battling go-to-location-handler)
+       (forest-view team chosen chosen-can-attack? battling go-to-location-handler attack-handler)
 
        (= location :canyon)
-       (canyon-view team chosen battling go-to-location-handler)
+       (canyon-view team chosen chosen-can-attack? battling go-to-location-handler attack-handler)
 
        :else
        [:div (str "Location " location "not handled.")])]))

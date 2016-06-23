@@ -31,11 +31,22 @@
     (merge monster {:at (+ (:at monster) (:speed monster))})
     monster))
 
+(defn attack [from-monster to-monster]
+  (merge to-monster {:hp (- (:hp to-monster) 10)}))
+
 (defn apply-ai-attack [chosen battling]
   (if (can-attack? battling)
-    {:chosen (merge chosen {:hp (- (:hp chosen) 10)})
+    {:chosen (attack battling chosen)
+     :battling (merge battling {:at 0})
      :attack-occured? true}
-    {:chosen chosen :attack-occured? false}))
+    {:chosen chosen :battling battling :attack-occured? false}))
+
+(defn apply-player-attack [chosen battling]
+  (if (can-attack? chosen)
+    {:battling (attack chosen battling)
+     :chosen (merge chosen {:at 0})
+     :attack-occured? true}
+    {:battling battling :attack-occured? false}))
 
 (defn tick-battle [chosen battling]
   (let [chosen-ticked (tick-monster chosen)
@@ -43,7 +54,7 @@
         battle-result (apply-ai-attack chosen-ticked
                                        battling-ticked)]
     {:chosen (:chosen battle-result)
-     :battling battling-ticked
+     :battling (:battling battle-result)
      :play-by-play
      (cond (is-dead? (:chosen battle-result))
            (str (:name chosen)

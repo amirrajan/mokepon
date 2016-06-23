@@ -8,6 +8,7 @@
   ((on-go-to-location app-state) :forest)
   (on-find-trouble app-state)
   (on-tick-battle-core app-state)
+  (on-attack app-state)
   )
 
   (swap!

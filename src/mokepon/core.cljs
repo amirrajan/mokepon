@@ -1,7 +1,11 @@
 (ns mokepon.core
   (:require [sablono.core :as sab]
             [mokepon.monsters :refer [chikapu sulbabaur deogude]]
-            [mokepon.rpg :refer [new-game battle-over? tick-battle]]
+            [mokepon.rpg :refer [new-game
+                                 battle-over?
+                                 tick-battle
+                                 apply-player-attack
+                                 can-attack?]]
             [mokepon.components :refer [rpg-view]]))
 
 (defn alert [message] #(.alert js/window message))
@@ -9,10 +13,9 @@
 (defonce app-state (atom new-game))
 
 (defn on-tick-battle-core [state]
-  (swap!
-   app-state
-   merge
-   (tick-battle (:chosen @state) (:battling @state))))
+  (swap! state
+         merge
+         (tick-battle (:chosen @state) (:battling @state))))
 
 (defn on-tick-battle [state]
   (if (not (battle-over? (:chosen @state) (:battling @state)))
@@ -26,6 +29,13 @@
 
 (defn on-go-to-location [state]
   (fn [loc] (swap! state update-in [:location] (fn [_] loc))))
+
+(defn on-attack [state]
+  (swap! state
+         merge
+         (apply-player-attack
+          (:chosen @state)
+          (:battling @state))))
 
 (defn set-battle [state chosen battling]
   (merge state {:chosen chosen :battling battling}))
@@ -46,7 +56,9 @@
   (sab/html
    (rpg-view @app-state
              #(on-take-chikapu app-state)
-             (on-go-to-location app-state))))
+             (on-go-to-location app-state)
+             can-attack?
+             #( on-attack app-state))))
 
 (defn render! []
   (.render js/React
