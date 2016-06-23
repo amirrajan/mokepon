@@ -57,14 +57,17 @@
    (rpg-view @app-state
              #(on-take-chikapu app-state)
              (on-go-to-location app-state)
+             #(on-find-trouble app-state)
              can-attack?
-             #( on-attack app-state))))
+             #(on-attack app-state))))
 
 (defn render! []
   (.render js/React
            (rpg-container)
            (.getElementById js/document "app")))
 
-(add-watch app-state :on-change (fn [_ _ _ _] (render!)))
+(add-watch app-state
+           :on-change
+           (fn [_ _ _ _] (render!)))
 
 (render!)

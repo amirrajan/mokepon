@@ -6,6 +6,7 @@
   (.alert js/window "hodor")
   (on-take-chikapu app-state)
   ((on-go-to-location app-state) :forest)
+  ((on-go-to-location app-state) :home)
   (on-find-trouble app-state)
   (on-tick-battle-core app-state)
   (on-attack app-state)
@@ -19,3 +20,6 @@
     (:battling @app-state)))
 
 (.setTimeout js/window #(.log js/console "hodor") 1000)
+
+
+app-state
