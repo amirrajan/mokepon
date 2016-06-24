@@ -2,7 +2,7 @@
 
 Catching 'em all just got real, yo.
 
-Written in React and ClojureScript.
+A RPG game written in React and ClojureScript.
 
 ## A Moment of Shock
 
