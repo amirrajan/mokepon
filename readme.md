@@ -16,6 +16,144 @@ And this one: [Design, Composition, and Performance](https://www.infoq.com/prese
 If the ideas presented in these videos don't jibe with you, then
 hacking on this super awesome game probably isn't for you.
 
+>I don't have time to watch 3 hours of videos. Give me the short
+>version.
+
+It comes down to a few questions really.
+
+### First Question
+
+How do you perceive JavaScript? A language that is `function`
+oriented or `class` oriented (you'll notice that I didn't say object
+oriented)?
+
+The current JavaScript landscape splits JavaScript into two
+philosophies. JavaScript is a terrible class oriented language that
+needs to be improved.
+
+For those that want JavaScript to be a `class` oriented language, they want:
+
+```
+fuction Person(firstName, lastName) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+  this.sayHello = function() {
+    console.log(this.firstName, this.lastName, ' says hello.');
+  }
+}
+
+var person = new Person('John', 'Doe');
+person.sayHello();
+```
+
+to look like this instead:
+
+```
+class Person {
+  constructor(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  sayHello() {
+    console.log(this.firstName, this.lastName, ' says hello.');
+  }
+}
+
+let person = new Person('John', 'Doe');
+person.sayHello();
+```
+
+For those that want JavaScript to be a `function` oriented language, they want:
+
+```
+function sayHello(person) {
+  console.log(this.firstName, this.lastName, ' says hello.');
+}
+
+var person = { firstName: 'John', lastName: 'Doe' };
+sayHello(person);
+```
+
+But with some guarantees about the mutabilty of objects:
+
+```
+function sayHello(person) {
+  console.log(this.firstName, this.lastName, ' says hello.');
+}
+
+//wrapping this hash in `immutable` ensures that sayHello cannot
+//change the properties of the person hash.
+var person = immutable({ firstName: 'John', lastName: 'Doe' });
+sayHello(person);
+```
+
+So. Given this, if you answered with an unwavering "JavaScript should
+be `class` oriented," then working in ClojureScript probably isn't for
+you. But you should really read up on the benefits of functional
+programming (and in this case, take some time to watch the 3 hours
+worth of video). But, if you're still hesitant on spending three hours
+of your life, this
+[blog entry](http://leongersing.tumblr.com/post/11561298378/my-perception-of-coffeescript)
+by Leon Gersing goes into detail about forcing JavaScript to be a
+class oriented language. Specifically:
+
+>That's it. Now, I know what you’re thinking, "Leon, please,
+>[this class oriented example] is contrived and doesn't represent real
+>world domains." You're right and so is mine as a result. "But you
+>also didn't create real domain models." Also right, because I didn’t
+>have do, nor would I ever want to. Therein lies my point. Sometimes a
+>struct is a struct and not an class. The difference that I'm
+>desperately trying to convey in this overly simple context is that by
+>leveraging FP over OO (he really means class oriented, not OO) one
+>can provide not only a more dependable >abstraction but when combined
+>with JavaScript's inherent flexibility as a language, we can achieve
+>true referential transparency and polymorphism.
+
+and also:
+
+>FP encourages building small functions that do not mutate state and
+>can be bound together as needed to perform a task whereas the OO
+>[class oriented] philosophy is to encapsulate and achieve
+>polymorphism through interface or contract. The more dynamic your
+>context the more OO's [class oriented] encapsulation paradigm, as
+>seen in the inheritance model, leaks..
+
+### Second Question
+
+How do you perceive languages in general? Do you perfer:
+
+Static, strongly typed.
+Dynamic, strongly typed.
+Dynamic, weakly typed.
+Static, weakly typed.
+
+ClojureScript is dynamic, strongly typed (specifically through the
+use of `protocols`). The whole static vs dynamic debate has been going
+on for a while, so I'll skip that and just give you examples langauges that
+fall into each category.
+
+- Functional, Static, Strong: Haskell, Elm, F#, PureScript, Fable, ScalaZ
+- Functional, Dynamic, Strong: ClojureScript, Clojure
+- Functional, Dynamic, Weak: ES5
+- Functional, Static, Weak: lol iono
+- Class, Dynamic, Weak: ES6, CoffeeScript
+- Class, Dynamic, Strong: Ruby, Python
+- Class, Static, Strong: C#, Java, TypeScript, Scala
+- Class, Static, Weak: C
+
+There are many other expamples (even the list above has languages that
+are multiparadigm). But I hope that gives some clarity to language
+preference. Made your decision/observations? Great!
+
+### Bottomline
+
+So, you've watched the videos, read that blog entry by Leon, and have
+heated debates about static vs dynamic on assorted public forums. After all
+of that, if you still feel that JavaScript is philosophically class
+oriented (and infact should become a static class oriented langauge),
+then writing ClojureScript is definitely not for you.
+
 ## Running The Game
 
 - Install Java 8 (1.8 sdk).
@@ -92,7 +230,7 @@ function sayHello(name, otherName) {
   delimiter is a space ` `, and the block delimiter can be any
   closing pair: `)`, `}`, `]`.
 - ClojureScript's `str` function joins multiple strings together.
-- You really need to get used to editing with plugins similar to
+- You _really_ need to get used to editing with plugins similar to
   `paredit`. Balancing parenthesis are not fun, using a plugin will
   make _manipulating_ s-expressions trivial (lisp dialects are
   _not_ about manipulating closing parens like most devs think):
@@ -100,6 +238,12 @@ function sayHello(name, otherName) {
   - [Vim](https://github.com/vim-scripts/paredit.vim)
   - [Sublime Text](https://github.com/odyssomay/paredit)
   - [Atom](https://atom.io/packages/lisp-paredit)
+- Another important plugin would be `vim-surround`. It'll help you
+  manipulate ClojureScript block delimiters more efficiently:
+  - [Emacs](https://github.com/timcharper/evil-surround)
+  - [Vim](https://github.com/vim-scripts/paredit.vim)
+  - [Sublime Text](https://github.com/jcartledge/sublime-surround)
+  - [Atom](https://atom.io/packages/vim-surround)
 
 ## Defining a Hash/Dictionary
 
