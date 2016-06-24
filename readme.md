@@ -2,6 +2,8 @@
 
 Catching 'em all just got real, yo.
 
+Written in React and ClojureScript.
+
 ## A Moment of Shock
 
 >Gasp! You're using a lisp dialect?! Are you insane??? Do you see all
@@ -28,8 +30,13 @@ oriented or `class` oriented (you'll notice that I didn't say object
 oriented)?
 
 The current JavaScript landscape splits JavaScript into two
-philosophies. JavaScript is a terrible class oriented language that
-needs to be improved.
+philosophies.
+
+>JavaScript is a terrible class oriented language that needs to be improved.
+
+and
+
+>JavaScript is a terrible function oriented language that needs to be improved.
 
 For those that want JavaScript to be a `class` oriented language, they want:
 
@@ -84,31 +91,34 @@ function sayHello(person) {
 
 //wrapping this hash in `immutable` ensures that sayHello cannot
 //change the properties of the person hash.
-var person = immutable({ firstName: 'John', lastName: 'Doe' });
+let person = immutable({ firstName: 'John', lastName: 'Doe' });
 sayHello(person);
 ```
 
 So. Given this, if you answered with an unwavering "JavaScript should
 be `class` oriented," then working in ClojureScript probably isn't for
-you. But you should really read up on the benefits of functional
+you. But, you should really read up on the benefits of functional
 programming (and in this case, take some time to watch the 3 hours
-worth of video). But, if you're still hesitant on spending three hours
-of your life, this
+worth of video). If you're _still_ hesitant on spending three hours
+of your life watching videos, this
 [blog entry](http://leongersing.tumblr.com/post/11561298378/my-perception-of-coffeescript)
 by Leon Gersing goes into detail about forcing JavaScript to be a
 class oriented language. Specifically:
 
->That's it. Now, I know what you’re thinking, "Leon, please,
->[this class oriented example] is contrived and doesn't represent real
->world domains." You're right and so is mine as a result. "But you
->also didn't create real domain models." Also right, because I didn’t
->have do, nor would I ever want to. Therein lies my point. Sometimes a
->struct is a struct and not an class. The difference that I'm
->desperately trying to convey in this overly simple context is that by
->leveraging FP over OO (he really means class oriented, not OO) one
->can provide not only a more dependable >abstraction but when combined
->with JavaScript's inherent flexibility as a language, we can achieve
->true referential transparency and polymorphism.
+>That's it. Now, I know what you're thinking, "Leon, please,
+>[the class oriented example] is contrived and doesn't represent real
+>world domains." You're right and so is [my function oriented example]
+>as a result. "But you also didn't create real domain models." Also
+>right, because I didn't have do, nor would I ever want to. Therein
+>lies my point.
+
+>Sometimes a struct is a struct and not an class. The
+>difference that I'm desperately trying to convey in this overly
+>simple context is that by leveraging FP over OO (he really means
+>class oriented, not OO) one can provide not only a more dependable
+>>abstraction but when combined with JavaScript's inherent flexibility
+>as a language, we can achieve true referential transparency and
+>polymorphism.
 
 and also:
 
@@ -121,7 +131,7 @@ and also:
 
 ### Second Question
 
-How do you perceive languages in general? Do you perfer:
+How do you perceive languages in general? Do you prefer:
 
 Static, strongly typed.
 Dynamic, strongly typed.
@@ -130,7 +140,7 @@ Static, weakly typed.
 
 ClojureScript is dynamic, strongly typed (specifically through the
 use of `protocols`). The whole static vs dynamic debate has been going
-on for a while, so I'll skip that and just give you examples langauges that
+on for a while, so I'll skip that and just give you example langauges that
 fall into each category.
 
 - Functional, Static, Strong: Haskell, Elm, F#, PureScript, Fable, ScalaZ
@@ -155,7 +165,7 @@ oriented (and infact should become a static, class oriented langauge),
 then writing ClojureScript is definitely not for you.
 
 Additionally,
-[Reacts](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
+[React's](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
 approach to client side view generation is consistent with functional
 programming languages:
 
@@ -184,7 +194,9 @@ round hole.
 
 ClojureScript syntax is _simple_ (which is not the same thing as
 _easy_). Here is an explanation of `token` and `block`
-delimeters. Take this JavaScript function:
+delimeters.
+
+Take this JavaScript function:
 
 ```javascript
 1   function render(person, favoriteColor) {
@@ -229,9 +241,9 @@ In ClojureScript:
 ```
 
 The token and block delimeter counts are about the same, but _they
-are not overloaded, nor do they contextually change_ (they are not
+are not overloaded, nor do they contextually change_ (ie. not
 _complex_). Given this consistency, plugins make it very straight
-forward to manipluation these `symbolic-expressions` (you won't
+forward to manipluation these `symbolic-expressions` (you won't be
 balancing parenthesis as much as you think).
 
 Look. I get it. You're used to the Ada-based syntax that JavaScript
@@ -240,12 +252,12 @@ are _easy_ (familiar). But it doesn't change the fact that this syntax
 is more _complex_ (has measurable, objective cognative overhead)
 than ClojureScript. If you haven't worked with a Lisp dialect,
 ClojureScript's syntax looks _hard_ (unfamiliar), which is completely
-fair. But, its sytax is also _simple_ (has less cognative overhead).
+fair. But, its syntax is also _simple_ (has less cognative overhead).
 
 In essense, _hard_ things can eventually become _easy_. But, _complex_
 things have a much much more difficult time in becoming _simple_. The
 3 hours worth of videos go into great detail about the simplicity of
-ClojureScript (you should watch them).
+ClojureScript (you should watch them if you still haven't).
 
 ## Running The Game
 
