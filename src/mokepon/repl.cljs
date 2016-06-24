@@ -1,25 +1,12 @@
 (ns mokepon.core)
 
 (defn repl-foo []
-  (battle-over? nil nil)
-  (reset! app-state mokepon.rpg/new-game)
-  (.alert js/window "hodor")
-  (on-take-chikapu app-state)
-  ((on-go-to-location app-state) :forest)
-  ((on-go-to-location app-state) :home)
-  (on-find-trouble app-state)
-  (on-tick-battle-core app-state)
-  (on-attack app-state)
   )
 
-  (swap!
-   app-state
-   merge
-   (mokepon.rpg/tick-battle
-    (:chosen @app-state)
-    (:battling @app-state)))
+(defn isn'tthiscool? [])
 
-(.setTimeout js/window #(.log js/console "hodor") 1000)
-
-
-app-state
+(defn go-find-trouble-in [location]
+  (reset! app-state mokepon.rpg/new-game)
+  (on-take-chikapu app-state)
+  ((on-go-to-location app-state) location)
+  (on-find-trouble app-state))

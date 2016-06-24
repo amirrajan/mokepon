@@ -36,17 +36,16 @@
       (a "Go be awesome in the forest." #(go-to-location-handler :forest)))]))
 
 (defn progress-bar-view [percentage]
-  (if (>= percentage 1)
-    [:div
-     {:style {:background "green"
-              :border "solid 1px black"
-              :width "100%"
-              :height "10px"}}]
-    [:div
-     {:style {:background (str "linear-gradient(90deg, green, white " (* 100 percentage) "%, white)")
-              :border "solid 1px black"
-              :width "100%"
-              :height "10px"}}]))
+  [:div
+   {:style {:border "solid 1px black"
+            :width "100%"
+            :height "10px"}}
+   [:div
+    {:style {:background "green"
+             :margin "0px"
+             :padding "0px"
+             :width (str (* 100 percentage) "%")
+             :height "100%"}}]])
 
 (defn battler-view [monster full-active-turn]
   [:div
@@ -57,7 +56,7 @@
    (progress-bar-view (/ (:at monster) full-active-turn))
    [:hr]])
 
-(defn battle-view [chosen chosen-can-attack? battling active-turn-threshold attack-handler]
+(defn battle-view [chosen chosen-can-attack? battling play-by-play active-turn-threshold attack-handler]
   [:div
    (battler-view battling active-turn-threshold)
    (battler-view chosen active-turn-threshold)
@@ -68,30 +67,64 @@
      (section
       (disabled-a "Attack!")
       [:br]))
-   [:div
-    [:div "Chikapu attacked for 10."]
-    [:div "Sulbabaur attacked for 10."]
-    [:hr]]])
+   (section (for [i play-by-play] [:div i]))])
 
-(defn forest-view [team find-trouble-handler chosen chosen-can-attack? battling go-to-location-handler attack-handler]
-   (if (nil? battling)
-     [:div
-      (section [:p "You are currently chillin' like a villian in the forest."])
-      (team-view team "Your posse:")
-      (section
-       (a "Go look for some trouble." find-trouble-handler)
-       [:br]
-       (a "Go home." #(go-to-location-handler :home)))]
-     (battle-view chosen chosen-can-attack? battling 1800 attack-handler)))
+(defn location-view [location-description
+                     team
+                     find-trouble-handler
+                     chosen
+                     chosen-can-attack?
+                     battling
+                     play-by-play
+                     go-to-location-handler
+                     attack-handler]
+  (if (nil? battling)
+    [:div
+     (section [:p location-description])
+     (team-view team "Your posse:")
+     (section
+      (a "Go look for some trouble." find-trouble-handler)
+      [:br]
+      (a "Go home." #(go-to-location-handler :home)))]
+    (battle-view chosen chosen-can-attack? battling play-by-play 1800 attack-handler)))
 
-(defn canyon-view [team find-trouble-handler chosen chosen-can-attack? battling go-to-location-handler attack-handler]
-  [:div
-   (section [:p "You are currently chillin' like a villian in the canyon."])
-   (team-view team "Your posse:")
-   (section
-    (a "Go look for some trouble." find-trouble-handler)
-    [:br]
-    (a "Go home." #(go-to-location-handler :home)))])
+(defn forest-view [team
+                   find-trouble-handler
+                   chosen
+                   chosen-can-attack?
+                   battling
+                   play-by-play
+                   go-to-location-handler
+                   attack-handler]
+  (location-view
+   "You are currently chillin' like a villian in the forest."
+   team
+   find-trouble-handler
+   chosen
+   chosen-can-attack?
+   battling
+   play-by-play
+   go-to-location-handler
+   attack-handler))
+
+(defn canyon-view [team
+                   find-trouble-handler
+                   chosen
+                   chosen-can-attack?
+                   battling
+                   play-by-play
+                   go-to-location-handler
+                   attack-handler]
+  (location-view
+   "You are currently chillin' like a villian in the canyon."
+   team
+   find-trouble-handler
+   chosen
+   chosen-can-attack?
+   battling
+   play-by-play
+   go-to-location-handler
+   attack-handler))
 
 (defn home-view [location
                  team
@@ -116,7 +149,7 @@
                 find-trouble-handler
                 can-attack?
                 attack-handler]
-  (let [{:keys [location team team-at-home battling chosen]} state
+  (let [{:keys [location team team-at-home battling chosen play-by-play]} state
         chosen-can-attack? (can-attack? chosen)]
     [:div
      (title-view)
@@ -133,6 +166,7 @@
                     find-trouble-handler
                     chosen chosen-can-attack?
                     battling
+                    play-by-play
                     go-to-location-handler
                     attack-handler)
 
@@ -142,6 +176,7 @@
                     chosen
                     chosen-can-attack?
                     battling
+                    play-by-play
                     go-to-location-handler
                     attack-handler)
 

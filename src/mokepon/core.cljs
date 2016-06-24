@@ -15,7 +15,9 @@
 (defn on-tick-battle-core [state]
   (swap! state
          merge
-         (tick-battle (:chosen @state) (:battling @state))))
+         (tick-battle (:chosen @state)
+                      (:battling @state)
+                      (:play-by-play @state))))
 
 (defn on-tick-battle [state]
   (if (not (battle-over? (:chosen @state) (:battling @state)))
@@ -35,7 +37,8 @@
          merge
          (apply-player-attack
           (:chosen @state)
-          (:battling @state))))
+          (:battling @state)
+          (:play-by-play @state))))
 
 (defn set-battle [state chosen battling]
   (merge state {:chosen chosen :battling battling}))
@@ -44,12 +47,16 @@
   (cond
     (= (:location @state) :forest)
     (do
-      (swap! state merge {:chosen chikapu :battling sulbabaur})
+      (swap! state merge {:chosen chikapu
+                          :battling sulbabaur
+                          :play-by-play [(str "It has begun! " (:name chikapu) " vs " (:name sulbabaur) "!")]})
       (on-tick-battle state))
 
     (= (:location @state) :canyon)
     (do
-      (swap! state merge {:chosen chikapu :battling deogude})
+      (swap! state merge {:chosen chikapu
+                          :battling deogude
+                          :play-by-play [[(str "It has begun! " (:name chikapu) " vs " (:name deogude) "!")]]})
       (on-tick-battle state))))
 
 (defn rpg-container []

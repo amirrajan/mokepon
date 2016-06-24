@@ -5,7 +5,8 @@
    :team []
    :location :home
    :chosen nil
-   :battling nil})
+   :battling nil
+   :play-by-play []})
 
 (defn battle-over? [chosen battling]
   (cond (nil? chosen) true
@@ -41,14 +42,14 @@
      :attack-occured? true}
     {:chosen chosen :battling battling :attack-occured? false}))
 
-(defn apply-player-attack [chosen battling]
+(defn apply-player-attack [chosen battling play-by-play]
   (if (can-attack? chosen)
     {:battling (attack chosen battling)
      :chosen (merge chosen {:at 0})
      :attack-occured? true}
     {:battling battling :attack-occured? false}))
 
-(defn tick-battle [chosen battling]
+(defn tick-battle [chosen battling play-by-play]
   (let [chosen-ticked (tick-monster chosen)
         battling-ticked (tick-monster battling)
         battle-result (apply-ai-attack chosen-ticked
@@ -57,10 +58,14 @@
      :battling (:battling battle-result)
      :play-by-play
      (cond (is-dead? (:chosen battle-result))
-           (str (:name chosen)
-                " has fallen. Mauled and bloody.")
-           (:attack-occured? battle-result)
-           (str (:name battling)
-                " attacks "
-                (:name chosen)
-                " for 10."))}))
+           (conj play-by-play
+                 (str (:name chosen)
+                      " has fallen. Mauled and bloody."))
+                 (:attack-occured? battle-result)
+           (conj play-by-play
+                 (str (:name battling)
+                      " attacks "
+                      (:name chosen)
+                      " for 10."))
+           :else
+           play-by-play)}))
