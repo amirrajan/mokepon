@@ -134,7 +134,7 @@ on for a while, so I'll skip that and just give you examples langauges that
 fall into each category.
 
 - Functional, Static, Strong: Haskell, Elm, F#, PureScript, Fable, ScalaZ
-- Functional, Dynamic, Strong: ClojureScript, Clojure
+- Functional, Dynamic, Strong: ClojureScript, Clojure, Elixir
 - Functional, Dynamic, Weak: ES5
 - Functional, Static, Weak: lol iono
 - Class, Dynamic, Weak: ES6, CoffeeScript
@@ -148,11 +148,104 @@ preference. Made your decision/observations? Great!
 
 ### Bottomline
 
-So, you've watched the videos, read that blog entry by Leon, and have
+You've watched the videos, read that blog entry by Leon, and have
 heated debates about static vs dynamic on assorted public forums. After all
 of that, if you still feel that JavaScript is philosophically class
-oriented (and infact should become a static class oriented langauge),
+oriented (and infact should become a static, class oriented langauge),
 then writing ClojureScript is definitely not for you.
+
+Additionally,
+[Reacts](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
+approach to client side view generation is consistent with functional
+programming languages:
+
+>When your component is first initialized, the render method is
+>called, generating a lightweight representation of your view. From
+>that representation, a string of markup is produced, and injected
+>into the document. When your data changes, the render method is
+>called again. In order to perform updates as efficiently as possible,
+>we diff the return value from the previous call to render with the
+>new one, and generate a minimal set of changes to be applied to the
+>DOM.
+
+In essense, _the view is a function of the data_ (in fact, the creators
+of React went so far as to
+[create](https://facebook.github.io/immutable-js/)
+a suite of immutable data structures for JavaScript). Now, you may be
+thinking:
+
+>Hey in that case, we can just use ES6 plus ImmutableJS and everything
+>will be awesome because I don't have to deal with parenthesis!!!
+
+Look, attempting to add immutablility to ES6 is shoving a square peg in a
+round hole.
+
+### But, Parenthesis!!!!
+
+ClojureScript syntax is _simple_ (which is not the same thing as
+_easy_). Here is an explanation of `token` and `block`
+delimeters. Take this JavaScript function:
+
+```javascript
+1   function render(person, favoriteColor) {
+2     return (
+3       <div
+4         data-first-name={person.firstName}
+5         data-last-name={person.lastName}
+6         style={{ backgroundColor: favoriteColor }}>
+7         Hello World
+8       </div>
+9     );
+10  }
+```
+
+- Line `1` has the token `(`, and `,`. This line also has `{`, a block delmiter.
+
+- Line `3` has a block delimter of `<` (which is overloaded with `<`,
+  a token delimeter when it's in between two numbers `1 < 2`).
+
+- Line `4` has a few token delimeters: `.`, and `=`. There are
+  also block delimiters: `{`. The `-` is ignored because of the
+  `<` delimter on line `3` (which shouldn't be confused with the `<`
+  token delimeter when it's between two numbers).
+
+- Line `6` has token delimiters `:`, and block delimeters `{`,
+  `>`. The token `backgroundColor` cannot be called `background-color`
+  becuase it's no longer within in `<` block delimiter.
+
+- Line `8` has another block delimiter `</>`.
+
+- Line `9` has block delimeter `;`.
+
+In ClojureScript:
+
+```clojurescript
+(defn render [person favorite-color]
+  [:div
+   {:data-first-name (:first-name person)
+    :data-last-name (:last-name person)}
+    :style {:background-color favorite-color}
+   "Hello World"])
+```
+
+The token and block delimeter counts are about the same, but _they
+are not overloaded, nor do they contextually change_ (they are not
+_complex_). Given this consistency, plugins make it very straight
+forward to manipluation these `symbolic-expressions` (you won't
+balancing parenthesis as much as you think).
+
+Look. I get it. You're used to the Ada-based syntax that JavaScript
+(and ES6) borrows from. Learning languages that have similar syntax
+are _easy_ (familiar). But it doesn't change the fact that this syntax
+is more _complex_ (has measurable, objective cognative overhead)
+than ClojureScript. If you haven't worked with a Lisp dialect,
+ClojureScript's syntax looks _hard_ (unfamiliar), which is completely
+fair. But, its sytax is also _simple_ (has less cognative overhead).
+
+In essense, _hard_ things can eventually become _easy_. But, _complex_
+things have a much much more difficult time in becoming _simple_. The
+3 hours worth of videos go into great detail about the simplicity of
+ClojureScript (you should watch them).
 
 ## Running The Game
 
