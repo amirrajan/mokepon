@@ -139,7 +139,7 @@ Dynamic, weakly typed.
 Static, weakly typed.
 
 ClojureScript is dynamic, strongly typed (specifically through the
-use of `protocols`). The whole static vs dynamic debate has been going
+use of `protocols`). The whole [static vs dynamic](http://www.craigstuntz.com/posts/2016-06-18-static-vs-dynamic-wrong-question.html) debate has been going
 on for a while, so I'll skip that and just give you example langauges that
 fall into each category.
 
