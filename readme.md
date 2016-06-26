@@ -140,12 +140,12 @@ Static, weakly typed.
 
 ClojureScript is dynamic, strongly typed (specifically through the
 use of `protocols`). The whole [static vs dynamic](http://www.craigstuntz.com/posts/2016-06-18-static-vs-dynamic-wrong-question.html) debate has been going
-on for a while, so I'll skip that and just give you example langauges that
+on for a while ([and only occasionally scientifically tested](https://vimeo.com/74354480)), so I'll skip that and just give you example langauges that
 fall into each category.
 
 - Functional, Static, Strong: Haskell, Elm, F#, PureScript, Fable, ScalaZ
 - Functional, Dynamic, Strong: ClojureScript, Clojure, Elixir
-- Functional, Dynamic, Weak: ES5
+- Functional, Dynamic, Weak: ES5, Perl
 - Functional, Static, Weak: lol iono
 - Class, Dynamic, Weak: ES6, CoffeeScript
 - Class, Dynamic, Strong: Ruby, Python
