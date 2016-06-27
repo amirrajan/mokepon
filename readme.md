@@ -116,7 +116,7 @@ class oriented language. Specifically:
 >difference that I'm desperately trying to convey in this overly
 >simple context is that by leveraging FP over OO (he really means
 >class oriented, not OO) one can provide not only a more dependable
->>abstraction but when combined with JavaScript's inherent flexibility
+>abstraction but when combined with JavaScript's inherent flexibility
 >as a language, we can achieve true referential transparency and
 >polymorphism.
 
