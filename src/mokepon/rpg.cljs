@@ -42,30 +42,37 @@
      :attack-occured? true}
     {:chosen chosen :battling battling :attack-occured? false}))
 
+(defn play-by-play-for [attacker target]
+  (if (is-dead? target)
+    (str (:name target) " has fallen. Mauled and bloody.")
+    (str (:name attacker) " attacks " (:name target) " for 10.")))
+
 (defn apply-player-attack [chosen battling play-by-play]
   (if (can-attack? chosen)
-    {:battling (attack chosen battling)
-     :chosen (merge chosen {:at 0})
-     :attack-occured? true}
+    (let [monster-after-attack (attack chosen battling)]
+      {:battling monster-after-attack
+       :chosen (merge chosen {:at 0})
+       :play-by-play
+       (conj play-by-play
+             (play-by-play-for
+              chosen
+              monster-after-attack))
+      :attack-occured? true})
     {:battling battling :attack-occured? false}))
 
 (defn tick-battle [chosen battling play-by-play]
   (let [chosen-ticked (tick-monster chosen)
         battling-ticked (tick-monster battling)
-        battle-result (apply-ai-attack chosen-ticked
-                                       battling-ticked)]
-    {:chosen (:chosen battle-result)
-     :battling (:battling battle-result)
+        battle-result (apply-ai-attack chosen-ticked battling-ticked)
+        chosen-after-battle (:chosen battle-result)
+        battling-after-battle (:battling battle-result)]
+    {:chosen chosen-after-battle
+     :battling battling-after-battle
      :play-by-play
-     (cond (is-dead? (:chosen battle-result))
+     (cond (:attack-occured? battle-result)
            (conj play-by-play
-                 (str (:name chosen)
-                      " has fallen. Mauled and bloody."))
-                 (:attack-occured? battle-result)
-           (conj play-by-play
-                 (str (:name battling)
-                      " attacks "
-                      (:name chosen)
-                      " for 10."))
+                 (play-by-play-for
+                  battling-after-battle
+                  chosen-after-battle))
            :else
            play-by-play)}))

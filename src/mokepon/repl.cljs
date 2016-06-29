@@ -1,9 +1,9 @@
 (ns mokepon.core)
 
-(defn repl-foo []
+(defn repl []
+  (go-find-trouble-in :forest)
+  (on-attack app-state)
   )
-
-(defn isn'tthiscool? [])
 
 (defn go-find-trouble-in [location]
   (reset! app-state mokepon.rpg/new-game)
