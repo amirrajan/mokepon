@@ -38,10 +38,10 @@
        :attack-occured? true}
       {:from from :to to :attack-occured? false}))
 
-(defn play-by-play-for [attacker target]
-  (if (is-dead? target)
-    (str (:name target) " has fallen. Mauled and bloody.")
-    (str (:name attacker) " attacks " (:name target) " for 10.")))
+(defn attack-description [from to]
+  (if (is-dead? to)
+    (str (:name to) " has fallen. Mauled and bloody.")
+    (str (:name from) " attacks " (:name to) " for 10.")))
 
 (defn apply-player-attack [chosen battling play-by-play]
   (let [{:keys [from to attack-occured?]}
@@ -50,7 +50,7 @@
        :chosen from
        :play-by-play
        (if attack-occured?
-         (conj play-by-play (play-by-play-for from to))
+         (conj play-by-play (attack-description from to))
          play-by-play)}))
 
 (defn tick-battle [chosen battling play-by-play]
@@ -62,5 +62,5 @@
      :battling from
      :play-by-play
      (if attack-occured?
-         (conj play-by-play (play-by-play-for from to))
+         (conj play-by-play (attack-description from to))
          play-by-play)}))
