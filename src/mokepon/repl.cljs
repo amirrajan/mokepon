@@ -8,4 +8,5 @@
 
 (defn repl []
   (go-find-trouble-in :forest)
-  (on-attack app-state))
+  (on-attack app-state)
+  )

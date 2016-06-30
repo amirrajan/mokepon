@@ -12,6 +12,12 @@
 
 (defonce app-state (atom new-game))
 
+(defn set-battle [state chosen battling]
+  (merge state {:chosen chosen :battling battling}))
+
+(defn clear-battle [state]
+  (swap! state merge {:chosen nil :battling nil}))
+
 (defn on-tick-battle-core [state]
   (swap! state
          merge
@@ -21,15 +27,16 @@
 
 (defn on-tick-battle [state]
   (if (not (battle-over? (:chosen @state) (:battling @state)))
-    (do
-      (on-tick-battle-core state)
-      (.setTimeout js/window #(on-tick-battle state) 250))))
+      (do
+        (on-tick-battle-core state)
+        (.setTimeout js/window #(on-tick-battle state) 250))))
+
 
 (defn on-take-chikapu [state]
   (swap! state update-in [:team] #(conj % chikapu)))
 
 (defn on-go-to-location [state]
-  (fn [loc] (swap! state update-in [:location] (fn [_] loc))))
+  (fn [loc] (swap! state merge {:location loc :battling nil :chosen nil})))
 
 (defn on-attack [state]
   (swap! state
@@ -39,8 +46,6 @@
           (:battling @state)
           (:play-by-play @state))))
 
-(defn set-battle [state chosen battling]
-  (merge state {:chosen chosen :battling battling}))
 
 (defn set-monsters [chosen battling]
   {:chosen chosen
@@ -67,6 +72,7 @@
              #(on-find-trouble app-state)
              (and (can-attack? (:chosen @app-state))
                   (not (battle-over? (:chosen @app-state) (:battling @app-state))))
+             (battle-over? (:chosen @app-state) (:battling @app-state))
              #(on-attack app-state))))
 
 (defn render! []

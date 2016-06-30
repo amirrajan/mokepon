@@ -56,14 +56,18 @@
    (progress-bar-view (/ (:at monster) full-active-turn))
    [:hr]])
 
-(defn battle-view [chosen chosen-can-attack? battling play-by-play active-turn-threshold attack-handler]
+(defn battle-view [chosen chosen-can-attack? battle-over? battling play-by-play active-turn-threshold attack-handler go-to-location-handler]
   [:div
    (battler-view battling active-turn-threshold)
    (battler-view chosen active-turn-threshold)
-   (if chosen-can-attack?
+   (cond
+     battle-over?
+     (section (a "Go Home." #(go-to-location-handler :home)))
+     chosen-can-attack?
      (section
       (a "Attack!" attack-handler)
       [:br])
+     :else
      (section
       (disabled-a "Attack!")
       [:br]))
@@ -74,10 +78,12 @@
                      find-trouble-handler
                      chosen
                      chosen-can-attack?
+                     battle-over?
                      battling
                      play-by-play
                      go-to-location-handler
-                     attack-handler]
+                     attack-handler
+                     go-to-location-handler]
   (if (nil? battling)
     [:div
      (section [:p location-description])
@@ -86,12 +92,13 @@
       (a "Go look for some trouble." find-trouble-handler)
       [:br]
       (a "Go home." #(go-to-location-handler :home)))]
-    (battle-view chosen chosen-can-attack? battling play-by-play 1800 attack-handler)))
+    (battle-view chosen chosen-can-attack? battle-over? battling play-by-play 1800 attack-handler go-to-location-handler)))
 
 (defn forest-view [team
                    find-trouble-handler
                    chosen
                    chosen-can-attack?
+                   battle-over?
                    battling
                    play-by-play
                    go-to-location-handler
@@ -102,15 +109,18 @@
    find-trouble-handler
    chosen
    chosen-can-attack?
+   battle-over?
    battling
    play-by-play
    go-to-location-handler
-   attack-handler))
+   attack-handler
+   go-to-location-handler))
 
 (defn canyon-view [team
                    find-trouble-handler
                    chosen
                    chosen-can-attack?
+                   battle-over?
                    battling
                    play-by-play
                    go-to-location-handler
@@ -121,10 +131,12 @@
    find-trouble-handler
    chosen
    chosen-can-attack?
+   battle-over?
    battling
    play-by-play
    go-to-location-handler
-   attack-handler))
+   attack-handler
+   go-to-location-handler))
 
 (defn home-view [location
                  team
@@ -148,6 +160,7 @@
                 go-to-location-handler
                 find-trouble-handler
                 chosen-can-attack?
+                battle-over?
                 attack-handler]
   (let [{:keys [location team team-at-home battling chosen play-by-play]} state]
     [:div
@@ -164,6 +177,7 @@
        (forest-view team
                     find-trouble-handler
                     chosen chosen-can-attack?
+                    battle-over?
                     battling
                     play-by-play
                     go-to-location-handler
@@ -174,6 +188,7 @@
                     find-trouble-handler
                     chosen
                     chosen-can-attack?
+                    battle-over?
                     battling
                     play-by-play
                     go-to-location-handler
