@@ -65,7 +65,8 @@
              #(on-take-chikapu app-state)
              (on-go-to-location app-state)
              #(on-find-trouble app-state)
-             can-attack?
+             (and (can-attack? (:chosen @app-state))
+                  (not (battle-over? (:chosen @app-state) (:battling @app-state))))
              #(on-attack app-state))))
 
 (defn render! []

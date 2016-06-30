@@ -147,10 +147,9 @@
                 take-chikapu-handler
                 go-to-location-handler
                 find-trouble-handler
-                can-attack?
+                chosen-can-attack?
                 attack-handler]
-  (let [{:keys [location team team-at-home battling chosen play-by-play]} state
-        chosen-can-attack? (can-attack? chosen)]
+  (let [{:keys [location team team-at-home battling chosen play-by-play]} state]
     [:div
      (title-view)
      (cond
