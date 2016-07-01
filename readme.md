@@ -322,6 +322,8 @@ function sayHello(name, otherName) {
 }
 ```
 
+Aside: Notice all the token and block delimiters?
+
 ```clojure
 (defn say-hello [name other-name]
   (str name " says hello to " other-name))
