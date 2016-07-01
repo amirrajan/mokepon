@@ -461,7 +461,7 @@ convert from a ClojureScript data structure to a JavaScript data
 structure. You wont be doing this often, but it's good to know.
 
 
-## ES2015 Classes + JSX vs Namespaced Functions + Sablono
+## ES2015 Classes + JSX vs Clojure Functions + Sablono
 
 ```javascript
 import { Component } from 'react';
