@@ -15,3 +15,6 @@
 
 
 (chosen-monster)
+
+
+(empty? [])

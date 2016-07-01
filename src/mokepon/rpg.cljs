@@ -41,7 +41,7 @@
 
 (defn attack-description [from to]
   (if (is-dead? to)
-    (str (:name to) " has fallen. Mauled and bloody.")
+    (str (:name to) " has fallen. Mauled and bloodied.")
     (str (:name from) " attacks " (:name to) " for 10.")))
 
 (defn apply-player-attack [chosen battling play-by-play]

@@ -72,10 +72,12 @@
 
 (defn on-find-trouble []
   (cond
+    (empty? (:team @app-state)) false
+
     (= (:location @app-state) :forest)
-    (do
+    ((do
       (on-set-battle :chikapu sulbabaur)
-      (on-tick-battle))
+      (on-tick-battle)))
 
     (= (:location @app-state) :canyon)
     (do

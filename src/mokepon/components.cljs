@@ -30,7 +30,7 @@
 (defn adventures-view [location team go-to-location-handler]
   [:div
    (section
-    [:p "Your mother's home stands in the distance. Smoke bellows from the chimeny."]
+    [:p "Your mother's home stands in the distance. Smoke bellows from the chimney."]
     (a "Go home." #(go-to-location-handler :home)))
    (section
     [:p "There is a rock face jutting out. It looks freaking scary."]
@@ -66,7 +66,10 @@
    (battler-view chosen active-turn-threshold)
    (cond
      battle-over?
-     (section (a "Head back." #(go-to-location-handler :outside)))
+     (section
+      (disabled-a "Attack!")
+      [:br]
+      (a "Head back." #(go-to-location-handler :outside)))
      chosen-can-attack?
      (section
       (a "Attack!" attack-handler)
@@ -93,7 +96,9 @@
      (section [:p location-description])
      (team-view team "Your posse:")
      (section
-      (a "Go look for some trouble." find-trouble-handler)
+      (if (empty? team)
+        (disabled-a "Go look for some trouble.")
+        (a "Go look for some trouble." find-trouble-handler))
       [:br]
       (a "Head back." #(go-to-location-handler :outside)))]
     (battle-view chosen chosen-can-attack? battle-over? battling play-by-play 1800 attack-handler go-to-location-handler)))
