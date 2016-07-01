@@ -21,7 +21,7 @@ hacking on this super awesome game probably isn't for you.
 >I don't have time to watch 3 hours of videos. Give me the short
 >version.
 
-It comes down to a few questions really.
+Fine, it comes down to a few questions really.
 
 ### First Question
 
