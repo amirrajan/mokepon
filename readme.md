@@ -6,7 +6,7 @@ An RPG about catching monsters IRL. Written in React and ClojureScript.
 
 ## A Moment of Shock
 
->Gasp! You're using a lisp dialect?! Are you insane??? Do you see all
+>Gasp! You're using a lisp dialect?! Are you insane??? Do you not see all
 >those parenthesis?!
 
 Watch this video: [Simple Made Easy](https://www.infoq.com/presentations/Simple-Made-Easy)
@@ -18,7 +18,7 @@ And this one: [Design, Composition, and Performance](https://www.infoq.com/prese
 If the ideas presented in these videos don't jibe with you, then
 hacking on this super awesome game probably isn't for you.
 
->I don't have time to watch 3 hours of videos. Give me the short
+>I don't have time to watch three hours of videos. Give me the short
 >version.
 
 Fine, it comes down to a few questions really.
@@ -29,7 +29,7 @@ How do you perceive JavaScript? A language that is `function`
 oriented or `class` oriented (you'll notice that I didn't say object
 oriented)?
 
-The current JavaScript landscape splits JavaScript into two
+The current JavaScript landscape splits it into two
 philosophies.
 
 >JavaScript is a terrible class oriented language that needs to be improved.
@@ -98,7 +98,7 @@ sayHello(person);
 So. Given this, if you answered with an unwavering "JavaScript should
 be `class` oriented," then working in ClojureScript probably isn't for
 you. But, you should really read up on the benefits of functional
-programming (and in this case, take some time to watch the 3 hours
+programming (and in this case, take some time to watch the three hours
 worth of video). If you're _still_ hesitant on spending three hours
 of your life watching videos, this
 [blog entry](http://leongersing.tumblr.com/post/11561298378/my-perception-of-coffeescript)
@@ -133,10 +133,10 @@ and also:
 
 How do you perceive languages in general? Do you prefer:
 
-Static, strongly typed.
-Dynamic, strongly typed.
-Dynamic, weakly typed.
-Static, weakly typed.
+- Static, strongly typed?
+- Dynamic, strongly typed?
+- Dynamic, weakly typed?
+- Static, weakly typed?
 
 ClojureScript is dynamic, strongly typed (specifically through the
 use of `protocols`). The whole [static vs dynamic](http://www.craigstuntz.com/posts/2016-06-18-static-vs-dynamic-wrong-question.html) debate has been going
@@ -152,20 +152,19 @@ fall into each category.
 - Class, Static, Strong: C#, Java, TypeScript, Scala
 - Class, Static, Weak: C
 
-There are many other expamples (even the list above has languages that
-are multiparadigm). But I hope that gives some clarity to language
+There are many other examples (even the list above has languages that
+are multiparadigm), but I hope that gives some clarity to language
 preference. Made your decision/observations? Great!
 
 ### Bottomline
 
-You've watched the videos, read that blog entry by Leon, and have
+You've watched the videos, read that blog entry by Leon, and have had
 heated debates about static vs dynamic on assorted public forums. After all
 of that, if you still feel that JavaScript is philosophically class
 oriented (and infact should become a static, class oriented langauge),
 then writing ClojureScript is definitely not for you.
 
-Additionally,
-[React's](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
+Aside: [React's](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
 approach to client side view generation is consistent with functional
 programming languages:
 
@@ -184,7 +183,7 @@ of React went so far as to
 a suite of immutable data structures for JavaScript). Now, you may be
 thinking:
 
->Hey in that case, we can just use ES6 plus ImmutableJS and everything
+>Hey! In that case, we can just use ES6 plus ImmutableJS and everything
 >will be awesome because I don't have to deal with parenthesis!!!
 
 Look, attempting to add immutablility to ES6 is shoving a square peg in a
@@ -211,7 +210,7 @@ Take this JavaScript function:
 10  }
 ```
 
-- Line `1` has the token `(`, and `,`. This line also has `{`, a block delmiter.
+- Line `1` has the token delimiter `(`, and `,`. This line also has `{`, a block delmiter.
 
 - Line `3` has a block delimter of `<` (which is overloaded with `<`,
   a token delimeter when it's in between two numbers `1 < 2`).
@@ -256,7 +255,7 @@ fair. But, its syntax is also _simple_ (has less cognative overhead).
 
 In essense, _hard_ things can eventually become _easy_. But, _complex_
 things have a much much more difficult time in becoming _simple_. The
-3 hours worth of videos go into great detail about the simplicity of
+three hours worth of videos go into great detail about the simplicity of
 ClojureScript (you should watch them if you still haven't).
 
 ## Running The Game
@@ -647,8 +646,8 @@ functions are covered in the next section.
 
 ## You Don't Need Lodash When Using ClojureScript
 
-Let's go through some Lodash functions and see how those look on
-ClojureScript:
+Let's go through some ClojureScript functions and see how they
+replace what's in Lodash:
 
 ### `map`
 
@@ -659,5 +658,21 @@ todo
 todo
 
 ### `conj`
+
+todo
+
+### `update-in`
+
+todo
+
+### `assoc`
+
+todo
+
+### `dissoc`
+
+todo
+
+### `cond`
 
 todo
