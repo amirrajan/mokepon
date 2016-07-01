@@ -41,7 +41,7 @@ and
 For those that want JavaScript to be a `class` oriented language, they want:
 
 ```
-fuction Person(firstName, lastName) {
+function Person(firstName, lastName) {
   this.firstName = firstName;
   this.lastName = lastName;
   this.sayHello = function() {
@@ -82,7 +82,7 @@ var person = { firstName: 'John', lastName: 'Doe' };
 sayHello(person);
 ```
 
-But with some guarantees about the mutabilty of objects:
+But with some guarantees about the mutability of objects:
 
 ```
 function sayHello(person) {
@@ -140,7 +140,7 @@ How do you perceive languages in general? Do you prefer:
 
 ClojureScript is dynamic, strongly typed (specifically through the
 use of `protocols`). The whole [static vs dynamic](http://www.craigstuntz.com/posts/2016-06-18-static-vs-dynamic-wrong-question.html) debate has been going
-on for a while ([and only occasionally scientifically tested](https://vimeo.com/74354480)), so I'll skip that and just give you example langauges that
+on for a while ([and only occasionally scientifically tested](https://vimeo.com/74354480)), so I'll skip that and just give you example languages that
 fall into each category.
 
 - Functional, Static, Strong: Haskell, Elm, F#, PureScript, Fable, ScalaZ
@@ -156,12 +156,12 @@ There are many other examples (even the list above has languages that
 are multiparadigm), but I hope that gives some clarity to language
 preference. Made your decision/observations? Great!
 
-### Bottomline
+### Bottom Line
 
 You've watched the videos, read that blog entry by Leon, and have had
 heated debates about static vs dynamic on assorted public forums. After all
 of that, if you still feel that JavaScript is philosophically class
-oriented (and infact should become a static, class oriented langauge),
+oriented (and in fact should become a static, class oriented language),
 then writing ClojureScript is definitely not for you.
 
 Aside: [React's](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
@@ -177,7 +177,7 @@ programming languages:
 >new one, and generate a minimal set of changes to be applied to the
 >DOM.
 
-In essense, _the view is a function of the data_ (in fact, the creators
+In essence, _the view is a function of the data_ (in fact, the creators
 of React went so far as to
 [create](https://facebook.github.io/immutable-js/)
 a suite of immutable data structures for JavaScript). Now, you may be
@@ -193,7 +193,7 @@ round hole.
 
 ClojureScript syntax is _simple_ (which is not the same thing as
 _easy_). Here is an explanation of `token` and `block`
-delimeters.
+delimiters.
 
 Take this JavaScript function:
 
@@ -210,23 +210,23 @@ Take this JavaScript function:
 10  }
 ```
 
-- Line `1` has the token delimiter `(`, and `,`. This line also has `{`, a block delmiter.
+- Line `1` has the token delimiter `(`, and `,`. This line also has `{`, a block delimiter.
 
-- Line `3` has a block delimter of `<` (which is overloaded with `<`,
-  a token delimeter when it's in between two numbers `1 < 2`).
+- Line `3` has a block delimiter of `<` (which is overloaded with `<`,
+  a token delimiter when it's in between two numbers `1 < 2`).
 
-- Line `4` has a few token delimeters: `.`, and `=`. There are
+- Line `4` has a few token delimiters: `.`, and `=`. There are
   also block delimiters: `{`. The `-` is ignored because of the
-  `<` delimter on line `3` (which shouldn't be confused with the `<`
-  token delimeter when it's between two numbers).
+  `<` delimiter on line `3` (which shouldn't be confused with the `<`
+  token delimiter when it's between two numbers).
 
-- Line `6` has token delimiters `:`, and block delimeters `{`,
+- Line `6` has token delimiters `:`, and block delimiters `{`,
   `>`. The token `backgroundColor` cannot be called `background-color`
-  becuase it's no longer within in `<` block delimiter.
+  because it's no longer within in `<` block delimiter.
 
 - Line `8` has another block delimiter `</>`.
 
-- Line `9` has block delimeter `;`.
+- Line `9` has block delimiter `;`.
 
 In ClojureScript:
 
@@ -239,21 +239,21 @@ In ClojureScript:
    "Hello World"])
 ```
 
-The token and block delimeter counts are about the same, but _they
+The token and block delimiter counts are about the same, but _they
 are not overloaded, nor do they contextually change_ (ie. not
 _complex_). Given this consistency, plugins make it very straight
-forward to manipluation these `symbolic-expressions` (you won't be
+forward to manipulation these `symbolic-expressions` (you won't be
 balancing parenthesis as much as you think).
 
 Look. I get it. You're used to the Ada-based syntax that JavaScript
 (and ES6) borrows from. Learning languages that have similar syntax
 are _easy_ (familiar). But it doesn't change the fact that this syntax
-is more _complex_ (has measurable, objective cognative overhead)
+is more _complex_ (has measurable, objective cognitive overhead)
 than ClojureScript. If you haven't worked with a Lisp dialect,
 ClojureScript's syntax looks _hard_ (unfamiliar), which is completely
-fair. But, its syntax is also _simple_ (has less cognative overhead).
+fair. But, its syntax is also _simple_ (has less cognitive overhead).
 
-In essense, _hard_ things can eventually become _easy_. But, _complex_
+In essence, _hard_ things can eventually become _easy_. But, _complex_
 things have a much much more difficult time in becoming _simple_. The
 three hours worth of videos go into great detail about the simplicity of
 ClojureScript (you should watch them if you still haven't).
@@ -546,7 +546,7 @@ Instead of using a React component's `props` attribute (and
          :battling nil}))
 ```
 
-Aside: Using `def` is similar to using `var`/`let` in JavaScript. Infact, defining a
+Aside: Using `def` is similar to using `var`/`let` in JavaScript. In fact, defining a
 function `(defn say-hello [param] )` is shorthand for `(def say-hello (fn [params] ))`.
 
 In JavaScript + React, when you what a control hierarchy to render, you would
@@ -624,7 +624,7 @@ the current value using `@`).
          :last-name "Doe"})}
 ```
 
-To update `app-state` atomcially, we use `swap!`, giving it the `atom`
+To update `app-state` atomically, we use `swap!`, giving it the `atom`
 as the first parameter, what function we want to run on the `atom` (in
 this case it's `merge`), and what value we want to merge in. Putting
 all that together we get:
