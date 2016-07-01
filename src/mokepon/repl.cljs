@@ -7,6 +7,6 @@
   (on-find-trouble app-state))
 
 (defn repl []
-  (go-find-trouble-in :forest)
+  (go-find-trouble-in :home)
   (on-attack app-state)
   )

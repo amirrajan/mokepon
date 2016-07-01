@@ -2,8 +2,8 @@
 
 (def new-game
   {:team-at-home []
-   :team []
-   :location :home
+   :team {}
+   :location :outside
    :chosen nil
    :battling nil
    :play-by-play []})

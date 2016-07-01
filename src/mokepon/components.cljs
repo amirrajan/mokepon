@@ -15,7 +15,9 @@
   (if (not= (count team) 0)
     (section
      [:div header]
-     [:ul (for [x team] [:li {:key (:name x)} (:name x)])])))
+     [:ul (for [[k v] team]
+            [:li {:key (:name v)}
+             (str (:name v) " (hp: " (:hp v) "/" (:max-hp v) ")")])])))
 
 (defn ask-mommy-view [team team-at-home take-chikapu-handler]
   (if (and (empty? team) (empty? team-at-home))
@@ -26,14 +28,16 @@
      (a "Take Chikapu." take-chikapu-handler))))
 
 (defn adventures-view [location team go-to-location-handler]
-  (if (not (empty? team))
-    [:div
-     (section
-      [:p "There is a rock face jutting out. It looks freaking scary."]
-      (a "Go be awesome in the canyon." #(go-to-location-handler :canyon)))
-     (section
-      [:p "There is a line of trees off in the distance."]
-      (a "Go be awesome in the forest." #(go-to-location-handler :forest)))]))
+  [:div
+   (section
+    [:p "Your mother's home stands in the distance. Smoke bellows from the chimeny."]
+    (a "Go home." #(go-to-location-handler :home)))
+   (section
+    [:p "There is a rock face jutting out. It looks freaking scary."]
+    (a "Go be awesome in the canyon." #(go-to-location-handler :canyon)))
+   (section
+    [:p "There is a line of trees off in the distance."]
+    (a "Go be awesome in the forest." #(go-to-location-handler :forest)))])
 
 (defn progress-bar-view [percentage]
   [:div
@@ -62,7 +66,7 @@
    (battler-view chosen active-turn-threshold)
    (cond
      battle-over?
-     (section (a "Go Home." #(go-to-location-handler :home)))
+     (section (a "Head back." #(go-to-location-handler :outside)))
      chosen-can-attack?
      (section
       (a "Attack!" attack-handler)
@@ -91,7 +95,7 @@
      (section
       (a "Go look for some trouble." find-trouble-handler)
       [:br]
-      (a "Go home." #(go-to-location-handler :home)))]
+      (a "Head back." #(go-to-location-handler :outside)))]
     (battle-view chosen chosen-can-attack? battle-over? battling play-by-play 1800 attack-handler go-to-location-handler)))
 
 (defn forest-view [team
@@ -138,15 +142,20 @@
    attack-handler
    go-to-location-handler))
 
-(defn home-view [location
-                 team
-                 team-at-home
-                 take-chikapu-handler
-                 go-to-location-handler]
+(defn home-view [team team-at-home take-chikapu-handler go-to-location-handler]
   [:div
-   (section [:p "You are currently being worthless at your mother's home."])
+   (section [:p "You are being worthless at home."])
    (ask-mommy-view team team-at-home take-chikapu-handler)
    (team-view team-at-home "Chillin' at the crib:")
+   (team-view team "Your posse:")
+   (section
+    (a "Head back." #(go-to-location-handler :outside)))])
+
+(defn outside-view [location
+                    team
+                    go-to-location-handler]
+  [:div
+   (section [:p "You are being worthless outside."])
    (team-view team "Your posse:")
    (adventures-view location team go-to-location-handler)])
 
@@ -166,12 +175,10 @@
     [:div
      (title-view)
      (cond
-       (= location :home)
-       (home-view location
-                  team
-                  team-at-home
-                  take-chikapu-handler
-                  go-to-location-handler)
+       (= location :outside)
+       (outside-view location
+                     team
+                     go-to-location-handler)
 
        (= location :forest)
        (forest-view team
@@ -194,5 +201,8 @@
                     go-to-location-handler
                     attack-handler)
 
+       (= location :home)
+       (home-view team team-at-home take-chikapu-handler go-to-location-handler)
+
        :else
-       [:div (str "Location " location "not handled.")])]))
+       [:div (str "Location " location " not handled.")])]))

@@ -33,7 +33,7 @@
 
 
 (defn on-take-chikapu [state]
-  (swap! state update-in [:team] #(conj % chikapu)))
+  (swap! state merge {:team (merge (:team @state) {:chikapu chikapu})}))
 
 (defn on-go-to-location [state]
   (fn [loc] (swap! state merge {:location loc :battling nil :chosen nil})))
