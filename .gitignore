@@ -5,3 +5,4 @@ target/
 /npm-debug.log
 /.nrepl-port
 /.lein-repl-history
+.DS_Store
