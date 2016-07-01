@@ -4,7 +4,7 @@
   {:team-at-home []
    :team {}
    :location :outside
-   :chosen nil
+   :chosen-key nil
    :battling nil
    :play-by-play []})
 
@@ -21,10 +21,11 @@
   (if (>= at active-turn-threshold) 1
       (/ at active-turn-threshold)))
 
-(defn can-attack? [monster]
-  (>= (:at monster) active-turn-threshold))
-
 (defn is-dead? [monster] (<= (:hp monster) 0))
+
+(defn can-attack? [monster]
+  (and (not (is-dead? monster))
+       (>= (:at monster) active-turn-threshold)))
 
 (defn tick-monster [monster]
   (if (not (can-attack? monster))

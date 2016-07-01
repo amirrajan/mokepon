@@ -168,10 +168,11 @@
                 take-chikapu-handler
                 go-to-location-handler
                 find-trouble-handler
+                chosen
                 chosen-can-attack?
                 battle-over?
                 attack-handler]
-  (let [{:keys [location team team-at-home battling chosen play-by-play]} state]
+  (let [{:keys [location team team-at-home battling play-by-play]} state]
     [:div
      (title-view)
      (cond
@@ -183,7 +184,8 @@
        (= location :forest)
        (forest-view team
                     find-trouble-handler
-                    chosen chosen-can-attack?
+                    chosen
+                    chosen-can-attack?
                     battle-over?
                     battling
                     play-by-play
