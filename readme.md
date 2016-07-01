@@ -2,7 +2,7 @@
 
 Catching 'em all just got real, yo.
 
-A RPG about catching monsters written in React and ClojureScript.
+An RPG about catching monsters IRL. Written in React and ClojureScript.
 
 ## A Moment of Shock
 
