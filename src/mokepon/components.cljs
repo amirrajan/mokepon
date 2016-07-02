@@ -68,16 +68,13 @@
      battle-over?
      (section
       (disabled-a "Attack!")
-      [:br]
       (a "Head back." #(go-to-location-handler :outside)))
      chosen-can-attack?
      (section
-      (a "Attack!" attack-handler)
-      [:br])
+      (a "Attack!" attack-handler))
      :else
      (section
-      (disabled-a "Attack!")
-      [:br]))
+      (disabled-a "Attack!")))
    (section (for [i play-by-play] [:div i]))])
 
 (defn location-view [location-description
@@ -99,7 +96,6 @@
       (if (empty? team)
         (disabled-a "Go look for some trouble.")
         (a "Go look for some trouble." find-trouble-handler))
-      [:br]
       (a "Head back." #(go-to-location-handler :outside)))]
     (battle-view chosen chosen-can-attack? battle-over? battling play-by-play 1800 attack-handler go-to-location-handler)))
 
@@ -147,13 +143,18 @@
    attack-handler
    go-to-location-handler))
 
-(defn home-view [team team-at-home take-chikapu-handler go-to-location-handler]
+(defn home-view [team
+                 team-at-home
+                 take-chikapu-handler
+                 go-to-location-handler
+                 sleep-at-home-handler]
   [:div
    (section [:p "You are being worthless at home."])
    (ask-mommy-view team team-at-home take-chikapu-handler)
    (team-view team-at-home "Chillin' at the crib:")
    (team-view team "Your posse:")
    (section
+    (a "Sleep, cause you're a lazy worthless millenial." sleep-at-home-handler)
     (a "Head back." #(go-to-location-handler :outside)))])
 
 (defn outside-view [location
@@ -176,7 +177,8 @@
                 chosen
                 chosen-can-attack?
                 battle-over?
-                attack-handler]
+                attack-handler
+                sleep-at-home-handler]
   (let [{:keys [location team team-at-home battling play-by-play]} state]
     [:div
      (title-view)
@@ -209,7 +211,11 @@
                     attack-handler)
 
        (= location :home)
-       (home-view team team-at-home take-chikapu-handler go-to-location-handler)
+       (home-view team
+                  team-at-home
+                  take-chikapu-handler
+                  go-to-location-handler
+                  sleep-at-home-handler)
 
        :else
        [:div (str "Location " location " not handled.")])]))

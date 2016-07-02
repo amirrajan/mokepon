@@ -25,7 +25,7 @@
 
 
 (deftest being-killed
-  "being killed by enemy monster removes chosen mokepon form the team."
+  "being killed by enemy monster removes chosen mokepon form the team"
   (reset-game)
   (core/on-set-battle :chikapu mon/sulbabaur)
   (swap! core/app-state update-in
@@ -33,6 +33,13 @@
          (fn [_] 0))
   (core/remove-dead-team-members)
   (is (= (core/team-count) 0)))
+
+(deftest healing-team
+  "anyone with low hp is healed to max"
+  (is (= (rpg/heal-team {:chikapu {:hp 10 :max-hp 50}
+                         :deogude {:hp 5  :max-hp 100}})
+         {:chikapu {:hp 50   :max-hp 50}
+          :deogude {:hp 100  :max-hp 100}})))
 
 (enable-console-print!)
 

@@ -6,7 +6,8 @@
                                  battle-over?
                                  tick-battle
                                  apply-player-attack
-                                 can-attack?]]
+                                 can-attack?
+                                 heal-team]]
             [mokepon.components :refer [rpg-view]]))
 
 (defn alert [message] #(.alert js/window message))
@@ -28,6 +29,9 @@
 
 (defn update-in-team [monster-key new-value]
   (merge (:team @app-state) {monster-key new-value}))
+
+(defn on-sleep-at-home []
+  (swap! app-state update-in [:team] #(heal-team %)))
 
 (defn on-tick-battle-core []
   (let [{:keys [battling chosen play-by-play]}
@@ -107,7 +111,8 @@
              (and (can-attack? (chosen-monster))
                   (not (battle-over? (chosen-monster) (:battling @app-state))))
              (battle-over? (chosen-monster) (:battling @app-state))
-             #(on-attack))))
+             #(on-attack)
+             on-sleep-at-home)))
 
 (defn render! []
   (.render js/React

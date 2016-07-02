@@ -6,3 +6,4 @@ target/
 /.nrepl-port
 /.lein-repl-history
 .DS_Store
+*.#*

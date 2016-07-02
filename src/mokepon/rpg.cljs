@@ -65,3 +65,9 @@
      (if attack-occured?
          (conj play-by-play (attack-description from to))
          play-by-play)}))
+
+(defn heal-monster [monster]
+  (merge monster {:hp (:max-hp monster)}))
+
+(defn heal-team [team]
+  (into {} (map (fn [[key value]] [key (heal-monster value)]) team)))
