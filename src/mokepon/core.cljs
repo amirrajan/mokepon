@@ -1,6 +1,7 @@
 (ns mokepon.core
   (:require [sablono.core :as sab]
             [mokepon.monsters :refer [chikapu sulbabaur deogude]]
+            [alandipert.storage-atom :refer [local-storage]]
             [mokepon.rpg :refer [new-game
                                  is-dead?
                                  battle-over?
@@ -13,7 +14,9 @@
 
 (defn alert [message] #(.alert js/window message))
 
-(defonce app-state (atom new-game))
+(reset! alandipert.storage-atom/storage-delay 1000)
+
+(defonce app-state (local-storage (atom new-game) :game))
 
 (defn team-count []
   (count (keys (:team @app-state))))
