@@ -27,17 +27,33 @@
      [:p "\"Make something of yourself, you worthless millenial!\" she says to you."]
      (a "Take Chikapu." take-chikapu-handler))))
 
+(defn adventure-view [description action-text key go-to-location-handler]
+  (section
+   [:p description]
+   (a action-text #(go-to-location-handler key))))
+
 (defn adventures-view [location team go-to-location-handler]
   [:div
-   (section
-    [:p "Your mother's home stands in the distance. Smoke bellows from the chimney."]
-    (a "Go home." #(go-to-location-handler :home)))
-   (section
-    [:p "There is a rock face jutting out. It looks freaking scary."]
-    (a "Go be awesome in the canyon." #(go-to-location-handler :canyon)))
-   (section
-    [:p "There is a line of trees off in the distance."]
-    (a "Go be awesome in the forest." #(go-to-location-handler :forest)))])
+   (adventure-view
+    "Your mother's home stands in the distance. Smoke bellows from the chimney."
+    "Go home."
+    :home
+    go-to-location-handler)
+   (adventure-view
+    "There is a rock face jutting out. It looks freaking scary."
+    "Go be awesome in the canyon."
+    :canyon
+    go-to-location-handler)
+   (adventure-view
+    "There is a line of trees off in the distance."
+    "Go be awesome in the forest."
+    :forest
+    go-to-location-handler)
+   (adventure-view
+    "There is a Mokepon store. Looks kinda shady."
+    "Go shop."
+    :store
+    go-to-location-handler)])
 
 (defn progress-bar-view [percentage]
   [:div
@@ -52,15 +68,20 @@
              :height "100%"}}]])
 
 (defn battler-view [monster full-active-turn]
-  [:div
+  (section
    [:h2 (str (:name monster) " (hp: " (:hp monster) ")" )]
    [:hr]
    [:p (:battle-text monster)]
    [:hr]
-   (progress-bar-view (/ (:at monster) full-active-turn))
-   [:hr]])
+   (progress-bar-view (/ (:at monster) full-active-turn))))
 
-(defn battle-view [chosen chosen-can-attack? battle-over? battling play-by-play active-turn-threshold attack-handler go-to-location-handler]
+(defn battle-view [chosen
+                   chosen-can-attack?
+                   battle-over?
+                   battling play-by-play
+                   active-turn-threshold
+                   attack-handler
+                   go-to-location-handler]
   [:div
    (battler-view battling active-turn-threshold)
    (battler-view chosen active-turn-threshold)
@@ -69,12 +90,12 @@
      (section
       (disabled-a "Attack!")
       (a "Head back." #(go-to-location-handler :outside)))
+
      chosen-can-attack?
-     (section
-      (a "Attack!" attack-handler))
+     (section (a "Attack!" attack-handler))
+
      :else
-     (section
-      (disabled-a "Attack!")))
+     (section (disabled-a "Attack!")))
    (section (for [i play-by-play] [:div i]))])
 
 (defn location-view [location-description
@@ -87,7 +108,8 @@
                      play-by-play
                      go-to-location-handler
                      attack-handler
-                     go-to-location-handler]
+                     go-to-location-handler
+                     active-turn-threshold]
   (if (nil? battling)
     [:div
      (section [:p location-description])
@@ -97,7 +119,14 @@
         (disabled-a "Go look for some trouble.")
         (a "Go look for some trouble." find-trouble-handler))
       (a "Head back." #(go-to-location-handler :outside)))]
-    (battle-view chosen chosen-can-attack? battle-over? battling play-by-play 1800 attack-handler go-to-location-handler)))
+    (battle-view chosen
+                 chosen-can-attack?
+                 battle-over?
+                 battling
+                 play-by-play
+                 active-turn-threshold
+                 attack-handler
+                 go-to-location-handler)))
 
 (defn forest-view [team
                    find-trouble-handler
@@ -107,7 +136,8 @@
                    battling
                    play-by-play
                    go-to-location-handler
-                   attack-handler]
+                   attack-handler
+                   active-turn-threshold]
   (location-view
    "You are currently chillin' like a villian in the forest."
    team
@@ -119,7 +149,8 @@
    play-by-play
    go-to-location-handler
    attack-handler
-   go-to-location-handler))
+   go-to-location-handler
+   active-turn-threshold))
 
 (defn canyon-view [team
                    find-trouble-handler
@@ -129,7 +160,8 @@
                    battling
                    play-by-play
                    go-to-location-handler
-                   attack-handler]
+                   attack-handler
+                   active-turn-threshold]
   (location-view
    "You are currently chillin' like a villian in the canyon."
    team
@@ -141,7 +173,8 @@
    play-by-play
    go-to-location-handler
    attack-handler
-   go-to-location-handler))
+   go-to-location-handler
+   active-turn-threshold))
 
 (defn home-view [team
                  team-at-home
@@ -154,7 +187,7 @@
    (team-view team-at-home "Chillin' at the crib:")
    (team-view team "Your posse:")
    (section
-    (a "Sleep, cause you're a lazy worthless millenial." sleep-at-home-handler)
+    (a "Sleep. Cause you're a lazy worthless millenial." sleep-at-home-handler)
     (a "Head back." #(go-to-location-handler :outside)))])
 
 (defn outside-view [location
@@ -168,7 +201,7 @@
 (defn title-view []
   (section
    [:h1 {:style {:line-height "0"}} "Moképon"]
-   [:h2 {:style {:line-height "0.8" :margin "0"}}"Catching 'em all just got real, yo"]))
+   [:h2 {:style {:line-height "0.8" :margin "0"}} "Catching 'em all just got real, yo"]))
 
 (defn rpg-view [state
                 take-chikapu-handler
@@ -178,8 +211,13 @@
                 chosen-can-attack?
                 battle-over?
                 attack-handler
-                sleep-at-home-handler]
-  (let [{:keys [location team team-at-home battling play-by-play]} state]
+                sleep-at-home-handler
+                active-turn-threshold]
+  (let [{:keys [location
+                team
+                team-at-home
+                battling
+                play-by-play]} state]
     [:div
      (title-view)
      (cond
@@ -197,7 +235,8 @@
                     battling
                     play-by-play
                     go-to-location-handler
-                    attack-handler)
+                    attack-handler
+                    active-turn-threshold)
 
        (= location :canyon)
        (canyon-view team
@@ -208,7 +247,8 @@
                     battling
                     play-by-play
                     go-to-location-handler
-                    attack-handler)
+                    attack-handler
+                    active-turn-threshold)
 
        (= location :home)
        (home-view team

@@ -7,7 +7,8 @@
                                  tick-battle
                                  apply-player-attack
                                  can-attack?
-                                 heal-team]]
+                                 heal-team
+                                 active-turn-threshold]]
             [mokepon.components :refer [rpg-view]]))
 
 (defn alert [message] #(.alert js/window message))
@@ -112,7 +113,8 @@
                   (not (battle-over? (chosen-monster) (:battling @app-state))))
              (battle-over? (chosen-monster) (:battling @app-state))
              #(on-attack)
-             on-sleep-at-home)))
+             on-sleep-at-home
+             active-turn-threshold)))
 
 (defn render! []
   (.render js/React
