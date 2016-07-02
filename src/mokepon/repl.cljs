@@ -8,7 +8,9 @@
 
 (defn repl []
   (go-find-trouble-in :forest)
-  (on-attack))
+  (on-attack)
+  (on-sleep-at-home)
+  )
 
 (mokepon.rpg/can-attack? (chosen-monster))
 (mokepon.rpg/battle-over? (chosen-monster) (:battling @app-state))

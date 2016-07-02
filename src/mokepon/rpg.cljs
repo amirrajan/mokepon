@@ -70,4 +70,5 @@
   (merge monster {:hp (:max-hp monster)}))
 
 (defn heal-team [team]
-  (into {} (map (fn [[key value]] [key (heal-monster value)]) team)))
+  (into {}
+        (map (fn [[key value]] [key (heal-monster value)]) team)))
