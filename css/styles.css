@@ -15,7 +15,17 @@ body {
 a {
   text-decoration: none;
   display: block;
-  padding: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#title {
+  line-height: 0
+}
+
+#tag-line {
+  line-height: 0.8;
+  margin: 0
 }
 
 hr {

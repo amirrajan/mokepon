@@ -50,7 +50,7 @@
     :forest
     go-to-location-handler)
    (adventure-view
-    "There is a Mokepon store. Looks kinda shady."
+    "There is a Moképon store with a half working neon sign flashing. Looks kinda shady."
     "Go shop."
     :store
     go-to-location-handler)])
@@ -200,8 +200,8 @@
 
 (defn title-view []
   (section
-   [:h1 {:style {:line-height "0"}} "Moképon"]
-   [:h2 {:style {:line-height "0.8" :margin "0"}} "Catching 'em all just got real, yo"]))
+   [:h1 {:id "title"} "Moképon"]
+   [:h2 {:id "tag-line"} "Catching 'em all just got real, yo"]))
 
 (defn rpg-view [state
                 take-chikapu-handler
@@ -258,4 +258,5 @@
                   sleep-at-home-handler)
 
        :else
-       [:div (str "Location " location " not handled.")])]))
+       (section (str "Location " location " not handled.")
+        (a "Go back." #(go-to-location-handler :outside))))]))
