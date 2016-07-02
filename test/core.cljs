@@ -4,10 +4,17 @@
             [mokepon.rpg :as rpg]
             [mokepon.core :as core]))
 
-(defn make-attack-ready-for [monster-key]
-  (swap! core/app-state update-in [monster-key] #(merge % {:at rpg/active-turn-threshold})))
+(defn make-enemy-attack-ready []
+  (swap! core/app-state
+         update-in [:battling]
+         #(merge % {:at rpg/active-turn-threshold})))
 
-(deftest attacking-monster
+(defn reset-game []
+  (reset! core/app-state rpg/new-game)
+  (core/on-take-chikapu))
+
+(deftest being-attacked
+  "begin attacked by enemy monster lowers the chosen mokepon's hp"
   (reset! core/app-state rpg/new-game)
   (core/on-take-chikapu)
   (core/on-set-battle :chikapu mon/sulbabaur)
@@ -16,6 +23,19 @@
   (core/on-tick-battle-core)
   (is (= (:hp (core/chosen-monster)) 40)))
 
+
+(deftest being-killed
+  "being killed by enemy monster removes chosen mokepon form the team."
+  (reset-game)
+  (core/on-set-battle :chikapu mon/sulbabaur)
+  (swap! core/app-state update-in
+         [:team (:chosen-key @core/app-state) :hp]
+         (fn [_] 0))
+  (core/remove-dead-team-members)
+  (is (= (core/team-count) 0)))
+
 (enable-console-print!)
 
 (cljs.test/run-tests)
+
+(rpg/is-dead? (core/chosen-monster))

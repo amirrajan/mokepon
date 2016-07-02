@@ -2,6 +2,7 @@
   (:require [sablono.core :as sab]
             [mokepon.monsters :refer [chikapu sulbabaur deogude]]
             [mokepon.rpg :refer [new-game
+                                 is-dead?
                                  battle-over?
                                  tick-battle
                                  apply-player-attack
@@ -11,6 +12,9 @@
 (defn alert [message] #(.alert js/window message))
 
 (defonce app-state (atom new-game))
+
+(defn team-count []
+  (count (keys (:team @app-state))))
 
 (defn chosen-monster []
   (if (:chosen-key @app-state)
@@ -36,8 +40,14 @@
             :team (update-in-team (:chosen-key @app-state) chosen)
             :play-by-play play-by-play})))
 
+(defn remove-dead-team-members []
+  (if (is-dead? (chosen-monster))
+    (swap! app-state update-in [:team] #(dissoc % (:chosen-key @app-state)))))
+
 (defn on-tick-battle []
-  (if (not (battle-over? (chosen-monster) (:battling @app-state)))
+  (if (not (battle-over?
+            (chosen-monster)
+            (:battling @app-state)))
       (do
         (on-tick-battle-core)
         (.setTimeout js/window #(on-tick-battle) 250))))
@@ -47,7 +57,10 @@
   (swap! app-state merge {:team (merge (:team @app-state) {:chikapu chikapu})}))
 
 (defn on-go-to-location []
-  (fn [loc] (swap! app-state merge {:location loc :battling nil :chosen-key nil})))
+  (fn [loc]
+    (do
+      (remove-dead-team-members)
+      (swap! app-state merge {:location loc :battling nil :chosen-key nil}))))
 
 (defn on-attack []
   (let [{:keys [battling chosen play-by-play]}
