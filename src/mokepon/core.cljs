@@ -1,6 +1,7 @@
 (ns mokepon.core
   (:require [sablono.core :as sab]
             [mokepon.monsters :refer [chikapu sulbabaur deogude]]
+            [mokepon.items :refer [store-items]]
             [alandipert.storage-atom :refer [local-storage]]
             [mokepon.rpg :refer [new-game
                                  is-dead?
@@ -43,13 +44,13 @@
 (defn item-count [item-key]
   (or (item-key (:items @app-state)) 0))
 
-(defn on-buy-item [item]
-  (let [item-id (:id item)
-        new-item-count (inc (item-count item-id))]
-    (swap! app-state
-           update-in
-           [:items]
-           #(merge % {item-id new-item-count}))))
+(defn on-buy-item []
+  (fn [item-id]
+    (let [new-item-count (inc (item-count item-id))]
+      (swap! app-state
+             update-in
+             [:items]
+             #(merge % {item-id new-item-count})))))
 
 (defn on-attempt-capture []
   (if (:mokebox (:items @app-state))
@@ -139,11 +140,8 @@
              #(on-attack)
              on-sleep-at-home
              active-turn-threshold
-            [{:id :mokebox :name "Mokébox" :cost 10 :description "Use this to catach Moképon."}
-            {:id :battery :name "Battery" :cost 5 :description "Use this to heal electric Moképon."}
-            {:id :fertilizer :name "Fertilizer" :cost 5 :description "Use this to heal plant Moképon."}]
-            (fn [item-id] #(.alert js/window (str "here is the item id: " item-id)))
-             )))
+             (store-items)
+             (on-buy-item))))
 
 (defn render! []
   (.render js/React

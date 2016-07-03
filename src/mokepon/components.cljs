@@ -192,7 +192,7 @@
 
 (defn store-view [store-items buy-item-handler]
   (section [:p "You are in the store"]
-           [:div [:ul (for [item store-items] [:li (a (str "Buy " (:name item) " (" (:cost item) " fiddy)") ( buy-item-handler (:id item)))])]]))
+           [:div [:ul (for [item store-items] [:li (a (str "Buy " (:name item) " (" (:cost item) " fiddy)") #(buy-item-handler (:id item)))])]]))
 
 
 

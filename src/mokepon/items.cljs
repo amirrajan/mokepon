@@ -1,6 +1,15 @@
 (ns mokepon.items)
 
-(def mokebox
-  {:id :mokebox
+(defn store-items []
+  [{:id :mokebox
    :name "Mokébox"
-   :description "Throw this at Moképon when they're week to catch them."})
+   :cost 10
+   :description "Use this to catach Moképon."}
+  {:id :battery
+   :name "Battery"
+   :cost 5
+   :description "Use this to heal electric Moképon."}
+  {:id :fertilizer
+   :name "Fertilizer"
+   :cost 5
+   :description "Use this to heal plant Moképon."}])

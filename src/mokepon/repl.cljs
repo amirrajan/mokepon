@@ -14,5 +14,9 @@
   app-state
   )
 
+
+
 (mokepon.rpg/can-attack? (chosen-monster))
 (mokepon.rpg/battle-over? (chosen-monster) (:battling @app-state))
+
+app-state
