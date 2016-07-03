@@ -2,6 +2,7 @@
   (:require [cljs.test :refer-macros [deftest is testing run-tests]]
             [mokepon.monsters :as mon]
             [mokepon.rpg :as rpg]
+            [mokepon.items :as items]
             [mokepon.core :as core]))
 
 (defn make-enemy-attack-ready []
@@ -23,7 +24,6 @@
   (core/on-tick-battle-core)
   (is (= (:hp (core/chosen-monster)) 40)))
 
-
 (deftest being-killed
   "being killed by enemy monster removes chosen mokepon form the team"
   (reset-game)
@@ -41,8 +41,19 @@
          {:chikapu {:hp 50   :max-hp 50}
           :deogude {:hp 100  :max-hp 100}})))
 
+(deftest capturing-wild-mokepon
+  "attempting to capture wild mokepon decrements mokeboxes"
+  (reset-game)
+  (core/on-set-battle :chikapu mon/sulbabaur)
+  (is (= (core/item-count :mokebox) 0))
+  (core/on-attempt-capture)
+  (is (= (core/item-count :mokebox) 0))
+  (core/on-buy-item items/mokebox)
+  (core/on-buy-item items/mokebox)
+  (is (= (core/item-count :mokebox) 2))
+  (core/on-attempt-capture)
+  (is (= (core/item-count :mokebox) 1)))
+
 (enable-console-print!)
 
 (cljs.test/run-tests)
-
-(rpg/is-dead? (core/chosen-monster))
