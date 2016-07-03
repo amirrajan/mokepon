@@ -34,6 +34,27 @@
 (defn update-in-team [monster-key new-value]
   (merge (:team @app-state) {monster-key new-value}))
 
+(defn on-decrement-item [item-key]
+  (swap! app-state
+         update-in
+         [:items item-key]
+         #(dec (or % 0))))
+
+(defn item-count [item-key]
+  (or (item-key (:items @app-state)) 0))
+
+(defn on-buy-item [item]
+  (let [item-id (:id item)
+        new-item-count (inc (item-count item-id))]
+    (swap! app-state
+           update-in
+           [:items]
+           #(merge % {item-id new-item-count}))))
+
+(defn on-attempt-capture []
+  (if (:mokebox (:items @app-state))
+    (on-decrement-item :mokebox)))
+
 (defn on-sleep-at-home []
   (swap! app-state update-in [:team] #(heal-team %)))
 

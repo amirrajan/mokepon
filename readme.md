@@ -278,6 +278,11 @@ ClojureScript (you should watch them if you still haven't).
 ```elisp
 (add-hook 'cider-repl-mode-hook #'company-mode)
 
+(setq cider-cljs-lein-repl
+      "(do (require 'figwheel-sidecar.repl-api)
+           (figwheel-sidecar.repl-api/start-figwheel!)
+           (figwheel-sidecar.repl-api/cljs-repl))")
+
 (add-hook
  'clojurescript-mode-hook
  (lambda ()
@@ -298,7 +303,7 @@ ClojureScript (you should watch them if you still haven't).
 
 - In `~/.lein/profiles.clj` add the following lines:
 ```clojure
-{:user {:plugins [[cider/cider-nrepl "0.12.0-snapshot"]]
+{:user {:plugins [[cider/cider-nrepl "0.12.0-SNAPSHOT"]]
         :dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}
 ```
 - In Emacs, first time you open a `.cljs` file run: `M-x cider-jack-in-clojurescript`.

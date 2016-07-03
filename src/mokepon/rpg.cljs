@@ -6,6 +6,7 @@
    :location :outside
    :chosen-key nil
    :battling nil
+   :items {}
    :play-by-play []})
 
 (defn battle-over? [chosen battling]
