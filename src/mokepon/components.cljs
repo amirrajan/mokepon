@@ -190,6 +190,12 @@
     (a "Sleep. Cause you're a lazy worthless millenial." sleep-at-home-handler)
     (a "Head back." #(go-to-location-handler :outside)))])
 
+(defn store-view [store-items buy-item-handler]
+  (section [:p "You are in the store"]
+           [:div [:ul (for [item store-items] [:li (a (str "Buy " (:name item) " (" (:cost item) " fiddy)") ( buy-item-handler (:id item)))])]]))
+
+
+
 (defn outside-view [location
                     team
                     go-to-location-handler]
@@ -212,7 +218,9 @@
                 battle-over?
                 attack-handler
                 sleep-at-home-handler
-                active-turn-threshold]
+                active-turn-threshold
+                store-items
+                buy-item-handler]
   (let [{:keys [location
                 team
                 team-at-home
@@ -256,6 +264,10 @@
                   take-chikapu-handler
                   go-to-location-handler
                   sleep-at-home-handler)
+
+       (= location :store)
+       (store-view store-items
+                   buy-item-handler)
 
        :else
        (section (str "Location " location " not handled.")

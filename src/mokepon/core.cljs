@@ -117,7 +117,12 @@
              (battle-over? (chosen-monster) (:battling @app-state))
              #(on-attack)
              on-sleep-at-home
-             active-turn-threshold)))
+             active-turn-threshold
+            [{:id :mokebox :name "Mokébox" :cost 10 :description "Use this to catach Moképon."}
+            {:id :battery :name "Battery" :cost 5 :description "Use this to heal electric Moképon."}
+            {:id :fertilizer :name "Fertilizer" :cost 5 :description "Use this to heal plant Moképon."}]
+            (fn [item-id] #(.alert js/window (str "here is the item id: " item-id)))
+             )))
 
 (defn render! []
   (.render js/React
