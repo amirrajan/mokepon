@@ -1,6 +1,6 @@
 (ns mokepon.items)
 
-(defn store-items []
+(def store-items
   [{:id :mokebox
    :name "Mokébox"
    :cost 10
@@ -14,7 +14,7 @@
    :cost 5
    :description "Use this to heal plant Moképon."}])
 
-(defn store-items-lookup []
+(def store-items-lookup
   (into {}
         (map (fn [item] [(:id item) item])
-             (store-items))))
+             store-items)))

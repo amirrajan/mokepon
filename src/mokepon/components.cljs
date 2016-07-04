@@ -12,7 +12,7 @@
 (defn section [& elements] [:div elements [:hr]])
 
 (defn team-view [team header]
-  (if (not= (count team) 0)
+  (if (not (empty? team))
     (section
      [:div header]
      [:ul (for [[k v] team]
@@ -197,7 +197,7 @@
       [:a
        {:style {:margin 0 :padding 0}
         :href "javascript:;"
-        :on-click #(buy-item-handler (:id item))}
+        :on-click #(buy-item-handler item)}
        (str "Buy " (:name item) " (" (:cost item) " Ƒiddy)")]
       [:p
        {:style {:margin 0 :padding 0 :margin-bottom "10px" :font-size "smaller"}}
@@ -223,12 +223,12 @@
   [:div
    (team-view team "Your posse:")
    (section
-   [:div "Cash: " cash " Ƒiddy"]
-   [:hr]
-   [:div "Items:"]
-   (if (empty? items)
-     [:div "None. Cause you're worthless."]
-     [:ul (for [[k v] items] [:li (str (:name (k store-items-lookup))  ": " v)])]))])
+    [:div "Cash: " cash " Ƒiddy"]
+    [:hr]
+    [:div "Items:"]
+    (if (empty? items)
+      [:div "None. Cause you're worthless."]
+      [:ul (for [[k v] items] [:li (str (:name (k store-items-lookup))  ": " v)])]))])
 
 (defn rpg-view [state
                 take-chikapu-handler
@@ -252,7 +252,6 @@
                 play-by-play]} state]
     [:div
      (title-view)
-     (status-view cash items store-items-lookup team)
      (cond
        (= location :outside)
        (outside-view location
@@ -297,4 +296,5 @@
 
        :else
        (section (str "Location " location " not handled.")
-        (a "Go back." #(go-to-location-handler :outside))))]))
+                (a "Go back." #(go-to-location-handler :outside))))
+     (status-view cash items store-items-lookup team)]))

@@ -44,13 +44,13 @@
 (defn item-count [item-key]
   (or (item-key (:items @app-state)) 0))
 
-(defn on-buy-item []
-  (fn [item-id]
-    (let [new-item-count (inc (item-count item-id))]
-      (swap! app-state
-             update-in
-             [:items]
-             #(merge % {item-id new-item-count})))))
+(defn on-buy-item [item]
+  (let [item-id (:id item)
+        new-item-count (inc (item-count item-id))]
+    (swap! app-state
+           update-in
+           [:items]
+           #(merge % {item-id new-item-count}))))
 
 (defn on-attempt-capture []
   (if (:mokebox (:items @app-state))
@@ -86,11 +86,10 @@
 (defn on-take-chikapu []
   (swap! app-state merge {:team (merge (:team @app-state) {:chikapu chikapu})}))
 
-(defn on-go-to-location []
-  (fn [loc]
-    (do
-      (remove-dead-team-members)
-      (swap! app-state merge {:location loc :battling nil :chosen-key nil}))))
+(defn on-go-to-location [loc]
+  (do
+    (remove-dead-team-members)
+    (swap! app-state merge {:location loc :battling nil :chosen-key nil})))
 
 (defn on-attack []
   (let [{:keys [battling chosen play-by-play]}
@@ -130,19 +129,19 @@
 (defn rpg-container []
   (sab/html
    (rpg-view @app-state
-             #(on-take-chikapu)
-             (on-go-to-location)
-             #(on-find-trouble)
+             on-take-chikapu
+             on-go-to-location
+             on-find-trouble
              (chosen-monster)
              (and (can-attack? (chosen-monster))
                   (not (battle-over? (chosen-monster) (:battling @app-state))))
              (battle-over? (chosen-monster) (:battling @app-state))
-             #(on-attack)
+             on-attack
              on-sleep-at-home
              active-turn-threshold
-             (store-items)
-             (store-items-lookup)
-             (on-buy-item))))
+             store-items
+             store-items-lookup
+             on-buy-item)))
 
 (defn render! []
   (.render js/React
