@@ -7,16 +7,8 @@
   (on-find-trouble))
 
 (defn repl []
-  (go-find-trouble-in :forest)
+  (go-find-trouble-in :shop)
   (on-attack)
   (on-sleep-at-home)
   ((on-go-to-location) :store)
-  app-state
-  )
-
-
-
-(mokepon.rpg/can-attack? (chosen-monster))
-(mokepon.rpg/battle-over? (chosen-monster) (:battling @app-state))
-
-app-state
+  app-state)

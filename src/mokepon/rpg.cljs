@@ -5,6 +5,7 @@
    :team {}
    :location :outside
    :chosen-key nil
+   :cash 10
    :battling nil
    :items {}
    :play-by-play []})

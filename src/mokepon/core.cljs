@@ -1,7 +1,7 @@
 (ns mokepon.core
   (:require [sablono.core :as sab]
             [mokepon.monsters :refer [chikapu sulbabaur deogude]]
-            [mokepon.items :refer [store-items]]
+            [mokepon.items :refer [store-items store-items-lookup]]
             [alandipert.storage-atom :refer [local-storage]]
             [mokepon.rpg :refer [new-game
                                  is-dead?
@@ -141,6 +141,7 @@
              on-sleep-at-home
              active-turn-threshold
              (store-items)
+             (store-items-lookup)
              (on-buy-item))))
 
 (defn render! []

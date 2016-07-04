@@ -113,7 +113,6 @@
   (if (nil? battling)
     [:div
      (section [:p location-description])
-     (team-view team "Your posse:")
      (section
       (if (empty? team)
         (disabled-a "Go look for some trouble.")
@@ -185,14 +184,26 @@
    (section [:p "You are being worthless at home."])
    (ask-mommy-view team team-at-home take-chikapu-handler)
    (team-view team-at-home "Chillin' at the crib:")
-   (team-view team "Your posse:")
    (section
     (a "Sleep. Cause you're a lazy worthless millenial." sleep-at-home-handler)
     (a "Head back." #(go-to-location-handler :outside)))])
 
-(defn store-view [store-items buy-item-handler]
-  (section [:p "You are in the store"]
-           [:div [:ul (for [item store-items] [:li (a (str "Buy " (:name item) " (" (:cost item) " fiddy)") #(buy-item-handler (:id item)))])]]))
+(defn store-view [store-items buy-item-handler go-to-location-handler]
+  (section
+   [:p (str "You walk into the store. A midget stands behind the counter on a stool. "
+            "He occasionally props himself up with locked arms and dangles his feet in the air.")]
+   (for [item store-items]
+     [:div
+      [:a
+       {:style {:margin 0 :padding 0}
+        :href "javascript:;"
+        :on-click #(buy-item-handler (:id item))}
+       (str "Buy " (:name item) " (" (:cost item) " Ƒiddy)")]
+      [:p
+       {:style {:margin 0 :padding 0 :margin-bottom "10px" :font-size "smaller"}}
+       (:description item)]])
+   [:hr]
+   (a "Head back." #(go-to-location-handler :outside))))
 
 
 
@@ -201,13 +212,23 @@
                     go-to-location-handler]
   [:div
    (section [:p "You are being worthless outside."])
-   (team-view team "Your posse:")
    (adventures-view location team go-to-location-handler)])
 
 (defn title-view []
   (section
    [:h1 {:id "title"} "Moképon"]
    [:h2 {:id "tag-line"} "Catching 'em all just got real, yo"]))
+
+(defn status-view [cash items store-items-lookup team]
+  [:div
+   (team-view team "Your posse:")
+   (section
+   [:div "Cash: " cash " Ƒiddy"]
+   [:hr]
+   [:div "Items:"]
+   (if (empty? items)
+     [:div "None. Cause you're worthless."]
+     [:ul (for [[k v] items] [:li (str (:name (k store-items-lookup))  ": " v)])]))])
 
 (defn rpg-view [state
                 take-chikapu-handler
@@ -220,14 +241,18 @@
                 sleep-at-home-handler
                 active-turn-threshold
                 store-items
+                store-items-lookup
                 buy-item-handler]
   (let [{:keys [location
                 team
                 team-at-home
                 battling
+                cash
+                items
                 play-by-play]} state]
     [:div
      (title-view)
+     (status-view cash items store-items-lookup team)
      (cond
        (= location :outside)
        (outside-view location
@@ -267,7 +292,8 @@
 
        (= location :store)
        (store-view store-items
-                   buy-item-handler)
+                   buy-item-handler
+                   go-to-location-handler)
 
        :else
        (section (str "Location " location " not handled.")
