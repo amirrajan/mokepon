@@ -46,11 +46,17 @@
 
 (defn on-buy-item [item]
   (let [item-id (:id item)
-        new-item-count (inc (item-count item-id))]
-    (swap! app-state
-           update-in
-           [:items]
-           #(merge % {item-id new-item-count}))))
+        new-item-count (inc (item-count item-id))
+        current-cash (:cash @app-state)
+        afford? (>= current-cash (:cost item))]
+    (if afford?
+      (do (swap! app-state
+                 merge
+                 {:cash (- current-cash (:cost item))})
+          (swap! app-state
+                 update-in
+                 [:items]
+                 #(merge % {item-id new-item-count}))))))
 
 (defn on-attempt-capture []
   (if (:mokebox (:items @app-state))

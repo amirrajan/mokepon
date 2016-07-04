@@ -7,8 +7,8 @@
   (on-find-trouble))
 
 (defn repl []
-  (go-find-trouble-in :shop)
+  (go-find-trouble-in :store)
   (on-attack)
   (on-sleep-at-home)
-  ((on-go-to-location) :store)
+  (on-go-to-location :store)
   app-state)

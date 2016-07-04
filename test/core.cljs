@@ -20,7 +20,7 @@
   (core/on-take-chikapu)
   (core/on-set-battle :chikapu mon/sulbabaur)
   (is (= (:play-by-play @core/app-state) ["It has begun! Chikapu vs Sulbabaur!"]))
-  (make-attack-ready-for :battling)
+  (make-enemy-attack-ready)
   (core/on-tick-battle-core)
   (is (= (:hp (core/chosen-monster)) 40)))
 
@@ -48,12 +48,28 @@
   (is (= (core/item-count :mokebox) 0))
   (core/on-attempt-capture)
   (is (= (core/item-count :mokebox) 0))
-  (core/on-buy-item items/mokebox)
-  (core/on-buy-item items/mokebox)
-  (is (= (core/item-count :mokebox) 2))
+  (core/on-buy-item (:mokebox items/store-items-lookup))
+  (is (= (core/item-count :mokebox) 1))
   (core/on-attempt-capture)
-  (is (= (core/item-count :mokebox) 1)))
+  (is (= (core/item-count :mokebox) 0)))
+
+(deftest purchasing-item
+  "purchasing item decrements cash"
+  (reset-game)
+  (is (= (:cash @core/app-state) 10))
+  (core/on-buy-item (:mokebox items/store-items-lookup))
+  (is (= (:cash @core/app-state) 0)))
+
+(deftest not-enough-cash-to-buy-item
+  "can't buy item if you don't have the cash"
+  (reset-game)
+  (swap! core/app-state merge {:cash 0})
+  (core/on-buy-item (:mokebox items/store-items-lookup))
+  (is (= (core/item-count :mokebox) 0))
+  (is (= (:cash @core/app-state) 0)))
 
 (enable-console-print!)
 
 (cljs.test/run-tests)
+
+(:cash @core/app-state)
