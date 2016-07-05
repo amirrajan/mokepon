@@ -8,7 +8,7 @@
 (defn make-enemy-attack-ready []
   (swap! core/app-state
          update-in [:battling]
-         #(merge % {:at rpg/active-turn-threshold})))
+         #(assoc % :at rpg/active-turn-threshold)))
 
 (defn reset-game []
   (reset! core/app-state rpg/new-game)

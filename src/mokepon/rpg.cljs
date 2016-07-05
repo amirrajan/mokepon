@@ -8,7 +8,7 @@
    :cash 10
    :battling nil
    :items {}
-   :play-by-play []})
+   :play-by-play ["You sit outside. You needed a break from your mother yelling at you."]})
 
 (defn battle-over? [chosen battling]
   (or (nil? chosen)
@@ -31,13 +31,13 @@
 
 (defn tick-monster [monster]
   (if (not (can-attack? monster))
-      (merge monster {:at (+ (:at monster) (:speed monster))})
+      (assoc monster :at (+ (:at monster) (:speed monster)))
       monster))
 
 (defn try-attack [from to]
   (if (can-attack? from)
-      {:to (merge to {:hp (- (:hp to) 10)})
-       :from (merge from {:at 0})
+      {:to (assoc to :hp (- (:hp to) 10))
+       :from (assoc from :at 0)
        :attack-occured? true}
       {:from from :to to :attack-occured? false}))
 
@@ -69,7 +69,7 @@
          play-by-play)}))
 
 (defn heal-monster [monster]
-  (merge monster {:hp (:max-hp monster)}))
+  (assoc monster :hp (:max-hp monster)))
 
 (defn heal-team [team]
   (into {}

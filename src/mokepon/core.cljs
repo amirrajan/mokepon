@@ -27,13 +27,13 @@
     ((:chosen-key @app-state) (:team @app-state))))
 
 (defn set-battle [chosen-key battling]
-  (merge @app-state {:chosen-key chosen-key :battling battling}))
+  (assoc @app-state :chosen-key chosen-key :battling battling))
 
 (defn clear-battle []
-  (swap! app-state merge {:chosen-key nil :battling nil}))
+  (swap! app-state assoc :chosen-key nil :battling nil))
 
 (defn update-in-team [monster-key new-value]
-  (merge (:team @app-state) {monster-key new-value}))
+  (assoc (:team @app-state) monster-key new-value))
 
 (defn add-to-play-by-play [text]
   (conj (:play-by-play @app-state) text))
@@ -56,21 +56,22 @@
     (if afford?
       (do (swap!
            app-state
-           merge
-           {:cash new-cash
-            :play-by-play
-            (add-to-play-by-play (str "You take the " (:name item) " from the midget's saggy hand." ))})
+           assoc
+           :cash
+           new-cash
+           :play-by-play
+           (add-to-play-by-play (str "You take the " (:name item) " from the midget's saggy, squishy hand. He smiles and gives you a tip of his top hat." )))
           (swap! app-state
                  update-in
                  [:items]
-                 #(merge % {item-id new-item-count})))
+                 #(assoc % item-id new-item-count)))
 
       (swap!
        app-state
-       merge
-       {:play-by-play
-        (add-to-play-by-play
-         "The midget bitch slaps you saying that you can't afford that. He wonders if you were taught common core math.")}))))
+       assoc
+       :play-by-play
+       (add-to-play-by-play
+        "The midget bitch slaps you saying that you can't afford that. He wonders if you were taught common core math.")))))
 
 (defn on-throw-mokebox []
   (if (:mokebox (:items @app-state))
@@ -80,10 +81,10 @@
   (do
     (swap!
      app-state
-     merge
-     {:play-by-play
-      (add-to-play-by-play
-       "You've slept. Your posse has been healed.")})
+     assoc
+     :play-by-play
+     (add-to-play-by-play
+      "You've slept. Your posse has been healed."))
     (swap!
      app-state
      update-in
@@ -96,10 +97,10 @@
                      (:battling @app-state)
                      (:play-by-play @app-state))]
     (swap! app-state
-           merge
-           {:battling battling
-            :team (update-in-team (:chosen-key @app-state) chosen)
-            :play-by-play play-by-play})))
+           assoc
+           :battling battling
+           :team (update-in-team (:chosen-key @app-state) chosen)
+           :play-by-play play-by-play)))
 
 (defn remove-dead-team-members []
   (if (is-dead? (chosen-monster))
@@ -119,15 +120,15 @@
 
 (defn on-take-chikapu []
   (swap! app-state
-         merge
-         {:team (merge (:team @app-state) {:chikapu chikapu})}))
+         assoc
+         :team (assoc (:team @app-state) :chikapu chikapu)))
 
 (defn on-go-to-location [loc]
   (do
     (remove-dead-team-members)
     (swap! app-state
-           merge
-           {:location loc :battling nil :chosen-key nil})))
+           assoc
+           :location loc :battling nil :chosen-key nil)))
 
 (defn on-attack []
   (let [{:keys [battling chosen play-by-play]}
@@ -136,10 +137,10 @@
          (:battling @app-state)
          (:play-by-play @app-state))]
     (swap! app-state
-           merge
-           {:battling battling
-            :team (update-in-team (:chosen-key @app-state) chosen)
-            :play-by-play play-by-play})))
+           assoc
+           :battling battling
+           :team (update-in-team (:chosen-key @app-state) chosen)
+           :play-by-play play-by-play)))
 
 
 (defn set-monsters [chosen-key battling play-by-play]

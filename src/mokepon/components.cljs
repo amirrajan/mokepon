@@ -14,10 +14,10 @@
 
 (defn section [& elements] [:div elements [:hr]])
 
-(defn team-view [team header]
+(defn team-view [team header empty-text]
   (section
    [:div header]
-   (if (empty? team) [:p "No one. Cause you're worthless."])
+   (if (empty? team) [:p empty-text])
    [:ul (for [[k v] team]
           [:li {:key (:name v)}
            (str (:name v) " (hp: " (:hp v) "/" (:max-hp v) ")")])]))
@@ -197,7 +197,7 @@
   [:div
    (section [:p "You are being worthless at home."])
    (ask-mommy-view team team-at-home take-chikapu-handler)
-   (team-view team-at-home "Chillin' at the crib:")
+   (team-view team-at-home "Moképon chillin' at the crib:" "None.")
    (section
     (a "Sleep. Cause you're a lazy worthless millenial." sleep-at-home-handler)
     (a "Head back." #(go-to-location-handler :outside)))])
@@ -236,7 +236,7 @@
 (defn status-view [cash items store-items-lookup team play-by-play]
   [:div
    (section "Cash: " cash " Ƒiddy")
-   (team-view team "Your posse:")
+   (team-view team "Your posse:" "No one. Cause you're worthless.")
    (section
     [:div "Items:"]
     (if (empty? items)
