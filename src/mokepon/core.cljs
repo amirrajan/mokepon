@@ -35,6 +35,9 @@
 (defn update-in-team [monster-key new-value]
   (merge (:team @app-state) {monster-key new-value}))
 
+(defn add-to-play-by-play [text]
+  (conj (:play-by-play @app-state) text))
+
 (defn on-decrement-item [item-key]
   (swap! app-state
          update-in
@@ -48,22 +51,44 @@
   (let [item-id (:id item)
         new-item-count (inc (item-count item-id))
         current-cash (:cash @app-state)
-        afford? (>= current-cash (:cost item))]
+        afford? (>= current-cash (:cost item))
+        new-cash (- current-cash (:cost item))]
     (if afford?
-      (do (swap! app-state
-                 merge
-                 {:cash (- current-cash (:cost item))})
+      (do (swap!
+           app-state
+           merge
+           {:cash new-cash
+            :play-by-play
+            (add-to-play-by-play (str "You take the " (:name item) " from the midget's saggy hand." ))})
           (swap! app-state
                  update-in
                  [:items]
-                 #(merge % {item-id new-item-count}))))))
+                 #(merge % {item-id new-item-count})))
 
-(defn on-attempt-capture []
+      (swap!
+       app-state
+       merge
+       {:play-by-play
+        (add-to-play-by-play
+         "The midget bitch slaps you saying that you can't afford that. He wonders if you were taught common core math.")}))))
+
+(defn on-throw-mokebox []
   (if (:mokebox (:items @app-state))
     (on-decrement-item :mokebox)))
 
 (defn on-sleep-at-home []
-  (swap! app-state update-in [:team] #(heal-team %)))
+  (do
+    (swap!
+     app-state
+     merge
+     {:play-by-play
+      (add-to-play-by-play
+       "You've slept. Your posse has been healed.")})
+    (swap!
+     app-state
+     update-in
+     [:team]
+     #(heal-team %))))
 
 (defn on-tick-battle-core []
   (let [{:keys [battling chosen play-by-play]}
@@ -78,7 +103,10 @@
 
 (defn remove-dead-team-members []
   (if (is-dead? (chosen-monster))
-    (swap! app-state update-in [:team] #(dissoc % (:chosen-key @app-state)))))
+    (swap! app-state
+           update-in
+           [:team]
+           #(dissoc % (:chosen-key @app-state)))))
 
 (defn on-tick-battle []
   (if (not (battle-over?
@@ -90,12 +118,16 @@
 
 
 (defn on-take-chikapu []
-  (swap! app-state merge {:team (merge (:team @app-state) {:chikapu chikapu})}))
+  (swap! app-state
+         merge
+         {:team (merge (:team @app-state) {:chikapu chikapu})}))
 
 (defn on-go-to-location [loc]
   (do
     (remove-dead-team-members)
-    (swap! app-state merge {:location loc :battling nil :chosen-key nil})))
+    (swap! app-state
+           merge
+           {:location loc :battling nil :chosen-key nil})))
 
 (defn on-attack []
   (let [{:keys [battling chosen play-by-play]}
@@ -110,13 +142,18 @@
             :play-by-play play-by-play})))
 
 
-(defn set-monsters [chosen-key battling]
+(defn set-monsters [chosen-key battling play-by-play]
   {:chosen-key chosen-key
    :battling battling
-   :play-by-play [(str "It has begun! " (:name (chosen-key (:team @app-state))) " vs " (:name battling) "!")]})
+   :play-by-play (add-to-play-by-play
+                  (str "It has begun! " (:name (chosen-key (:team @app-state))) " vs " (:name battling) "!"))})
 
 (defn on-set-battle [chosen-key battling]
-  (swap! app-state merge (set-monsters chosen-key battling)))
+  (swap! app-state
+         merge
+         (set-monsters chosen-key
+                       battling
+                       (:play-by-play @app-state))))
 
 (defn on-find-trouble []
   (cond
@@ -147,7 +184,8 @@
              active-turn-threshold
              store-items
              store-items-lookup
-             on-buy-item)))
+             on-buy-item
+             on-throw-mokebox)))
 
 (defn render! []
   (.render js/React

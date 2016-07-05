@@ -7,17 +7,20 @@
 (defn disabled-a [text]
   [:a {:href "javascript:;" :style {:color "#a0a0a0" :cursor "default"}} text])
 
+(defn conditional-a [predicate text on-click]
+  (if predicate (a text on-click) (disabled-a text)))
+
 (def todo #(.alert js/window "todo"))
 
 (defn section [& elements] [:div elements [:hr]])
 
 (defn team-view [team header]
-  (if (not (empty? team))
-    (section
-     [:div header]
-     [:ul (for [[k v] team]
-            [:li {:key (:name v)}
-             (str (:name v) " (hp: " (:hp v) "/" (:max-hp v) ")")])])))
+  (section
+   [:div header]
+   (if (empty? team) [:p "No one. Cause you're worthless."])
+   [:ul (for [[k v] team]
+          [:li {:key (:name v)}
+           (str (:name v) " (hp: " (:hp v) "/" (:max-hp v) ")")])]))
 
 (defn ask-mommy-view [team team-at-home take-chikapu-handler]
   (if (and (empty? team) (empty? team-at-home))
@@ -75,13 +78,18 @@
    [:hr]
    (progress-bar-view (/ (:at monster) full-active-turn))))
 
+(defn play-by-play-view [play-by-play]
+  (section (for [i (take 25 (reverse play-by-play))] [:div i])))
+
 (defn battle-view [chosen
                    chosen-can-attack?
                    battle-over?
-                   battling play-by-play
+                   battling
                    active-turn-threshold
                    attack-handler
-                   go-to-location-handler]
+                   go-to-location-handler
+                   items
+                   throw-mokebox-handler]
   [:div
    (battler-view battling active-turn-threshold)
    (battler-view chosen active-turn-threshold)
@@ -91,12 +99,12 @@
       (disabled-a "Attack!")
       (a "Head back." #(go-to-location-handler :outside)))
 
-     chosen-can-attack?
-     (section (a "Attack!" attack-handler))
-
      :else
-     (section (disabled-a "Attack!")))
-   (section (for [i play-by-play] [:div i]))])
+     (section
+      (conditional-a chosen-can-attack? "Attack!" attack-handler)
+      (conditional-a (> (:mokebox items) 0)
+                     "Throw Mokébox!"
+                     throw-mokebox-handler)))])
 
 (defn location-view [location-description
                      team
@@ -105,11 +113,12 @@
                      chosen-can-attack?
                      battle-over?
                      battling
-                     play-by-play
                      go-to-location-handler
                      attack-handler
                      go-to-location-handler
-                     active-turn-threshold]
+                     active-turn-threshold
+                     items
+                     throw-mokebox-handler]
   (if (nil? battling)
     [:div
      (section [:p location-description])
@@ -122,10 +131,11 @@
                  chosen-can-attack?
                  battle-over?
                  battling
-                 play-by-play
                  active-turn-threshold
                  attack-handler
-                 go-to-location-handler)))
+                 go-to-location-handler
+                 items
+                 throw-mokebox-handler)))
 
 (defn forest-view [team
                    find-trouble-handler
@@ -133,23 +143,25 @@
                    chosen-can-attack?
                    battle-over?
                    battling
-                   play-by-play
                    go-to-location-handler
                    attack-handler
-                   active-turn-threshold]
+                   active-turn-threshold
+                   items
+                   throw-mokebox-handler]
   (location-view
-   "You are currently chillin' like a villian in the forest."
-   team
-   find-trouble-handler
-   chosen
-   chosen-can-attack?
-   battle-over?
-   battling
-   play-by-play
-   go-to-location-handler
-   attack-handler
-   go-to-location-handler
-   active-turn-threshold))
+    "You are currently chillin' like a villian in the forest."
+    team
+    find-trouble-handler
+    chosen
+    chosen-can-attack?
+    battle-over?
+    battling
+    go-to-location-handler
+    attack-handler
+    go-to-location-handler
+    active-turn-threshold
+    items
+    throw-mokebox-handler))
 
 (defn canyon-view [team
                    find-trouble-handler
@@ -157,23 +169,25 @@
                    chosen-can-attack?
                    battle-over?
                    battling
-                   play-by-play
                    go-to-location-handler
                    attack-handler
-                   active-turn-threshold]
+                   active-turn-threshold
+                   items
+                   throw-mokebox-handler]
   (location-view
-   "You are currently chillin' like a villian in the canyon."
-   team
-   find-trouble-handler
-   chosen
-   chosen-can-attack?
-   battle-over?
-   battling
-   play-by-play
-   go-to-location-handler
-   attack-handler
-   go-to-location-handler
-   active-turn-threshold))
+    "You are currently chillin' like a villian in the canyon."
+    team
+    find-trouble-handler
+    chosen
+    chosen-can-attack?
+    battle-over?
+    battling
+    go-to-location-handler
+    attack-handler
+    go-to-location-handler
+    active-turn-threshold
+    items
+    throw-mokebox-handler))
 
 (defn home-view [team
                  team-at-home
@@ -219,16 +233,16 @@
    [:h1 {:id "title"} "Moképon"]
    [:h2 {:id "tag-line"} "Catching 'em all just got real, yo"]))
 
-(defn status-view [cash items store-items-lookup team]
+(defn status-view [cash items store-items-lookup team play-by-play]
   [:div
+   (section "Cash: " cash " Ƒiddy")
    (team-view team "Your posse:")
    (section
-    [:div "Cash: " cash " Ƒiddy"]
-    [:hr]
     [:div "Items:"]
     (if (empty? items)
-      [:div "None. Cause you're worthless."]
-      [:ul (for [[k v] items] [:li (str (:name (k store-items-lookup))  ": " v)])]))])
+      [:p "None. Cause you're worthless."]
+      [:ul (for [[k v] items] [:li (str (:name (k store-items-lookup))  ": " v)])]))
+   (play-by-play-view play-by-play)])
 
 (defn rpg-view [state
                 take-chikapu-handler
@@ -242,7 +256,8 @@
                 active-turn-threshold
                 store-items
                 store-items-lookup
-                buy-item-handler]
+                buy-item-handler
+                throw-mokebox-handler]
   (let [{:keys [location
                 team
                 team-at-home
@@ -265,10 +280,11 @@
                     chosen-can-attack?
                     battle-over?
                     battling
-                    play-by-play
                     go-to-location-handler
                     attack-handler
-                    active-turn-threshold)
+                    active-turn-threshold
+                    items
+                    throw-mokebox-handler)
 
        (= location :canyon)
        (canyon-view team
@@ -277,10 +293,11 @@
                     chosen-can-attack?
                     battle-over?
                     battling
-                    play-by-play
                     go-to-location-handler
                     attack-handler
-                    active-turn-threshold)
+                    active-turn-threshold
+                    items
+                    throw-mokebox-handler)
 
        (= location :home)
        (home-view team
@@ -297,4 +314,4 @@
        :else
        (section (str "Location " location " not handled.")
                 (a "Go back." #(go-to-location-handler :outside))))
-     (status-view cash items store-items-lookup team)]))
+     (status-view cash items store-items-lookup team play-by-play)]))

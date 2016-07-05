@@ -46,11 +46,11 @@
   (reset-game)
   (core/on-set-battle :chikapu mon/sulbabaur)
   (is (= (core/item-count :mokebox) 0))
-  (core/on-attempt-capture)
+  (core/on-throw-mokebox)
   (is (= (core/item-count :mokebox) 0))
   (core/on-buy-item (:mokebox items/store-items-lookup))
   (is (= (core/item-count :mokebox) 1))
-  (core/on-attempt-capture)
+  (core/on-throw-mokebox)
   (is (= (core/item-count :mokebox) 0)))
 
 (deftest purchasing-item
@@ -73,3 +73,9 @@
 (cljs.test/run-tests)
 
 (:cash @core/app-state)
+
+(reset-game)
+
+
+(merge {:a 1} {:a 2})
+(assoc {:a 1} :a 2)
