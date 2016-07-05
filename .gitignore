@@ -1,6 +1,4 @@
 /figwheel_server.log
-/main.js
-out/
 target/
 /npm-debug.log
 /.nrepl-port

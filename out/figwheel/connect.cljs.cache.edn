@@ -1,0 +1,1 @@
+{:name figwheel.connect, :doc nil, :excludes #{}, :use-macros nil, :require-macros nil, :uses nil, :requires {mokepon.core mokepon.core, figwheel.client figwheel.client, figwheel.client.utils figwheel.client.utils}, :imports nil, :cljs.analyzer/constants {:seen #{:build-id :websocket-url}, :order [:build-id :websocket-url]}}
