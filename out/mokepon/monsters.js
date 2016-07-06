@@ -1,8 +1,0 @@
-// Compiled by ClojureScript 1.9.76 {}
-goog.provide('mokepon.monsters');
-goog.require('cljs.core');
-mokepon.monsters.chikapu = new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),"Chikapu",new cljs.core.Keyword(null,"battle-text","battle-text",-1976034145),"The rat comes a swinging with electric punches.",new cljs.core.Keyword(null,"speed","speed",1257663751),(90),new cljs.core.Keyword(null,"hp","hp",-1541237831),(50),new cljs.core.Keyword(null,"max-hp","max-hp",-1065196696),(50),new cljs.core.Keyword(null,"at","at",1476951349),(0)], null);
-mokepon.monsters.sulbabaur = new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),"Sulbabaur",new cljs.core.Keyword(null,"battle-text","battle-text",-1976034145),"It's whipping vines and shit.",new cljs.core.Keyword(null,"speed","speed",1257663751),(45),new cljs.core.Keyword(null,"hp","hp",-1541237831),(50),new cljs.core.Keyword(null,"max-hp","max-hp",-1065196696),(50),new cljs.core.Keyword(null,"at","at",1476951349),(0)], null);
-mokepon.monsters.deogude = new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),"Deogude",new cljs.core.Keyword(null,"battle-text","battle-text",-1976034145),"Tank top looks a bit bloody. Best watch out.",new cljs.core.Keyword(null,"speed","speed",1257663751),(20),new cljs.core.Keyword(null,"hp","hp",-1541237831),(50),new cljs.core.Keyword(null,"max-hp","max-hp",-1065196696),(50),new cljs.core.Keyword(null,"at","at",1476951349),(0)], null);
-
-//# sourceMappingURL=monsters.js.map

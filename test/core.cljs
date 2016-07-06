@@ -52,7 +52,8 @@
   (is (= (core/item-count :mokebox) 1))
   (core/on-throw-mokebox)
   (is (= (core/item-count :mokebox) 0))
-  (is (= (:sulbabaur (:team @core/app-state)) (:battling (@core/app-state)))))
+  (is (= (:sulbabaur (:team @core/app-state))
+         (:battling @core/app-state))))
 
 (deftest purchasing-item
   "purchasing item decrements cash"
