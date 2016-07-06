@@ -19,7 +19,7 @@
   (reset! core/app-state rpg/new-game)
   (core/on-take-chikapu)
   (core/on-set-battle :chikapu mon/sulbabaur)
-  (is (= (:play-by-play @core/app-state) ["It has begun! Chikapu vs Sulbabaur!"]))
+  (is (some  #{"It has begun! Chikapu vs Sulbabaur!"} (:play-by-play @core/app-state)))
   (make-enemy-attack-ready)
   (core/on-tick-battle-core)
   (is (= (:hp (core/chosen-monster)) 40)))
@@ -51,7 +51,8 @@
   (core/on-buy-item (:mokebox items/store-items-lookup))
   (is (= (core/item-count :mokebox) 1))
   (core/on-throw-mokebox)
-  (is (= (core/item-count :mokebox) 0)))
+  (is (= (core/item-count :mokebox) 0))
+  (is (= (:sulbabaur (:team @core/app-state)) (:battling (@core/app-state)))))
 
 (deftest purchasing-item
   "purchasing item decrements cash"

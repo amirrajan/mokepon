@@ -12,3 +12,6 @@
   (on-sleep-at-home)
   (on-go-to-location :store)
   app-state)
+
+(stop-autobuild)
+(clean-builds)

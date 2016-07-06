@@ -258,6 +258,8 @@ things have a much much more difficult time in becoming _simple_. The
 three hours worth of videos go into great detail about the simplicity of
 ClojureScript (you should watch them if you still haven't).
 
+### But No Really, Parenthesis!!!!
+
 ## Running The Game
 
 - Install Java 8 (1.8 sdk).
