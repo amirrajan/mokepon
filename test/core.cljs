@@ -48,12 +48,34 @@
   (is (= (core/item-count :mokebox) 0))
   (core/on-throw-mokebox)
   (is (= (core/item-count :mokebox) 0))
+  (core/on-add-cash 10)
+  (is (= (:cash @core/app-state) 20))
   (core/on-buy-item (:mokebox items/store-items-lookup))
-  (is (= (core/item-count :mokebox) 1))
+  (core/on-buy-item (:mokebox items/store-items-lookup))
+  (is (= (core/item-count :mokebox) 2))
+
+  ;;capture probability is based on hp of monster
+  ;;monsters at full health have 0% of being captured
   (core/on-throw-mokebox)
-  (is (= (core/item-count :mokebox) 0))
   (is (= (:sulbabaur (:team @core/app-state))
-         (:battling @core/app-state))))
+         nil))
+  (is (= (core/item-count :mokebox) 1))
+
+  ;;capture probability is based on hp of monster
+  ;;setting max-hp to hp ratio really really high
+  (swap! core/app-state [:battling :max-hp] (fn [_] 100000000))
+  (core/on-throw-mokebox)
+  (is (= (:sulbabaur (:team @core/app-state))
+         (:battling @core/app-state)))
+  (is (= (core/item-count :mokebox) 0))))
+
+(deftest battle-is-over-if-mokepon-is-captured
+  "capturing a monster ends battle"
+  (reset-game)
+  (core/on-buy-item (:mokebox items/store-items-lookup))
+  (core/on-set-battle :chikapu mon/sulbabaur)
+  (core/on-throw-mokebox)
+  (is (= (rpg/battle-over? (core/chosen-monster) (:battling @core/app-state)) true)))
 
 (deftest purchasing-item
   "purchasing item decrements cash"
@@ -74,6 +96,8 @@
 
 (cljs.test/run-tests)
 
-(:team @core/app-state)
+(get-in  @core/app-state [:battling :name])
+
+(:items @core/app-state)
 
 (reset-game)

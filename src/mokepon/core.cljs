@@ -47,6 +47,19 @@
 (defn item-count [item-key]
   (or (item-key (:items @app-state)) 0))
 
+(defn on-add-cash [amount]
+  (swap! app-state
+         update-in
+         [:cash]
+         #(+ % amount)))
+
+(defn on-add-to-play-by-play [message]
+  (swap!
+   app-state
+   assoc
+   :play-by-play
+   (add-to-play-by-play message)))
+
 (defn on-buy-item [item]
   (let [item-id (:id item)
         new-item-count (inc (item-count item-id))
@@ -58,30 +71,48 @@
            app-state
            assoc
            :cash
-           new-cash
-           :play-by-play
-           (add-to-play-by-play (str "You take the " (:name item) " from the midget's saggy, squishy hand. He smiles and gives you a tip of his top hat." )))
+           new-cash)
+          (on-add-to-play-by-play
+           (str "You take the " (:name item)
+                " from the midget's saggy, squishy hand. "
+                "He smiles and gives you a tip of his top hat." ))
           (swap! app-state
                  update-in
                  [:items]
                  #(assoc % item-id new-item-count)))
 
-      (swap!
-       app-state
-       assoc
-       :play-by-play
-       (add-to-play-by-play
-        "The midget bitch slaps you saying that you can't afford that. He wonders if you were taught common core math.")))))
+      (on-add-to-play-by-play
+       (str "The midget bitch slaps you saying that you can't afford that. "
+            "He wonders if you were taught common core math.")))))
 
 (defn on-throw-mokebox []
-  (if (:mokebox (:items @app-state))
-    (do
-      (swap! app-state
-             update-in
-             [:team]
-             #(assoc % (:id (:battling @app-state))
-                     (:battling @app-state)))
-      (on-decrement-item :mokebox))))
+  (let [{:keys [max-hp hp]} (:battling @app-state)
+        capture-chance (/ (- max-hp hp) max-hp)
+        roll (rand)
+        captured? (> capture-chance roll)]
+    (if (:mokebox (:items @app-state))
+      (do
+        (on-decrement-item :mokebox)
+        (if captured?
+          (do
+            (on-add-to-play-by-play
+             (str "The Mokébox knocks out the "
+                  (get-in @app-state [:battling :name])
+                  ". It's been captured!"))
+            (swap! app-state
+                   update-in
+                   [:battling :captured]
+                   (fn [_] true))
+            (swap! app-state
+                   update-in
+                   [:team]
+                   #(assoc %
+                           (:id (:battling @app-state))
+                           (:battling @app-state))))
+          (on-add-to-play-by-play
+           (str "The Mokébox bounces off "
+                (get-in @app-state [:battling :name])
+                ". It's still too strong!")))))))
 
 (defn on-sleep-at-home []
   (do
