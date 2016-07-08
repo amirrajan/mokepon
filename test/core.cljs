@@ -74,6 +74,7 @@
   (reset-game)
   (core/on-buy-item (:mokebox items/store-items-lookup))
   (core/on-set-battle :chikapu mon/sulbabaur)
+  (swap! core/app-state [:battling :max-hp] (fn [_] 100000000))
   (core/on-throw-mokebox)
   (is (= (rpg/battle-over? (core/chosen-monster) (:battling @core/app-state)) true)))
 
@@ -95,9 +96,3 @@
 (enable-console-print!)
 
 (cljs.test/run-tests)
-
-(get-in  @core/app-state [:battling :name])
-
-(:items @core/app-state)
-
-(reset-game)
