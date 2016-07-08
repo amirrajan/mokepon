@@ -230,7 +230,7 @@ Take this JavaScript function:
 
 In ClojureScript:
 
-```clojurescript
+```clojure
 (defn render [person favorite-color]
   [:div
    {:data-first-name (:first-name person)
@@ -311,7 +311,7 @@ surround. Here is the same html above, but using Sablono. _Now, take a
 second to internalize that the next part you'll see is hard (unfamiliar),
 **not** complex (has measurable, objective cognitive overhead)._
 
-```clojurescript
+```clojure
 1  [:div.section
 2     [:p (str "You walk into the store. A midget stands behind the counter on a stool. "
 3              "He occasionally props himself up with locked arms and "
