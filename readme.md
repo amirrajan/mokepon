@@ -301,8 +301,7 @@ of the formatting. Here is the same html, but formatted differently:
 ```
 
 Surprisingly the structure can still be inferred pretty easily. Except
-there is one small mistake in line `4`, do you see it? The block
-delimeters are swapped.
+there is one small mistake in line `4`, do you see it? There is a rouge `<div>` block delimeter.
 
 >But, we have tooling to make sure that doesn't happen!
 
