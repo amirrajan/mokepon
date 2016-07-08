@@ -74,10 +74,6 @@
 
 (cljs.test/run-tests)
 
-(:cash @core/app-state)
+(:team @core/app-state)
 
 (reset-game)
-
-
-(merge {:a 1} {:a 2})
-(assoc {:a 1} :a 2)

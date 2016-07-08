@@ -16,5 +16,3 @@
 (stop-autobuild)
 (clean-builds)
 (start-autobuild :dev)
-
-(cljs.test/run-tests)

@@ -75,7 +75,13 @@
 
 (defn on-throw-mokebox []
   (if (:mokebox (:items @app-state))
-    (on-decrement-item :mokebox)))
+    (do
+      (swap! app-state
+             update-in
+             [:team]
+             #(assoc % (:id (:battling @app-state))
+                     (:battling @app-state)))
+      (on-decrement-item :mokebox))))
 
 (defn on-sleep-at-home []
   (do
