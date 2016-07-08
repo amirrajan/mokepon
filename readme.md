@@ -260,6 +260,83 @@ ClojureScript (you should watch them if you still haven't).
 
 ### But No Really, Parenthesis!!!!
 
+Let's take a more focused look at block delimiters. Here is some html:
+
+```html
+1   <div class="section">
+2    <p>
+3      You walk into the store. A midget stands behind the counter on a
+4      stool. He occasionally props himself up with locked arms and dangles
+5      his feet in the air.
+6    </p>
+7    <div>
+8      <a style="margin: 0; padding: 0"
+9         href="javascript:;"
+10        onClick="buyItem()">Buy Mokébox<a>
+11     <p style="margin: 0; padding: 0; margin-bottom: 10px, font-size: smaller">
+12       Use this to capture Moképon.
+13     </p>
+14   </div>
+15   <hr/>
+16   <a id="back-button" href="javascript:;" onClick="goBack()">Go back.</a>
+17  </div>
+```
+
+Now, at a glance you can immediately grok the structure. This _isn't_
+because of the block delimeters (`<div>`, `<p`>, etc.), it's because
+of the formatting. Here is the same html, but formatted differently:
+
+```html
+1  <div class="section"><p>
+2      You walk into the store. A midget stands behind the counter on a
+3      stool. He occasionally props himself up with locked arms and dangles
+4      his feet in the air.<div></p>
+5    <div><a style="margin: 0; padding: 0"
+6       href="javascript:;"
+7       onClick="buyItem()">Buy Mokébox<a>
+8    <p style="margin: 0; padding: 0; margin-bottom: 10px, font-size: smaller">
+9      Use this to capture Moképon.</p></div>
+10   <hr/>
+11   <a id="back-button" href="javascript:;" onClick="goBack()">Go back.</a></div>
+```
+
+Surprisingly the structure can still be inferred pretty easily. Except
+there is one small mistake in line `4`, do you see it? The block
+delimeters are swapped.
+
+>But, we have tooling to make sure that doesn't happen!
+
+That's great! And so does ClojureScript via plugins like paredit and
+surround. Here is the same html above, but using Sablono. _Now, take a
+second to internalize that the next part you'll see is hard (unfamiliar),
+**not** complex (has measurable, objective cognitive overhead)._
+
+```clojurescript
+1  [:div.section
+2     [:p (str "You walk into the store. A midget stands behind the counter on a stool. "
+3              "He occasionally props himself up with locked arms and "
+4              "dangles his feet in the air.")]
+5     [:div [:a {:style {:margin "0"
+6                        :padding: "0"
+7                        :href "javascript:;"
+8                        :on-click "buyItem()"}}
+9            "Buy Mokébox"]
+10     [:p {:style {:margin "0"
+11                  :padding "0"
+12                  :margin-bottom "10px"
+13                  :font-size "smaller"}}
+14      "Use this to capture Moképon."]]
+15    [:hr]
+16    [:a#back-button {:href "javascript:;"
+17                     :on-click "goBack()"}
+18     "Go back."]]
+```
+
+The tooling ensures that all the parenthesis, brackets, and braces
+balance out. So as you get better with the tooling, _the block
+delimeters mentally fade away, because you start thinking in code "forms" and
+how to manipulate them, as opposed to syntax/closing out blocks._
+
 ## Running The Game
 
 - Install Java 8 (1.8 sdk).
