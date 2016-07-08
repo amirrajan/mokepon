@@ -8,3 +8,4 @@ target/
 .cljs_rhino_repl/
 /TAGS
 /out
+/.lein-failures
