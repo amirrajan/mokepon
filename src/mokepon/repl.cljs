@@ -1,7 +1,7 @@
 (ns mokepon.core)
 
 (defn go-find-trouble-in [location]
-  (reset! app-state mokepon.rpg/new-game)
+  (reset! (app-state) mokepon.rpg/new-game)
   (on-take-chipu)
   (on-go-to-location location)
   (on-find-trouble))

@@ -28,7 +28,7 @@
      [:p "Your mom feels pity for your sorry ass."]
      [:p "From her extended arm, a Chipu whimpers, hanging by the scruff of its neck."]
      [:p "\"Make something of yourself, you worthless millenial!\" she says to you."]
-     (a "Take Chipu." take-chikapu-handler))))
+     (a "Take Chipu." take-chipu-handler))))
 
 (defn adventure-view [description action-text key go-to-location-handler]
   (section

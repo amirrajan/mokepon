@@ -13,5 +13,5 @@
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src"]
                         :figwheel true
-                        :compiler {:main mokepon.core }}]}
+                        :compiler {:main mokepon.core-tests }}]}
   :figwheel {:css-dirs ["css"]})
