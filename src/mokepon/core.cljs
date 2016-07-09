@@ -20,17 +20,22 @@
 (defonce app-state (local-storage (atom new-game) :game))
 
 (defn team-count []
-  (count (keys (:team @app-state))))
+  (count (:team @app-state)))
 
 (defn chosen-monster []
-  (if (:chosen-key @app-state)
-    ((:chosen-key @app-state) (:team @app-state))))
+  (get-in @app-state
+          [:team (:chosen-key @app-state)]))
 
 (defn set-battle [chosen-key battling]
-  (assoc @app-state :chosen-key chosen-key :battling battling))
+  (assoc @app-state
+         :chosen-key chosen-key
+         :battling battling))
 
 (defn clear-battle []
-  (swap! app-state assoc :chosen-key nil :battling nil))
+  (swap! app-state
+         assoc
+         :chosen-key nil
+         :battling nil))
 
 (defn update-in-team [monster-key new-value]
   (assoc (:team @app-state) monster-key new-value))
@@ -45,7 +50,7 @@
          #(dec (or % 0))))
 
 (defn item-count [item-key]
-  (or (item-key (:items @app-state)) 0))
+  (or (get-in @app-state [:items item-key]) 0))
 
 (defn on-add-cash [amount]
   (swap! app-state
@@ -62,7 +67,6 @@
 
 (defn on-buy-item [item]
   (let [item-id (:id item)
-        new-item-count (inc (item-count item-id))
         current-cash (:cash @app-state)
         afford? (>= current-cash (:cost item))
         new-cash (- current-cash (:cost item))]
@@ -70,16 +74,15 @@
       (do (swap!
            app-state
            assoc
-           :cash
-           new-cash)
+           :cash new-cash)
           (on-add-to-play-by-play
            "You take the " (:name item)
            " from the midget's saggy, squishy hand. "
            "He smiles and gives you a tip of his top hat.")
           (swap! app-state
                  update-in
-                 [:items]
-                 #(assoc % item-id new-item-count)))
+                 [:items item-id]
+                 #(inc (item-count item-id))))
 
       (on-add-to-play-by-play
        "The midget bitch slaps you saying that you can't afford that. "

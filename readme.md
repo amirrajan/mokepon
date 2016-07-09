@@ -750,11 +750,19 @@ todo
 
 todo
 
+### `get-in`
+
+todo
+
 ### `update-in`
 
 todo
 
 ### `dissoc`
+
+todo
+
+### `if`
 
 todo
 
