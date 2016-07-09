@@ -71,6 +71,17 @@
 (defn heal-monster [monster]
   (assoc monster :hp (:max-hp monster)))
 
+(defn reset-monster-at [monster]
+  (assoc monster :at 0))
+
+(defn reset-team-at [team]
+  (into {}
+        (map (fn [[key value]]
+               [key (reset-monster-at value)])
+             team)))
+
 (defn heal-team [team]
   (into {}
-        (map (fn [[key value]] [key (heal-monster value)]) team)))
+        (map (fn [[key value]]
+               [key (heal-monster value)])
+             team)))

@@ -8,6 +8,7 @@
 
 (defn repl []
   (go-find-trouble-in :forest)
+  (swap! app-state merge {:cash 100})
   (on-attack)
   (on-sleep-at-home)
   (on-go-to-location :store)

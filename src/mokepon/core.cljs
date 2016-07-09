@@ -10,6 +10,7 @@
                                  apply-player-attack
                                  can-attack?
                                  heal-team
+                                 reset-team-at
                                  active-turn-threshold]]
             [mokepon.components :refer [rpg-view]]))
 
@@ -129,6 +130,13 @@
      [:team]
      #(heal-team %))))
 
+(defn on-reset-team-at []
+  (swap!
+   app-state
+   update-in
+   [:team]
+   #(reset-team-at %)))
+
 (defn on-tick-battle-core []
   (let [{:keys [battling chosen play-by-play]}
         (tick-battle (chosen-monster)
@@ -153,7 +161,9 @@
             (:battling @app-state)))
       (do
         (on-tick-battle-core)
-        (.setTimeout js/window #(on-tick-battle) 250))))
+        (.setTimeout js/window #(on-tick-battle) 250))
+
+      (on-reset-team-at)))
 
 
 (defn on-take-chikapu []
