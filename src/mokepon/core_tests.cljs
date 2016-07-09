@@ -107,3 +107,5 @@
   (run-tests)
   (swap! core/current-app-state assoc :value :game)
   (core/render!))
+
+(main)
