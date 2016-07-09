@@ -22,13 +22,13 @@
           [:li {:key (:name v)}
            (str (:name v) " (hp: " (:hp v) "/" (:max-hp v) ")")])]))
 
-(defn ask-mommy-view [team team-at-home take-chikapu-handler]
+(defn ask-mommy-view [team team-at-home take-chipu-handler]
   (if (and (empty? team) (empty? team-at-home))
     (section
      [:p "Your mom feels pity for your sorry ass."]
-     [:p "From her extended arm, a Chikapu whimpers, hanging by the scruff of its neck."]
+     [:p "From her extended arm, a Chipu whimpers, hanging by the scruff of its neck."]
      [:p "\"Make something of yourself, you worthless millenial!\" she says to you."]
-     (a "Take Chikapu." take-chikapu-handler))))
+     (a "Take Chipu." take-chikapu-handler))))
 
 (defn adventure-view [description action-text key go-to-location-handler]
   (section
@@ -191,12 +191,12 @@
 
 (defn home-view [team
                  team-at-home
-                 take-chikapu-handler
+                 take-chipu-handler
                  go-to-location-handler
                  sleep-at-home-handler]
   [:div
    (section [:p "You are being worthless at home."])
-   (ask-mommy-view team team-at-home take-chikapu-handler)
+   (ask-mommy-view team team-at-home take-chipu-handler)
    (team-view team-at-home "Moképon chillin' at the crib:" "None.")
    (section
     (a "Sleep. Cause you're a lazy worthless millenial." sleep-at-home-handler)
@@ -245,7 +245,7 @@
    (play-by-play-view play-by-play)])
 
 (defn rpg-view [state
-                take-chikapu-handler
+                take-chipu-handler
                 go-to-location-handler
                 find-trouble-handler
                 chosen
@@ -302,7 +302,7 @@
        (= location :home)
        (home-view team
                   team-at-home
-                  take-chikapu-handler
+                  take-chipu-handler
                   go-to-location-handler
                   sleep-at-home-handler)
 

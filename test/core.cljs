@@ -12,14 +12,17 @@
 
 (defn reset-game []
   (reset! core/app-state rpg/new-game)
-  (core/on-take-chikapu))
+  (core/on-take-chipu))
+
+(defn set-cash [amount]
+  (swap! core/app-state merge {:cash amount}))
 
 (deftest being-attacked
   "begin attacked by enemy monster lowers the chosen mokepon's hp"
   (reset! core/app-state rpg/new-game)
-  (core/on-take-chikapu)
-  (core/on-set-battle :chikapu mon/sulbabaur)
-  (is (some  #{"It has begun! Chikapu vs Sulbabaur!"} (:play-by-play @core/app-state)))
+  (core/on-take-chipu)
+  (core/on-set-battle :chipu mon/sulbabaur)
+  (is (some  #{"It has begun! Chipu vs Sulbabaur!"} (:play-by-play @core/app-state)))
   (make-enemy-attack-ready)
   (core/on-tick-battle-core)
   (is (= (:hp (core/chosen-monster)) 40)))
@@ -27,7 +30,7 @@
 (deftest being-killed
   "being killed by enemy monster removes chosen mokepon form the team"
   (reset-game)
-  (core/on-set-battle :chikapu mon/sulbabaur)
+  (core/on-set-battle :chipu mon/sulbabaur)
   (swap! core/app-state update-in
          [:team (:chosen-key @core/app-state) :hp]
          (fn [_] 0))
@@ -36,20 +39,20 @@
 
 (deftest healing-team
   "anyone with low hp is healed to max"
-  (is (= (rpg/heal-team {:chikapu {:hp 10 :max-hp 50}
+  (is (= (rpg/heal-team {:chipu {:hp 10 :max-hp 50}
                          :deogude {:hp 5  :max-hp 100}})
-         {:chikapu {:hp 50   :max-hp 50}
+         {:chipu {:hp 50   :max-hp 50}
           :deogude {:hp 100  :max-hp 100}})))
 
 (deftest capturing-wild-mokepon
   "attempting to capture wild mokepon decrements mokeboxes"
   (reset-game)
-  (core/on-set-battle :chikapu mon/sulbabaur)
+  (set-cash 20)
+  (core/on-set-battle :chipu mon/sulbabaur)
   (is (= (core/item-count :mokebox) 0))
   (core/on-throw-mokebox)
   (is (= (core/item-count :mokebox) 0))
-  (core/on-add-cash 10)
-  (is (= (:cash @core/app-state) 20))
+
   (core/on-buy-item (:mokebox items/store-items-lookup))
   (core/on-buy-item (:mokebox items/store-items-lookup))
   (is (= (core/item-count :mokebox) 2))
@@ -67,13 +70,13 @@
   (core/on-throw-mokebox)
   (is (= (:sulbabaur (:team @core/app-state))
          (:battling @core/app-state)))
-  (is (= (core/item-count :mokebox) 0))))
+  (is (= (core/item-count :mokebox) 0)))
 
 (deftest battle-is-over-if-mokepon-is-captured
   "capturing a monster ends battle"
   (reset-game)
   (core/on-buy-item (:mokebox items/store-items-lookup))
-  (core/on-set-battle :chikapu mon/sulbabaur)
+  (core/on-set-battle :chipu mon/sulbabaur)
   (swap! core/app-state [:battling :max-hp] (fn [_] 100000000))
   (core/on-throw-mokebox)
   (is (= (rpg/battle-over? (core/chosen-monster) (:battling @core/app-state)) true)))
@@ -81,6 +84,7 @@
 (deftest purchasing-item
   "purchasing item decrements cash"
   (reset-game)
+  (swap! core/app-state merge {:cash 10})
   (is (= (:cash @core/app-state) 10))
   (core/on-buy-item (:mokebox items/store-items-lookup))
   (is (= (:cash @core/app-state) 0)))

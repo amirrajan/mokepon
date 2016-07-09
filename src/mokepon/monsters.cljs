@@ -1,11 +1,12 @@
 (ns mokepon.monsters)
 
-(def chikapu
-  {:id :chikapu
-   :name "Chikapu"
+(def chipu
+  {:id :chipu
+   :name "Chipu"
    :battle-text "The rat comes a swinging with electric punches."
    :speed 90
    :hp 50
+   :type :electric
    :max-hp 50
    :at 0})
 
@@ -15,6 +16,7 @@
    :battle-text "It's whipping vines and shit."
    :speed 90
    :hp 50
+   :type :grass
    :max-hp 50
    :at 0})
 
@@ -24,5 +26,16 @@
    :battle-text "Tank top looks a bit bloody. Best watch out."
    :speed 90,
    :hp 50,
+   :type :rock
+   :max-hp 50
+   :at 0})
+
+(def tirsqule
+  { :id :tirsqule
+   :name "Tirsqule"
+   :battle-text "Its a slippery little devil. Smells like a rotting fish head."
+   :speed 90,
+   :hp 50,
+   :type :water
    :max-hp 50
    :at 0})

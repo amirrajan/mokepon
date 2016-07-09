@@ -2,7 +2,7 @@
 
 (defn go-find-trouble-in [location]
   (reset! app-state mokepon.rpg/new-game)
-  (on-take-chikapu)
+  (on-take-chipu)
   (on-go-to-location location)
   (on-find-trouble))
 

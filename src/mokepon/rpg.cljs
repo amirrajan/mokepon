@@ -5,7 +5,7 @@
    :team {}
    :location :outside
    :chosen-key nil
-   :cash 10
+   :cash 100
    :battling nil
    :items {}
    :play-by-play ["You sit outside. You needed a break from your mother yelling at you."]})

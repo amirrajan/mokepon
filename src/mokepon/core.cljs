@@ -1,6 +1,6 @@
 (ns mokepon.core
   (:require [sablono.core :as sab]
-            [mokepon.monsters :refer [chikapu sulbabaur deogude]]
+            [mokepon.monsters :refer [chipu sulbabaur deogude]]
             [mokepon.items :refer [store-items store-items-lookup]]
             [alandipert.storage-atom :refer [local-storage]]
             [mokepon.rpg :refer [new-game
@@ -166,10 +166,10 @@
       (on-reset-team-at)))
 
 
-(defn on-take-chikapu []
+(defn on-take-chipu []
   (swap! app-state
          assoc
-         :team (assoc (:team @app-state) :chikapu chikapu)))
+         :team (assoc (:team @app-state) :chipu chipu)))
 
 (defn on-go-to-location [loc]
   (do
@@ -211,18 +211,18 @@
 
     (= (:location @app-state) :forest)
     ((do
-      (on-set-battle :chikapu sulbabaur)
+      (on-set-battle :chipu sulbabaur)
       (on-tick-battle)))
 
     (= (:location @app-state) :canyon)
     (do
-      (on-set-battle :chikapu deogude)
+      (on-set-battle :chipu deogude)
       (on-tick-battle))))
 
 (defn rpg-container []
   (sab/html
    (rpg-view @app-state
-             on-take-chikapu
+             on-take-chipu
              on-go-to-location
              on-find-trouble
              (chosen-monster)
