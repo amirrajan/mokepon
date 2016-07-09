@@ -4,6 +4,63 @@ Catching 'em all just got real, yo.
 
 An RPG about catching monsters IRL. Written in React and ClojureScript.
 
+## Running The Game
+
+- Install Java 8 (1.8 sdk).
+- Install [Leiningen](http://leiningen.org/).
+- Install rlwrap (`brew install rlwrap`).
+- Clone repo.
+- Nav to root directory.
+- Run `lein deps`.
+- Run `rlwrap lein figwheel`
+- Open `index.html` in Chrome.
+- Then `touch src/mokepon/core.cljs`.
+
+### Running The Game + Emacs
+
+- Instead of running `rlwrap lein figwheel`, do the following.
+- Install plugins: `cider`, `company-mode`.
+- Throw these lines into your `init.el`:
+
+```elisp
+(add-hook 'cider-repl-mode-hook #'company-mode)
+
+(setq cider-cljs-lein-repl
+      "(do (require 'figwheel-sidecar.repl-api)
+           (figwheel-sidecar.repl-api/start-figwheel!)
+           (figwheel-sidecar.repl-api/cljs-repl))")
+
+(add-hook
+ 'clojurescript-mode-hook
+ (lambda ()
+   (progn
+     (show-paren-mode)
+     (paredit-mode)
+     (modify-syntax-entry ?- "w"))))
+
+(defun user/cider-send-to-repl ()
+  (interactive)
+  (let ((s (buffer-substring-no-properties
+            (nth 0 (cider-last-sexp 'bounds))
+            (nth 1 (cider-last-sexp 'bounds)))))
+    (with-current-buffer (cider-current-connection)
+      (insert s)
+      (cider-repl-return))))
+```
+
+- In `~/.lein/profiles.clj` add the following lines:
+```clojure
+{:user {:plugins [[cider/cider-nrepl "0.12.0-SNAPSHOT"]]
+        :dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}
+```
+- In Emacs, first time you open a `.cljs` file run: `M-x cider-jack-in-clojurescript`.
+- You can use `repl.cljs` to interact with the applications.
+- To send a block to the browser use `M-x user/cider-send-to-repl`.
+- To view the output of a block within in Emacs use `M-x cider-eval-last-sexp`.
+- If you don't get autocompletion, make sure `cider-mode` is enabled
+  for the current buffer (you may want to start and stop it again for
+  good measure).
+
 ## A Moment of Shock
 
 >Gasp! You're using a lisp dialect?! Are you insane??? Do you not see all
@@ -335,62 +392,6 @@ The tooling ensures that all the parenthesis, brackets, and braces
 balance out. So as you get better with the tooling, _the block
 delimeters mentally fade away, because you start thinking in code "forms" and
 how to manipulate them, as opposed to syntax/closing out blocks._
-
-## Running The Game
-
-- Install Java 8 (1.8 sdk).
-- Install [Leiningen](http://leiningen.org/).
-- Install rlwrap (`brew install rlwrap`).
-- Clone repo.
-- Nav to root directory.
-- Run `lein deps`.
-- Run `rlwrap lein figwheel`
-- Open `index.html` in Chrome.
-
-### Running The Game + Emacs
-
-- Instead of running `rlwrap lein figwheel`, do the following.
-- Install plugins: `cider`, `company-mode`.
-- Throw these lines into your `init.el`:
-
-```elisp
-(add-hook 'cider-repl-mode-hook #'company-mode)
-
-(setq cider-cljs-lein-repl
-      "(do (require 'figwheel-sidecar.repl-api)
-           (figwheel-sidecar.repl-api/start-figwheel!)
-           (figwheel-sidecar.repl-api/cljs-repl))")
-
-(add-hook
- 'clojurescript-mode-hook
- (lambda ()
-   (progn
-     (show-paren-mode)
-     (paredit-mode)
-     (modify-syntax-entry ?- "w"))))
-
-(defun user/cider-send-to-repl ()
-  (interactive)
-  (let ((s (buffer-substring-no-properties
-            (nth 0 (cider-last-sexp 'bounds))
-            (nth 1 (cider-last-sexp 'bounds)))))
-    (with-current-buffer (cider-current-connection)
-      (insert s)
-      (cider-repl-return))))
-```
-
-- In `~/.lein/profiles.clj` add the following lines:
-```clojure
-{:user {:plugins [[cider/cider-nrepl "0.12.0-SNAPSHOT"]]
-        :dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}
-```
-- In Emacs, first time you open a `.cljs` file run: `M-x cider-jack-in-clojurescript`.
-- You can use `repl.cljs` to interact with the applications.
-- To send a block to the browser use `M-x user/cider-send-to-repl`.
-- To view the output of a block within in Emacs use `M-x cider-eval-last-sexp`.
-- If you don't get autocompletion, make sure `cider-mode` is enabled
-  for the current buffer (you may want to start and stop it again for
-  good measure).
 
 ## JavaScript to ClojureScript
 
