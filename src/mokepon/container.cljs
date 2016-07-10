@@ -75,8 +75,8 @@
    :play-by-play
    (apply add-to-play-by-play message)))
 
-(defn on-buy-item [item]
-  (let [item-id (:id item)
+(defn on-buy-item [item-id]
+  (let [item (item-id store-items-lookup)
         current-cash (:cash @(app-state))
         afford? (>= current-cash (:cost item))
         new-cash (- current-cash (:cost item))]

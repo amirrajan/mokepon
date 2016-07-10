@@ -1,4 +1,4 @@
-(ns mokepon.core)
+(ns mokepon.container)
 
 (defn go-find-trouble-in [location]
   (reset! (app-state) mokepon.rpg/new-game)

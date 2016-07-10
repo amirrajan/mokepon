@@ -34,12 +34,14 @@
       (assoc monster :at (+ (:at monster) (:speed monster)))
       monster))
 
+(def affinities
+  {[:electric  :grass] 0.5
+   [:ground :electric] 2
+   [:electric :ground] 0})
+
 (defn affinity-lookup [from to]
   (let [from-type (:type from)
-        to-type (:type to)
-        affinities {[:electric  :grass] 0.5
-                    [:ground :electric] 2
-                    [:electric :ground] 0}]
+        to-type (:type to)]
     (or (get affinities [from-type to-type]) 1.0)))
 
 (defn attack-damage [from to]
@@ -51,7 +53,9 @@
     {:to (assoc to :hp (- (:hp to) (attack-damage from to)))
      :from (assoc from :at 0)
      :attack-occured? true}
-    {:from from :to to :attack-occured? false}))
+    {:to to
+     :from from
+     :attack-occured? false}))
 
 (defn attack-description [from to]
   (cond (is-dead? to)

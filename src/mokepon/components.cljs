@@ -211,7 +211,7 @@
       [:a
        {:style {:margin 0 :padding 0}
         :href "javascript:;"
-        :on-click #(buy-item-handler item)}
+        :on-click #(buy-item-handler (:id item))}
        (str "Buy " (:name item) " (" (:cost item) " Ƒiddy)")]
       [:p
        {:style {:margin 0 :padding 0 :margin-bottom "10px" :font-size "smaller"}}
