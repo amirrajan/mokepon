@@ -1,6 +1,6 @@
 (ns mokepon.container
   (:require [sablono.core :as sab]
-            [mokepon.monsters :refer [chipu sulbabaur deogude]]
+            [mokepon.monsters :refer [chipu sulbabaur deogude tirsqule]]
             [mokepon.items :refer [store-items store-items-lookup]]
             [alandipert.storage-atom :refer [local-storage]]
             [mokepon.rpg :refer [new-game
@@ -218,7 +218,8 @@
         location (:location @(app-state))
         first-team-member (first (keys team))
         location-monsters {:forest sulbabaur
-                           :canyon deogude}
+                           :canyon deogude
+                           :pool   tirsqule}
         monster-for-location (location location-monsters)]
     (cond
       (empty? team)

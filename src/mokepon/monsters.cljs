@@ -3,7 +3,7 @@
 (def chipu
   {:id :chipu
    :name "Chipu"
-   :battle-text "The rat comes a swinging with electric punches."
+   :battle-text "It looks like a tiny rat that's been shocked by a hair dryer."
    :speed 90
    :hp 50
    :power 10
@@ -14,7 +14,7 @@
 (def sulbabaur
   {:id :sulbabaur
    :name "Sulbabaur"
-   :battle-text "It's whipping vines and shit."
+   :battle-text "It's running around in circles, whipping vines and shit."
    :speed 90
    :hp 50
    :power 10
@@ -25,7 +25,7 @@
 (def deogude
   {:id :deogude
    :name "Deogude"
-   :battle-text "Tank top looks a bit bloody. Best watch out."
+   :battle-text "Its tank top looks a bit bloody. Best watch out."
    :speed 90,
    :hp 50,
    :power 10
@@ -36,7 +36,7 @@
 (def tirsqule
   { :id :tirsqule
    :name "Tirsqule"
-   :battle-text "Its a slippery little devil. Smells like a rotting fish head."
+   :battle-text "It's a slippery little devil. Smells like a rotting fish head."
    :speed 90,
    :hp 50,
    :power 10

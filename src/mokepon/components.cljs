@@ -56,6 +56,11 @@
     "There is a line of trees off in the distance."
     "Go be awesome in the forest."
     :forest
+    go-to-location-handler)
+   (adventure-view
+    "The neighborhood pool hasn't been cleaned in a while. Smells like poop."
+    "Go be awesome at the pool."
+    :pool
     go-to-location-handler)])
 
 (defn progress-bar-view [percentage]
@@ -198,6 +203,33 @@
     items
     throw-mokebox-handler))
 
+(defn pool-view [team
+                   find-trouble-handler
+                   chosen
+                   chosen-can-attack?
+                   battle-over?
+                   battling
+                   go-to-location-handler
+                   attack-handler
+                   active-turn-threshold
+                   items
+                   throw-mokebox-handler]
+  (location-view
+    "You are currently chillin' like a villian at the pool."
+    team
+    find-trouble-handler
+    chosen
+    chosen-can-attack?
+    battle-over?
+    battling
+    go-to-location-handler
+    attack-handler
+    go-to-location-handler
+    active-turn-threshold
+    items
+    throw-mokebox-handler))
+
+
 (defn home-view [team
                  team-at-home
                  take-chipu-handler
@@ -307,6 +339,19 @@
                     active-turn-threshold
                     items
                     throw-mokebox-handler)
+
+       (= location :pool)
+       (pool-view team
+                  find-trouble-handler
+                  chosen
+                  chosen-can-attack?
+                  battle-over?
+                  battling
+                  go-to-location-handler
+                  attack-handler
+                  active-turn-threshold
+                  items
+                  throw-mokebox-handler)
 
        (= location :home)
        (home-view team
