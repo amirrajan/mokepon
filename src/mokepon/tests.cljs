@@ -30,7 +30,7 @@
 (defn get-state [& path]
   (get-in (state) path))
 
-(defn log-app-state [& path]
+(defn log-state [& path]
   (log (apply get-state path)))
 
 (deftest being-attacked
@@ -150,6 +150,13 @@
   (tnr/on-tick-battle-core)
   (has-play-by-play "Tirsqule attacks Chipu for 10.")
   (is (= (get-state :team :chipu :hp) 40)))
+
+(deftest looking-for-trouble-chooses-first-monster-on-team
+  (swap! (tnr/app-state) update-in [:team] #(dissoc % :chipu))
+  (swap! (tnr/app-state) assoc-in [:team :sulbabaur] mon/sulbabaur)
+  (tnr/on-go-to-location :forest)
+  (tnr/on-find-trouble false)
+  (is (= (tnr/chosen-monster) (get-state :team :sulbabaur))))
 
 (defn run-tests []
   (.clear js/console)

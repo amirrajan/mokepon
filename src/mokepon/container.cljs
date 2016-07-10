@@ -213,26 +213,28 @@
                        battling
                        (:play-by-play @(app-state)))))
 
-(defn on-find-trouble []
-  (cond
-    (empty? (:team @(app-state))) false
-
-    (= (:location @(app-state)) :forest)
-    ((do
-      (on-set-battle :chipu sulbabaur)
-      (on-tick-battle)))
-
-    (= (:location @(app-state)) :canyon)
-    (do
-      (on-set-battle :chipu deogude)
-      (on-tick-battle))))
+(defn on-find-trouble [kick-off-battle]
+  (let [team (:team @(app-state))
+        location (:location @(app-state))
+        first-team-member (first (keys team))
+        location-monsters {:forest sulbabaur
+                           :canyon deogude}
+        monster-for-location (location location-monsters)]
+    (cond
+      (empty? team)
+      false
+      monster-for-location
+      (do
+        (on-set-battle first-team-member
+                       monster-for-location)
+        (if kick-off-battle (on-tick-battle))))))
 
 (defn rpg-container []
   (sab/html
    (rpg-view @(app-state)
              on-take-chipu
              on-go-to-location
-             on-find-trouble
+             #(on-find-trouble true)
              (chosen-monster)
              (and (can-attack? (chosen-monster))
                   (not (battle-over? (chosen-monster) (:battling @(app-state)))))

@@ -81,6 +81,21 @@
 (defn play-by-play-view [play-by-play]
   (section (for [i (take 25 (reverse play-by-play))] [:div i])))
 
+(defn battle-report-view [battle-over? go-to-location-handler]
+  (if battle-over?
+    (section
+     [:p "The fight has ended."]
+     (a "Head back." #(go-to-location-handler :outside)))))
+
+(defn battle-actions-view [chosen-can-attack?
+                           attack-handler
+                           battle-over?
+                           items
+                           throw-mokebox-handler]
+  (section
+   (conditional-a chosen-can-attack? "Attack!" attack-handler)
+   (conditional-a (and (not battle-over?) (> (:mokebox items) 0)) "Throw Mokébox!" throw-mokebox-handler)))
+
 (defn battle-view [chosen
                    chosen-can-attack?
                    battle-over?
@@ -93,13 +108,8 @@
   [:div
    (battler-view battling active-turn-threshold)
    (battler-view chosen active-turn-threshold)
-   (section
-    (conditional-a chosen-can-attack? "Attack!" attack-handler)
-    (conditional-a (and (not battle-over?) (> (:mokebox items) 0)) "Throw Mokébox!" throw-mokebox-handler))
-   (if battle-over?
-     (section
-      [:p "The fight has ended."]
-      (a "Head back." #(go-to-location-handler :outside))))])
+   (battle-actions-view chosen-can-attack? attack-handler battle-over? items throw-mokebox-handler)
+   (battle-report-view battle-over? go-to-location-handler)])
 
 (defn location-view [location-description
                      team
