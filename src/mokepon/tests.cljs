@@ -43,10 +43,14 @@
 
 (deftest being-killed
   "being killed by enemy monster removes chosen mokepon form the team"
-  (tnr/on-set-battle :chipu mon/sulbabaur)
+  (swap! (tnr/app-state) assoc-in [:team :sulbabaur] mon/sulbabaur)
   (swap! (tnr/app-state)
          assoc-in
-         [:team (:chosen-key (state)) :hp] 0)
+         [:team :sulbabaur :hp] 0)
+  (swap! (tnr/app-state)
+         assoc-in
+         [:team :chipu :hp] 0)
+
   (tnr/remove-dead-team-members)
   (is (= (tnr/team-count) 0)))
 
@@ -157,6 +161,25 @@
   (tnr/on-go-to-location :forest)
   (tnr/on-find-trouble false)
   (is (= (tnr/chosen-monster) (get-state :team :sulbabaur))))
+
+(deftest battle-doesnt-end-until-all-of-team-is-dead
+  (swap! (tnr/app-state) assoc-in [:team :sulbabaur] mon/sulbabaur)
+  (tnr/on-go-to-location :forest)
+  (tnr/on-find-trouble false)
+  (make-enemy-attack-ready)
+
+  ;;make enemy's attack super powerful
+  (swap! (tnr/app-state)
+         assoc-in [:battling :power]
+         100)
+
+  ;;let AI perform killing blow
+  (tnr/on-tick-battle-core)
+  (is (= (rpg/is-dead? (get-state :team :chipu)) true))
+
+  ;;tick again and see that monster has been swapped out
+  (tnr/on-tick-battle-core)
+  (has-play-by-play "Sulbabaur dashes into battle!"))
 
 (defn run-tests []
   (.clear js/console)

@@ -67,6 +67,13 @@
 (defn item-count [item-key]
   (or (get-app-state :items item-key) 0))
 
+(defn first-live-team-member []
+  (first
+   (map (fn [[k v]] k)
+        (filter (fn [[k v]]
+                  (not (is-dead? v)))
+                (:team @(app-state))))))
+
 (defn on-add-to-play-by-play [& message]
   (swap!
    (app-state)
@@ -150,18 +157,29 @@
         (tick-battle (chosen-monster)
                      (:battling @(app-state))
                      (:play-by-play @(app-state)))]
-    (swap! (app-state)
-           assoc
-           :battling battling
-           :team (update-in-team (:chosen-key @(app-state)) chosen)
-           :play-by-play play-by-play)))
+    (do
+      (swap! (app-state)
+             assoc
+             :battling battling
+             :team (update-in-team (:chosen-key @(app-state)) chosen)
+             :play-by-play play-by-play)
+      (let [live-member-key (first-live-team-member)
+            live-monster (get-in @(app-state) [:team live-member-key])]
+        (if (and (is-dead? chosen) live-member-key)
+          (do
+            (on-add-to-play-by-play (str (:name live-monster) " dashes into battle!"))
+            (swap! (app-state) assoc :chosen-key live-member-key)))))))
+
+(defn dead-team-member-keys []
+  (map (fn [[k v]] k)
+       (filter
+        (fn [[k v]] (is-dead? v))
+        (:team @(app-state)))))
 
 (defn remove-dead-team-members []
-  (if (is-dead? (chosen-monster))
-    (swap! (app-state)
-           update-in
-           [:team]
-           #(dissoc % (:chosen-key @(app-state))))))
+  (swap! (app-state)
+         update-in [:team]
+         #(apply dissoc % (dead-team-member-keys))))
 
 (defn on-tick-battle []
   (if (not (battle-over?
@@ -213,10 +231,12 @@
                        battling
                        (:play-by-play @(app-state)))))
 
+
+
 (defn on-find-trouble [kick-off-battle]
   (let [team (:team @(app-state))
         location (:location @(app-state))
-        first-team-member (first (keys team))
+        first-team-member (first-live-team-member)
         location-monsters {:forest sulbabaur
                            :canyon deogude
                            :pool   tirsqule}
