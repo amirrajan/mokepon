@@ -735,6 +735,14 @@ functions are covered in the next section.
 Let's go through some ClojureScript functions and see how they
 replace what's in Lodash:
 
+### `if`
+
+todo
+
+### `cond`
+
+todo
+
 ### `map`
 
 todo
@@ -759,14 +767,10 @@ todo
 
 todo
 
+### `assoc-in`
+
+todo
+
 ### `dissoc`
-
-todo
-
-### `if`
-
-todo
-
-### `cond`
 
 todo

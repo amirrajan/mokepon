@@ -27,14 +27,19 @@
 (defonce test-app-state
   (atom new-game))
 
-(defn app-state [] (if (= (:value @current-app-state) :game) game-app-state test-app-state))
+(defn app-state []
+  (if (= (:value @current-app-state) :game)
+    game-app-state
+    test-app-state))
+
+(defn get-app-state [& path]
+  (get-in @(app-state) path))
 
 (defn team-count []
   (count (:team @(app-state))))
 
 (defn chosen-monster []
-  (get-in @(app-state)
-          [:team (:chosen-key @(app-state))]))
+  (get-app-state :team (:chosen-key @(app-state))))
 
 (defn set-battle [chosen-key battling]
   (assoc @(app-state)
@@ -60,13 +65,7 @@
          #(dec (or % 0))))
 
 (defn item-count [item-key]
-  (or (get-in @(app-state) [:items item-key]) 0))
-
-(defn on-add-cash [amount]
-  (swap! (app-state)
-         update-in
-         [:cash]
-         #(+ % amount)))
+  (or (get-app-state :items item-key) 0))
 
 (defn on-add-to-play-by-play [& message]
   (swap!
@@ -112,21 +111,21 @@
           (do
             (on-add-to-play-by-play
              "The Mokébox knocks out the "
-             (get-in @(app-state) [:battling :name])
+             (get-app-state :battling :name)
              ". It's been captured!")
             (swap! (app-state)
-                   update-in
+                   assoc-in
                    [:battling :captured]
-                   (fn [_] true))
+                   true)
             (swap! (app-state)
                    update-in
-                   [:team ]
+                   [:team]
                    #(assoc %
                            (:id battling)
                            battling)))
           (on-add-to-play-by-play
            "The Mokébox bounces off "
-           (get-in @(app-state) [:battling :name])
+           (get-app-state :battling :name)
            ". It's still too strong!"))))))
 
 (defn on-sleep-at-home []
