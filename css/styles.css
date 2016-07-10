@@ -30,7 +30,7 @@ a {
 
 hr {
   border: 0;
-  height: 2px;
+  height: 1px;
   background: #a0a0a0;
 }
 
@@ -44,5 +44,6 @@ hr {
 
 
 div {
-  padding: 2px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }

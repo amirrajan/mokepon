@@ -34,17 +34,36 @@
       (assoc monster :at (+ (:at monster) (:speed monster)))
       monster))
 
+(defn affinity-lookup [from to]
+  (let [from-type (:type from)
+        to-type (:type to)
+        affinities {[:electric  :grass] 0.5
+                    [:ground :electric] 2
+                    [:electric :ground] 0}]
+    (or (get affinities [from-type to-type]) 1.0)))
+
+(defn attack-damage [from to]
+  (* (:power from)
+     (affinity-lookup from to)))
+
 (defn try-attack [from to]
   (if (can-attack? from)
-      {:to (assoc to :hp (- (:hp to) 10))
-       :from (assoc from :at 0)
-       :attack-occured? true}
-      {:from from :to to :attack-occured? false}))
+    {:to (assoc to :hp (- (:hp to) (attack-damage from to)))
+     :from (assoc from :at 0)
+     :attack-occured? true}
+    {:from from :to to :attack-occured? false}))
 
 (defn attack-description [from to]
-  (if (is-dead? to)
-    (str (:name to) " has fallen. Mauled and bloodied.")
-    (str (:name from) " attacks " (:name to) " for 10.")))
+  (cond (is-dead? to)
+        (str (:name to) " has fallen. Mauled and bloodied.")
+        (= (affinity-lookup from to) 2)
+        (str (:name from) " attacks " (:name to) " for " (attack-damage from to) ". It was super effective.")
+        (= (affinity-lookup from to) 0.5)
+        (str (:name from) " attacks " (:name to) " for " (attack-damage from to) ". It wasn't very effective.")
+        (= (affinity-lookup from to) 0)
+        (str  (:name to) " is immune to " (:name from) "'s attack. No damage was done.")
+        :else
+        (str (:name from) " attacks " (:name to) " for " (attack-damage from to) ".")))
 
 (defn apply-player-attack [chosen battling play-by-play]
   (let [{:keys [from to attack-occured?]}

@@ -18,11 +18,14 @@
 
 (reset! alandipert.storage-atom/storage-delay 1000)
 
-(defonce current-app-state (atom {:value :game}))
+(defonce current-app-state
+  (atom {:value :game}))
 
-(defonce game-app-state (local-storage (atom new-game) :game))
+(defonce game-app-state
+  (local-storage (atom new-game) :game))
 
-(defonce test-app-state (atom new-game))
+(defonce test-app-state
+  (atom new-game))
 
 (defn app-state [] (if (= (:value @current-app-state) :game) game-app-state test-app-state))
 
@@ -167,7 +170,7 @@
             (:battling @(app-state))))
       (do
         (on-tick-battle-core)
-        (.setTimeout js/window #(on-tick-battle) 250))
+        (.setTimeout js/window #(on-tick-battle) 350))
 
       (on-reset-team-at)))
 
