@@ -43,6 +43,11 @@
     :home
     go-to-location-handler)
    (adventure-view
+    "There is a Moképon store with a half working neon sign flashing. Looks kinda shady."
+    "Go shop."
+    :store
+    go-to-location-handler)
+   (adventure-view
     "There is a rock face jutting out. It looks freaking scary."
     "Go be awesome in the canyon."
     :canyon
@@ -51,11 +56,6 @@
     "There is a line of trees off in the distance."
     "Go be awesome in the forest."
     :forest
-    go-to-location-handler)
-   (adventure-view
-    "There is a Moképon store with a half working neon sign flashing. Looks kinda shady."
-    "Go shop."
-    :store
     go-to-location-handler)])
 
 (defn progress-bar-view [percentage]
@@ -93,18 +93,13 @@
   [:div
    (battler-view battling active-turn-threshold)
    (battler-view chosen active-turn-threshold)
-   (cond
-     battle-over?
+   (section
+    (conditional-a chosen-can-attack? "Attack!" attack-handler)
+    (conditional-a (and (not battle-over?) (> (:mokebox items) 0)) "Throw Mokébox!" throw-mokebox-handler))
+   (if battle-over?
      (section
-      (disabled-a "Attack!")
-      (a "Head back." #(go-to-location-handler :outside)))
-
-     :else
-     (section
-      (conditional-a chosen-can-attack? "Attack!" attack-handler)
-      (conditional-a (> (:mokebox items) 0)
-                     "Throw Mokébox!"
-                     throw-mokebox-handler)))])
+      [:p "The fight has ended."]
+      (a "Head back." #(go-to-location-handler :outside))))])
 
 (defn location-view [location-description
                      team
