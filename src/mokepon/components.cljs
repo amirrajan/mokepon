@@ -94,7 +94,11 @@
                            throw-mokebox-handler]
   (section
    (conditional-a chosen-can-attack? "Attack!" attack-handler)
-   (conditional-a (and (not battle-over?) (> (:mokebox items) 0)) "Throw Mokébox!" throw-mokebox-handler)))
+   (if (:mokebox items)
+     (conditional-a (and (not battle-over?)
+                         (> (:mokebox items) 0))
+                    "Throw Mokébox!"
+                    throw-mokebox-handler))))
 
 (defn battle-view [chosen
                    chosen-can-attack?
