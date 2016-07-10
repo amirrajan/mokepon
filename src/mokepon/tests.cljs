@@ -122,7 +122,6 @@
   (is (= (get-state :battling :hp) 45)))
 
 (deftest ground-mokepon-do-double-damage-to-electric
-  "ground mokepon do double damage to electric"
   (tnr/on-set-battle :chipu mon/deogude)
   (make-enemy-attack-ready)
   (tnr/on-tick-battle-core)
@@ -131,12 +130,26 @@
   (is (= (get-state :team :chipu :hp) 30)))
 
 (deftest ground-mokepon-are-immune-to-electric
-  "ground mokepon are immune to electric"
   (tnr/on-set-battle :chipu mon/deogude)
   (swap! (tnr/app-state) assoc-in [:team :chipu :at] 1800)
   (tnr/on-attack)
   (has-play-by-play "Deogude is immune to Chipu's attack. No damage was done.")
   (is (= (get-state :battling :hp) 50)))
+
+(deftest electric-mokepon-do-double-damage-to-water
+  (tnr/on-set-battle :chipu mon/tirsqule)
+  (swap! (tnr/app-state) assoc-in [:team :chipu :at] 1800)
+  (tnr/on-attack)
+  (has-play-by-play "Chipu attacks Tirsqule for 20. It was super effective.")
+  (is (= (get-state :battling :hp) 30)))
+
+(deftest water-mokepon-do-normal-damage-to-electric
+  (tnr/on-set-battle :chipu mon/tirsqule)
+  (swap! (tnr/app-state) assoc-in [:team :chipu :at] 1800)
+  (make-enemy-attack-ready)
+  (tnr/on-tick-battle-core)
+  (has-play-by-play "Tirsqule attacks Chipu for 10.")
+  (is (= (get-state :team :chipu :hp) 40)))
 
 (defn run-tests []
   (.clear js/console)
