@@ -8,17 +8,22 @@ An RPG about catching monsters IRL. Written in React and ClojureScript.
 
 - Install Java 8 (1.8 sdk).
 - Install [Leiningen](http://leiningen.org/).
-- Install rlwrap (`brew install rlwrap`).
 - Clone repo.
 - Nav to root directory.
 - Run `lein deps`.
+- Run `lein cljsbuild once`.
+- Open `index.html` in Chrome and play.
+
+### Running The Game + Dev
+
+- Install rlwrap (`brew install rlwrap`).
 - Run `rlwrap lein figwheel`.
 - In the repl execute the command `(clean-builds :devs)`.
 - In the repl execute the command `(build-once :devs)`.
 - Open `index-dev.html` in Chrome.
 - Then `touch src/mokepon/core.cljs` to ensure the live reload is working.
 
-### Running The Game + Emacs
+### Running The Game + Dev + Emacs
 
 - Instead of running `rlwrap lein figwheel`, do the following.
 - Install plugins: `cider`, `company-mode`.
@@ -56,6 +61,7 @@ An RPG about catching monsters IRL. Written in React and ClojureScript.
         :dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}
 ```
 - In Emacs, first time you open a `.cljs` file run: `M-x cider-jack-in-clojurescript`.
+- Open `index-dev.html` in Chrome.
 - You can use `repl.cljs` to interact with the applications.
 - To send a block to the browser use `M-x user/cider-send-to-repl`.
 - To view the output of a block within in Emacs use `M-x cider-eval-last-sexp`.
