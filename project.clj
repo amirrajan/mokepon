@@ -13,9 +13,12 @@
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src"]
                         :figwheel true
-                        :compiler {:main mokepon.core}}
+                        :compiler {:output-to "mokepon-dev.js"
+                                   :output-dir "out-dev"
+                                   :main mokepon.core}}
                        {:id "prod"
-                        :output-to "out_prod"
                         :source-paths ["src"]
-                        :compiler {:main mokepon.core}}]}
+                        :compiler {:output-to "mokepon.js"
+                                   :output-dir "out"
+                                   :main mokepon.core}}]}
   :figwheel {:css-dirs ["css"]})

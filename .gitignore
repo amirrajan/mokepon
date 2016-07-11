@@ -7,6 +7,6 @@ target/
 *.#*
 .cljs_rhino_repl/
 /TAGS
-/out
+/out-dev
 /.lein-failures
 /.tern-port
