@@ -186,13 +186,43 @@
          update-in [:team]
          #(apply dissoc % (dead-team-member-keys))))
 
+(defn count-down! [message callback]
+  (do
+    (if message (add-to-play-by-play! message))
+    (swap! (app-state) assoc :battle-count-down (- (get-state :battle-count-down) 250))
+    (.setTimeout js/window callback 250)))
+
 (defn tick-battle! []
   (if (not (battle-over?
             (chosen-monster)
             (:battling @(app-state))))
-      (do
-        (tick-battle-core!)
-        (.setTimeout js/window #(tick-battle!) 350))
+      (cond (not (get-state :battle-count-down))
+            (do
+              (swap! (app-state) assoc :battle-count-down 5000)
+              (.setTimeout js/window #(tick-battle!) 250))
+
+            (= (get-state :battle-count-down) 5000)
+            (count-down! "Battle starts in 5..." tick-battle!)
+
+            (= (get-state :battle-count-down) 4000)
+            (count-down! "Battle starts in 4..." tick-battle!)
+
+            (= (get-state :battle-count-down) 3000)
+            (count-down! "Battle starts in 3..." tick-battle!)
+
+            (= (get-state :battle-count-down) 2000)
+            (count-down! "Battle starts in 2..." tick-battle!)
+
+            (= (get-state :battle-count-down) 1000)
+            (count-down! "Battle starts in 1..." tick-battle!)
+
+            (= (get-state :battle-count-down) 0)
+            (do
+              (tick-battle-core!)
+              (.setTimeout js/window #(tick-battle!) 300))
+
+            :else
+            (count-down! nil tick-battle!))
 
       (reset-team-at!)))
 
@@ -207,7 +237,7 @@
     (remove-dead-team-members!)
     (swap! (app-state)
            assoc
-           :location loc :battling nil :chosen-key nil)))
+           :location loc :battling nil :chosen-key nil :battle-count-down nil)))
 
 (defn attack! []
   (let [{:keys [battling chosen play-by-play]}
