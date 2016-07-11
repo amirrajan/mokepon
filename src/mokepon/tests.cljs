@@ -12,7 +12,7 @@
 
 (defn reset-game []
   (reset! (tnr/app-state) rpg/new-game)
-  (tnr/on-take-chipu))
+  (tnr/take-chipu!))
 
 (use-fixtures :each {:before reset-game})
 
@@ -35,10 +35,10 @@
 
 (deftest being-attacked
   "begin attacked by enemy monster lowers the chosen mokepon's hp"
-  (tnr/on-set-battle :chipu mon/sulbabaur)
+  (tnr/set-battle! :chipu mon/sulbabaur)
   (has-play-by-play "It has begun! Chipu vs Sulbabaur!")
   (make-enemy-attack-ready)
-  (tnr/on-tick-battle-core)
+  (tnr/tick-battle-core!)
   (is (= (:hp (tnr/chosen-monster)) 40)))
 
 (deftest being-killed
@@ -51,7 +51,7 @@
          assoc-in
          [:team :chipu :hp] 0)
 
-  (tnr/remove-dead-team-members)
+  (tnr/remove-dead-team-members!)
   (is (= (tnr/team-count) 0)))
 
 (deftest healing-team
@@ -65,19 +65,19 @@
 (deftest capturing-wild-mokepon
   "attempting to capture wild mokepon decrements mokeboxes"
   (set-cash 20)
-  (tnr/on-set-battle :chipu mon/sulbabaur)
+  (tnr/set-battle! :chipu mon/sulbabaur)
   (is (= (tnr/item-count :mokebox) 0))
-  (tnr/on-throw-mokebox)
+  (tnr/throw-mokebox!)
   (is (= (tnr/item-count :mokebox) 0))
 
   ;;buy two mokeboxes
-  (tnr/on-buy-item :mokebox)
-  (tnr/on-buy-item :mokebox)
+  (tnr/buy-item! :mokebox)
+  (tnr/buy-item! :mokebox)
   (is (= (tnr/item-count :mokebox) 2))
 
   ;;capture probability is based on hp of monster
   ;;monsters at full health have 0% of being captured
-  (tnr/on-throw-mokebox)
+  (tnr/throw-mokebox!)
   (is (= (get-state :team :sulbabaur)
          nil))
   (is (= (tnr/item-count :mokebox) 1))
@@ -85,7 +85,7 @@
   ;;capture probability is based on hp of monster
   ;;setting max-hp to hp ratio really really high
   (swap! (tnr/app-state) assoc-in [:battling :max-hp] 100000000)
-  (tnr/on-throw-mokebox)
+  (tnr/throw-mokebox!)
   (is (= (get-state :team :sulbabaur)
          (dissoc (get-state :battling) :captured)))
 
@@ -93,13 +93,13 @@
 
 (deftest battle-is-over-if-mokepon-is-captured
   "capturing a monster ends battle"
-  (tnr/on-buy-item :mokebox)
-  (tnr/on-set-battle :chipu mon/sulbabaur)
+  (tnr/buy-item! :mokebox)
+  (tnr/set-battle! :chipu mon/sulbabaur)
   ;;since the capture propbablity is based off of current hp
   ;;and max hp, set the max hp to a really large number to
   ;;pretty much gurantee a capture
   (swap! (tnr/app-state) assoc-in [:battling :max-hp] 100000000)
-  (tnr/on-throw-mokebox)
+  (tnr/throw-mokebox!)
   (is (= (rpg/battle-over?
           (get-state :team :chipu)
           (get-state :battling)) true)))
@@ -107,65 +107,65 @@
 (deftest purchasing-item
   "purchasing item decrements cash"
   (set-cash 10)
-  (tnr/on-buy-item :mokebox)
+  (tnr/buy-item! :mokebox)
   (is (= (get-state :cash) 0)))
 
 (deftest not-enough-cash-to-buy-item
   "can't buy item if you don't have the cash"
   (set-cash 0)
-  (tnr/on-buy-item (:mokebox itm/store-items-lookup))
+  (tnr/buy-item! (:mokebox itm/store-items-lookup))
   (is (= (tnr/item-count :mokebox) 0))
   (is (= (get-state :cash) 0)))
 
 (deftest electric-only-does-half-damage-to-grass
   "electric mokepon only do 0.5 damage to grass mokepon"
-  (tnr/on-set-battle :chipu mon/sulbabaur)
+  (tnr/set-battle! :chipu mon/sulbabaur)
   (swap! (tnr/app-state) assoc-in [:team :chipu :at] rpg/active-turn-threshold)
-  (tnr/on-attack)
+  (tnr/attack!)
   (has-play-by-play "Chipu attacks Sulbabaur for 5. It wasn't very effective.")
   (is (= (get-state :battling :hp) 45)))
 
 (deftest ground-mokepon-do-double-damage-to-electric
-  (tnr/on-set-battle :chipu mon/deogude)
+  (tnr/set-battle! :chipu mon/deogude)
   (make-enemy-attack-ready)
-  (tnr/on-tick-battle-core)
+  (tnr/tick-battle-core!)
   (has-play-by-play "It has begun! Chipu vs Deogude!")
   (has-play-by-play "Deogude attacks Chipu for 20. It was super effective.")
   (is (= (get-state :team :chipu :hp) 30)))
 
 (deftest ground-mokepon-are-immune-to-electric
-  (tnr/on-set-battle :chipu mon/deogude)
+  (tnr/set-battle! :chipu mon/deogude)
   (swap! (tnr/app-state) assoc-in [:team :chipu :at] 1800)
-  (tnr/on-attack)
+  (tnr/attack!)
   (has-play-by-play "Deogude is immune to Chipu's attack. No damage was done.")
   (is (= (get-state :battling :hp) 50)))
 
 (deftest electric-mokepon-do-double-damage-to-water
-  (tnr/on-set-battle :chipu mon/tirsqule)
+  (tnr/set-battle! :chipu mon/tirsqule)
   (swap! (tnr/app-state) assoc-in [:team :chipu :at] 1800)
-  (tnr/on-attack)
+  (tnr/attack!)
   (has-play-by-play "Chipu attacks Tirsqule for 20. It was super effective.")
   (is (= (get-state :battling :hp) 30)))
 
 (deftest water-mokepon-do-normal-damage-to-electric
-  (tnr/on-set-battle :chipu mon/tirsqule)
+  (tnr/set-battle! :chipu mon/tirsqule)
   (swap! (tnr/app-state) assoc-in [:team :chipu :at] 1800)
   (make-enemy-attack-ready)
-  (tnr/on-tick-battle-core)
+  (tnr/tick-battle-core!)
   (has-play-by-play "Tirsqule attacks Chipu for 10.")
   (is (= (get-state :team :chipu :hp) 40)))
 
 (deftest looking-for-trouble-chooses-first-monster-on-team
   (swap! (tnr/app-state) update-in [:team] #(dissoc % :chipu))
   (swap! (tnr/app-state) assoc-in [:team :sulbabaur] mon/sulbabaur)
-  (tnr/on-go-to-location :forest)
-  (tnr/on-find-trouble false)
+  (tnr/go-to-location! :forest)
+  (tnr/find-trouble! false)
   (is (= (tnr/chosen-monster) (get-state :team :sulbabaur))))
 
 (deftest battle-doesnt-end-until-all-of-team-is-dead
   (swap! (tnr/app-state) assoc-in [:team :sulbabaur] mon/sulbabaur)
-  (tnr/on-go-to-location :forest)
-  (tnr/on-find-trouble false)
+  (tnr/go-to-location! :forest)
+  (tnr/find-trouble! false)
   (make-enemy-attack-ready)
 
   ;;make enemy's attack super powerful
@@ -174,11 +174,11 @@
          100)
 
   ;;let AI perform killing blow
-  (tnr/on-tick-battle-core)
+  (tnr/tick-battle-core!)
   (is (= (rpg/is-dead? (get-state :team :chipu)) true))
 
   ;;tick again and see that monster has been swapped out
-  (tnr/on-tick-battle-core)
+  (tnr/tick-battle-core!)
   (has-play-by-play "Sulbabaur dashes into battle!"))
 
 (defn run-tests []

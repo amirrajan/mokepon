@@ -46,7 +46,7 @@
          :chosen-key chosen-key
          :battling battling))
 
-(defn clear-battle []
+(defn clear-battle! []
   (swap! (app-state)
          assoc
          :chosen-key nil
@@ -58,7 +58,7 @@
 (defn add-to-play-by-play [& text]
   (conj (:play-by-play @(app-state)) (apply str text)))
 
-(defn on-decrement-item [item-key]
+(defn decrement-item! [item-key]
   (swap! (app-state)
          update-in
          [:items item-key]
@@ -74,14 +74,14 @@
                   (not (is-dead? v)))
                 (:team @(app-state))))))
 
-(defn on-add-to-play-by-play [& message]
+(defn add-to-play-by-play! [& message]
   (swap!
    (app-state)
    assoc
    :play-by-play
    (apply add-to-play-by-play message)))
 
-(defn on-buy-item [item-id]
+(defn buy-item! [item-id]
   (let [item (item-id store-items-lookup)
         current-cash (:cash @(app-state))
         afford? (>= current-cash (:cost item))
@@ -91,7 +91,7 @@
            (app-state)
            assoc
            :cash new-cash)
-          (on-add-to-play-by-play
+          (add-to-play-by-play!
            "You take the " (:name item)
            " from the midget's saggy, squishy hand. "
            "He smiles and gives you a tip of his top hat.")
@@ -100,11 +100,11 @@
                  [:items item-id]
                  #(inc (item-count item-id))))
 
-      (on-add-to-play-by-play
+      (add-to-play-by-play!
        "The midget bitch slaps you saying that you can't afford that. "
        "He wonders if you were taught common core math."))))
 
-(defn on-throw-mokebox []
+(defn throw-mokebox! []
   (let [{:keys [max-hp hp]} (:battling @(app-state))
         capture-chance (/ (- max-hp hp) max-hp)
         roll (rand)
@@ -113,10 +113,10 @@
         battling (:battling @(app-state))]
     (if has-mokeball?
       (do
-        (on-decrement-item :mokebox)
+        (decrement-item! :mokebox)
         (if captured?
           (do
-            (on-add-to-play-by-play
+            (add-to-play-by-play!
              "The Mokébox knocks out the "
              (get-app-state :battling :name)
              ". It's been captured!")
@@ -130,14 +130,14 @@
                    #(assoc %
                            (:id battling)
                            battling)))
-          (on-add-to-play-by-play
+          (add-to-play-by-play!
            "The Mokébox bounces off "
            (get-app-state :battling :name)
            ". It's still too strong!"))))))
 
-(defn on-sleep-at-home []
+(defn sleep-at-home! []
   (do
-    (on-add-to-play-by-play
+    (add-to-play-by-play!
      "You've slept. Your posse has been healed.")
     (swap!
      (app-state)
@@ -145,14 +145,14 @@
      [:team]
      #(heal-team %))))
 
-(defn on-reset-team-at []
+(defn reset-team-at! []
   (swap!
    (app-state)
    update-in
    [:team]
    #(reset-team-at %)))
 
-(defn on-tick-battle-core []
+(defn tick-battle-core! []
   (let [{:keys [battling chosen play-by-play]}
         (tick-battle (chosen-monster)
                      (:battling @(app-state))
@@ -167,7 +167,7 @@
             live-monster (get-in @(app-state) [:team live-member-key])]
         (if (and (is-dead? chosen) live-member-key)
           (do
-            (on-add-to-play-by-play (str (:name live-monster) " dashes into battle!"))
+            (add-to-play-by-play! (str (:name live-monster) " dashes into battle!"))
             (swap! (app-state) assoc :chosen-key live-member-key)))))))
 
 (defn dead-team-member-keys []
@@ -176,35 +176,35 @@
         (fn [[k v]] (is-dead? v))
         (:team @(app-state)))))
 
-(defn remove-dead-team-members []
+(defn remove-dead-team-members! []
   (swap! (app-state)
          update-in [:team]
          #(apply dissoc % (dead-team-member-keys))))
 
-(defn on-tick-battle []
+(defn tick-battle! []
   (if (not (battle-over?
             (chosen-monster)
             (:battling @(app-state))))
       (do
-        (on-tick-battle-core)
-        (.setTimeout js/window #(on-tick-battle) 350))
+        (tick-battle-core!)
+        (.setTimeout js/window #(tick-battle!) 350))
 
-      (on-reset-team-at)))
+      (reset-team-at!)))
 
 
-(defn on-take-chipu []
+(defn take-chipu! []
   (swap! (app-state)
          assoc
          :team (assoc (:team @(app-state)) :chipu chipu)))
 
-(defn on-go-to-location [loc]
+(defn go-to-location! [loc]
   (do
-    (remove-dead-team-members)
+    (remove-dead-team-members!)
     (swap! (app-state)
            assoc
            :location loc :battling nil :chosen-key nil)))
 
-(defn on-attack []
+(defn attack! []
   (let [{:keys [battling chosen play-by-play]}
         (apply-player-attack
          (chosen-monster)
@@ -224,7 +224,7 @@
                   "It has begun! " (:name (chosen-key (:team @(app-state))))
                   " vs " (:name battling) "!")})
 
-(defn on-set-battle [chosen-key battling]
+(defn set-battle! [chosen-key battling]
   (swap! (app-state)
          merge
          (set-monsters chosen-key
@@ -233,7 +233,7 @@
 
 
 
-(defn on-find-trouble [kick-off-battle]
+(defn find-trouble! [kick-off-battle]
   (let [team (:team @(app-state))
         location (:location @(app-state))
         first-team-member (first-live-team-member)
@@ -246,27 +246,27 @@
       false
       monster-for-location
       (do
-        (on-set-battle first-team-member
+        (set-battle! first-team-member
                        monster-for-location)
-        (if kick-off-battle (on-tick-battle))))))
+        (if kick-off-battle (tick-battle!))))))
 
 (defn rpg-container []
   (sab/html
    (rpg-view @(app-state)
-             on-take-chipu
-             on-go-to-location
-             #(on-find-trouble true)
+             take-chipu!
+             go-to-location!
+             #(find-trouble! true)
              (chosen-monster)
              (and (can-attack? (chosen-monster))
                   (not (battle-over? (chosen-monster) (:battling @(app-state)))))
              (battle-over? (chosen-monster) (:battling @(app-state)))
-             on-attack
-             on-sleep-at-home
+             attack!
+             sleep-at-home!
              active-turn-threshold
              store-items
              store-items-lookup
-             on-buy-item
-             on-throw-mokebox)))
+             buy-item!
+             throw-mokebox!)))
 
 (defn render! []
   (.render js/React
