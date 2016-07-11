@@ -140,20 +140,20 @@ alandipert.storage_atom._commit_BANG_.call(null,backend,cljs.core.deref.call(nul
 cljs.core.reset_BANG_.call(null,atom,existing);
 }
 
-var G__31041 = atom;
-cljs.core.add_watch.call(null,G__31041,new cljs.core.Keyword("alandipert.storage-atom","storage-watch","alandipert.storage-atom/storage-watch",1159565749),((function (G__31041,existing,debounce){
-return (function (p1__31038_SHARP_,p2__31039_SHARP_,p3__31036_SHARP_,p4__31037_SHARP_){
+var G__20760 = atom;
+cljs.core.add_watch.call(null,G__20760,new cljs.core.Keyword("alandipert.storage-atom","storage-watch","alandipert.storage-atom/storage-watch",1159565749),((function (G__20760,existing,debounce){
+return (function (p1__20757_SHARP_,p2__20758_SHARP_,p3__20755_SHARP_,p4__20756_SHARP_){
 if(cljs.core.truth_((function (){var and__18452__auto__ = alandipert.storage_atom._STAR_watch_active_STAR_;
 if(cljs.core.truth_(and__18452__auto__)){
-return cljs.core.not_EQ_.call(null,p3__31036_SHARP_,p4__31037_SHARP_);
+return cljs.core.not_EQ_.call(null,p3__20755_SHARP_,p4__20756_SHARP_);
 } else {
 return and__18452__auto__;
 }
 })())){
-return debounce.call(null,((function (G__31041,existing,debounce){
+return debounce.call(null,((function (G__20760,existing,debounce){
 return (function (){
-return alandipert.storage_atom._commit_BANG_.call(null,backend,p4__31037_SHARP_);
-});})(G__31041,existing,debounce))
+return alandipert.storage_atom._commit_BANG_.call(null,backend,p4__20756_SHARP_);
+});})(G__20760,existing,debounce))
 ,(function (){var or__18464__auto__ = alandipert.storage_atom._STAR_storage_delay_STAR_;
 if(cljs.core.truth_(or__18464__auto__)){
 return or__18464__auto__;
@@ -164,25 +164,25 @@ return cljs.core.deref.call(null,alandipert.storage_atom.storage_delay);
 } else {
 return null;
 }
-});})(G__31041,existing,debounce))
+});})(G__20760,existing,debounce))
 );
 
-return G__31041;
+return G__20760;
 });
 alandipert.storage_atom.maybe_update_backend = (function alandipert$storage_atom$maybe_update_backend(atom,storage,k,default$,e){
 if((storage === e.storageArea)){
 if(cljs.core.empty_QMARK_.call(null,e.key)){
-var _STAR_watch_active_STAR_31045 = alandipert.storage_atom._STAR_watch_active_STAR_;
+var _STAR_watch_active_STAR_20764 = alandipert.storage_atom._STAR_watch_active_STAR_;
 alandipert.storage_atom._STAR_watch_active_STAR_ = false;
 
 try{return cljs.core.reset_BANG_.call(null,atom,default$);
-}finally {alandipert.storage_atom._STAR_watch_active_STAR_ = _STAR_watch_active_STAR_31045;
+}finally {alandipert.storage_atom._STAR_watch_active_STAR_ = _STAR_watch_active_STAR_20764;
 }} else {
 try{var temp__4657__auto__ = alandipert.storage_atom.json__GT_clj.call(null,e.key);
 if(cljs.core.truth_(temp__4657__auto__)){
 var sk = temp__4657__auto__;
 if(cljs.core._EQ_.call(null,sk,k)){
-var _STAR_watch_active_STAR_31047 = alandipert.storage_atom._STAR_watch_active_STAR_;
+var _STAR_watch_active_STAR_20766 = alandipert.storage_atom._STAR_watch_active_STAR_;
 alandipert.storage_atom._STAR_watch_active_STAR_ = false;
 
 try{return cljs.core.reset_BANG_.call(null,atom,(function (){var value = e.newValue;
@@ -192,14 +192,14 @@ return alandipert.storage_atom.json__GT_clj.call(null,value);
 return default$;
 }
 })());
-}finally {alandipert.storage_atom._STAR_watch_active_STAR_ = _STAR_watch_active_STAR_31047;
+}finally {alandipert.storage_atom._STAR_watch_active_STAR_ = _STAR_watch_active_STAR_20766;
 }} else {
 return null;
 }
 } else {
 return null;
 }
-}catch (e31046){var e__$1 = e31046;
+}catch (e20765){var e__$1 = e20765;
 return null;
 }}
 } else {
@@ -209,8 +209,8 @@ return null;
 alandipert.storage_atom.link_storage = (function alandipert$storage_atom$link_storage(atom,storage,k){
 var default$ = cljs.core.deref.call(null,atom);
 return window.addEventListener("storage",((function (default$){
-return (function (p1__31048_SHARP_){
-return alandipert.storage_atom.maybe_update_backend.call(null,atom,storage,k,default$,p1__31048_SHARP_);
+return (function (p1__20767_SHARP_){
+return alandipert.storage_atom.maybe_update_backend.call(null,atom,storage,k,default$,p1__20767_SHARP_);
 });})(default$))
 );
 });

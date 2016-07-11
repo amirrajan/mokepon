@@ -18,6 +18,7 @@
                                    :main mokepon.core}}
                        {:id "prod"
                         :source-paths ["src"]
+                        :optimizations :advanced
                         :compiler {:output-to "mokepon.js"
                                    :output-dir "out"
                                    :main mokepon.core}}]}
