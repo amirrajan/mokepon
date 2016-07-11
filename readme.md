@@ -107,7 +107,7 @@ and
 
 For those that want JavaScript to be a `class` oriented language, they want:
 
-```
+```javascript
 function Person(firstName, lastName) {
   this.firstName = firstName;
   this.lastName = lastName;
@@ -122,7 +122,7 @@ person.sayHello();
 
 to look like this instead:
 
-```
+```javascript
 class Person {
   constructor(firstName, lastName) {
     this.firstName = firstName;
@@ -140,7 +140,7 @@ person.sayHello();
 
 For those that want JavaScript to be a `function` oriented language, they want:
 
-```
+```javascript
 function sayHello(person) {
   console.log(this.firstName, this.lastName, ' says hello.');
 }
@@ -151,7 +151,7 @@ sayHello(person);
 
 But with some guarantees about the mutability of objects:
 
-```
+```javascript
 function sayHello(person) {
   console.log(this.firstName, this.lastName, ' says hello.');
 }
