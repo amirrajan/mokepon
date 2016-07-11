@@ -15,6 +15,7 @@
                         :figwheel true
                         :compiler {:main mokepon.core}}
                        {:id "prod"
+                        :output-to "out_prod"
                         :source-paths ["src"]
                         :compiler {:main mokepon.core}}]}
   :figwheel {:css-dirs ["css"]})

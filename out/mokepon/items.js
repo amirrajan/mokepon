@@ -1,9 +1,0 @@
-// Compiled by ClojureScript 1.9.76 {}
-goog.provide('mokepon.items');
-goog.require('cljs.core');
-mokepon.items.store_items = new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null,"id","id",-1388402092),new cljs.core.Keyword(null,"mokebox","mokebox",-2057865385),new cljs.core.Keyword(null,"name","name",1843675177),"Mok\u00E9box",new cljs.core.Keyword(null,"cost","cost",-1094861735),(10),new cljs.core.Keyword(null,"description","description",-1428560544),"Use this to catch Mok\u00E9pon."], null),new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null,"id","id",-1388402092),new cljs.core.Keyword(null,"battery","battery",18489324),new cljs.core.Keyword(null,"name","name",1843675177),"Battery",new cljs.core.Keyword(null,"cost","cost",-1094861735),(5),new cljs.core.Keyword(null,"description","description",-1428560544),"Use this to heal electric Mok\u00E9pon."], null),new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null,"id","id",-1388402092),new cljs.core.Keyword(null,"fertilizer","fertilizer",647222991),new cljs.core.Keyword(null,"name","name",1843675177),"Fertilizer",new cljs.core.Keyword(null,"cost","cost",-1094861735),(5),new cljs.core.Keyword(null,"description","description",-1428560544),"Use this to heal plant Mok\u00E9pon."], null)], null);
-mokepon.items.store_items_lookup = cljs.core.into.call(null,cljs.core.PersistentArrayMap.EMPTY,cljs.core.map.call(null,(function (item){
-return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"id","id",-1388402092).cljs$core$IFn$_invoke$arity$1(item),item], null);
-}),mokepon.items.store_items));
-
-//# sourceMappingURL=items.js.map
