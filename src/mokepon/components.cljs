@@ -59,7 +59,7 @@
     go-to-location-handler)
    (adventure-view
     "The neighborhood pool hasn't been cleaned in a while. Smells like poop."
-    "Go be awesome at the pool."
+    "Go be awesome in the pool."
     :pool
     go-to-location-handler)])
 
@@ -92,20 +92,28 @@
      [:p "The fight has ended."]
      (a "Head back." #(go-to-location-handler :outside)))))
 
-(defn battle-actions-view [chosen-can-attack?
+(defn battle-actions-view [team
+                           choosable-monsters
+                           chosen-can-attack?
                            attack-handler
                            battle-over?
                            items
-                           throw-mokebox-handler]
+                           throw-mokebox-handler
+                           choose-monster-handler]
   (section
    (conditional-a chosen-can-attack? "Attack!" attack-handler)
    (if (:mokebox items)
      (conditional-a (and (not battle-over?)
                          (> (:mokebox items) 0))
                     "Throw Mokébox!"
-                    throw-mokebox-handler))))
+                    throw-mokebox-handler))
+   (if (and (not battle-over?) (> (count choosable-monsters) 1))
+     (for [m choosable-monsters]
+       (a (str "Choose " (:name (m team) )"!") #(choose-monster-handler m))))))
 
-(defn battle-view [chosen
+(defn battle-view [team
+                   choosable-monsters
+                   chosen
                    chosen-can-attack?
                    battle-over?
                    battling
@@ -113,16 +121,25 @@
                    attack-handler
                    go-to-location-handler
                    items
-                   throw-mokebox-handler]
+                   throw-mokebox-handler
+                   choose-monster-handler]
   [:div
    (battler-view battling active-turn-threshold)
    (battler-view chosen active-turn-threshold)
-   (battle-actions-view chosen-can-attack? attack-handler battle-over? items throw-mokebox-handler)
+   (battle-actions-view team
+                        choosable-monsters
+                        chosen-can-attack?
+                        attack-handler
+                        battle-over?
+                        items
+                        throw-mokebox-handler
+                        choose-monster-handler)
    (battle-report-view battle-over? go-to-location-handler)])
 
 (defn location-view [location-description
                      team
                      find-trouble-handler
+                     choosable-monsters
                      chosen
                      chosen-can-attack?
                      battle-over?
@@ -132,7 +149,8 @@
                      go-to-location-handler
                      active-turn-threshold
                      items
-                     throw-mokebox-handler]
+                     throw-mokebox-handler
+                     choose-monster-handler]
   (if (nil? battling)
     [:div
      (section [:p location-description])
@@ -141,7 +159,9 @@
         (disabled-a "Go look for some trouble.")
         (a "Go look for some trouble." find-trouble-handler))
       (a "Head back." #(go-to-location-handler :outside)))]
-    (battle-view chosen
+    (battle-view team
+                 choosable-monsters
+                 chosen
                  chosen-can-attack?
                  battle-over?
                  battling
@@ -149,7 +169,8 @@
                  attack-handler
                  go-to-location-handler
                  items
-                 throw-mokebox-handler)))
+                 throw-mokebox-handler
+                 choose-monster-handler)))
 
 (defn home-view [team
                  team-at-home
@@ -210,6 +231,7 @@
                 take-chipu-handler
                 go-to-location-handler
                 find-trouble-handler
+                choosable-monsters
                 chosen
                 chosen-can-attack?
                 battle-over?
@@ -219,7 +241,8 @@
                 store-items
                 store-items-lookup
                 buy-item-handler
-                throw-mokebox-handler]
+                throw-mokebox-handler
+                choose-monster-handler]
   (let [{:keys [location
                 team
                 team-at-home
@@ -242,6 +265,7 @@
        (location-view (location location-awesome-text)
                       team
                       find-trouble-handler
+                      choosable-monsters
                       chosen
                       chosen-can-attack?
                       battle-over?
@@ -251,7 +275,8 @@
                       go-to-location-handler
                       active-turn-threshold
                       items
-                      throw-mokebox-handler)
+                      throw-mokebox-handler
+                      choose-monster-handler)
 
        (= location :home)
        (home-view team

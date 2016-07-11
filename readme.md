@@ -12,9 +12,11 @@ An RPG about catching monsters IRL. Written in React and ClojureScript.
 - Clone repo.
 - Nav to root directory.
 - Run `lein deps`.
-- Run `rlwrap lein figwheel`
+- Run `rlwrap lein figwheel`.
+- In the repl execute the command `(clean-builds :devs)`.
+- In the repl execute the command `(build-once :devs)`.
 - Open `index.html` in Chrome.
-- Then `touch src/mokepon/core.cljs`.
+- Then `touch src/mokepon/core.cljs` to ensure the live reload is working.
 
 ### Running The Game + Emacs
 

@@ -10,6 +10,13 @@
    :items {}
    :play-by-play ["You sit outside. You needed a break from your mother yelling at you."]})
 
+(defn apply-to-all-values [f dict]
+  (into {} (map (fn [[k v]] [k (f v)]) dict)))
+
+(defn filter-key [predicate dict]
+  (map (fn [[k v]] k)
+       (filter (fn [[k v]] (predicate v)) dict)))
+
 (defn battle-over? [chosen battling]
   (or (nil? chosen)
       (nil? battling)
@@ -100,13 +107,10 @@
   (assoc monster :at 0))
 
 (defn reset-team-at [team]
-  (into {}
-        (map (fn [[key value]]
-               [key (reset-monster-at value)])
-             team)))
+  (apply-to-all-values reset-monster-at team))
 
 (defn heal-team [team]
-  (into {}
-        (map (fn [[key value]]
-               [key (heal-monster value)])
-             team)))
+  (apply-to-all-values heal-monster team))
+
+(defn choosable-monsters [team]
+  (filter-key #(not (is-dead? %)) team))

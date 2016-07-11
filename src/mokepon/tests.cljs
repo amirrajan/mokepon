@@ -181,6 +181,27 @@
   (tnr/tick-battle-core!)
   (has-play-by-play "Sulbabaur dashes into battle!"))
 
+(deftest choosing-mokepon-within-battle
+  "only live mokepon can be chosen, AT is reset when chosen"
+  (swap! (tnr/app-state) assoc-in [:team :sulbabaur] mon/sulbabaur)
+  (tnr/go-to-location! :forest)
+  (tnr/find-trouble! false)
+  (is (= (rpg/choosable-monsters (get-state :team)) [:chipu :sulbabaur]))
+  (swap! (tnr/app-state) assoc-in [:team :chipu :at] rpg/active-turn-threshold)
+  (swap! (tnr/app-state) assoc-in [:team :sulbabaur :at] rpg/active-turn-threshold)
+  (tnr/choose-monster! :sulbabaur)
+  (is (= (get-state :chosen-key) :sulbabaur))
+  (is (= (get-state :team :chipu :at) 0))
+  (is (= (get-state :team :sulbabaur :at) 0))
+  (has-play-by-play "You have chosen Sulbabaur to fight!")
+
+
+  ;;choosing currently chosen monster doesn't do anything
+  (swap! (tnr/app-state) assoc-in [:team :sulbabaur :at] rpg/active-turn-threshold)
+  (tnr/choose-monster! :sulbabaur)
+  (is (= (get-state :team :sulbabaur :at) rpg/active-turn-threshold))
+  )
+
 (defn run-tests []
   (.clear js/console)
   (cljs.test/run-all-tests #"mokepon.tests"))

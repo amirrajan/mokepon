@@ -10,6 +10,7 @@
                                  apply-player-attack
                                  can-attack?
                                  heal-team
+                                 choosable-monsters
                                  reset-team-at
                                  active-turn-threshold]]
             [mokepon.components :refer [rpg-view]]))
@@ -32,14 +33,14 @@
     game-app-state
     test-app-state))
 
-(defn get-app-state [& path]
+(defn get-state [& path]
   (get-in @(app-state) path))
 
 (defn team-count []
   (count (:team @(app-state))))
 
 (defn chosen-monster []
-  (get-app-state :team (:chosen-key @(app-state))))
+  (get-state :team (:chosen-key @(app-state))))
 
 (defn set-battle [chosen-key battling]
   (assoc @(app-state)
@@ -65,14 +66,7 @@
          #(dec (or % 0))))
 
 (defn item-count [item-key]
-  (or (get-app-state :items item-key) 0))
-
-(defn first-live-team-member []
-  (first
-   (map (fn [[k v]] k)
-        (filter (fn [[k v]]
-                  (not (is-dead? v)))
-                (:team @(app-state))))))
+  (or (get-state :items item-key) 0))
 
 (defn add-to-play-by-play! [& message]
   (swap!
@@ -80,6 +74,17 @@
    assoc
    :play-by-play
    (apply add-to-play-by-play message)))
+
+(defn choose-monster! [team-key]
+  (if (not= (get-state :chosen-key) team-key)
+    (do
+      (swap! (app-state) assoc :chosen-key team-key)
+      (swap! (app-state) assoc :team (reset-team-at (get-state :team)))
+      (add-to-play-by-play! "You have chosen " (get-state :team team-key :name) " to fight!"))))
+
+(defn first-live-team-member []
+  (first
+   (choosable-monsters (get-state :team))))
 
 (defn buy-item! [item-id]
   (let [item (item-id store-items-lookup)
@@ -118,7 +123,7 @@
           (do
             (add-to-play-by-play!
              "The Mokébox knocks out the "
-             (get-app-state :battling :name)
+             (get-state :battling :name)
              ". It's been captured!")
             (swap! (app-state)
                    assoc-in
@@ -132,7 +137,7 @@
                            battling)))
           (add-to-play-by-play!
            "The Mokébox bounces off "
-           (get-app-state :battling :name)
+           (get-state :battling :name)
            ". It's still too strong!"))))))
 
 (defn sleep-at-home! []
@@ -231,24 +236,28 @@
                        battling
                        (:play-by-play @(app-state)))))
 
-
+(defn location-monsters []
+  {:forest sulbabaur
+   :canyon deogude
+   :pool   tirsqule})
 
 (defn find-trouble! [kick-off-battle]
   (let [team (:team @(app-state))
         location (:location @(app-state))
         first-team-member (first-live-team-member)
-        location-monsters {:forest sulbabaur
-                           :canyon deogude
-                           :pool   tirsqule}
-        monster-for-location (location location-monsters)]
+        monster-for-location (location (location-monsters))]
     (cond
       (empty? team)
       false
       monster-for-location
       (do
         (set-battle! first-team-member
-                       monster-for-location)
+                     monster-for-location)
         (if kick-off-battle (tick-battle!))))))
+
+(defn chosen-can-attack? []
+  (and (can-attack? (chosen-monster))
+       (not (battle-over? (chosen-monster) (:battling @(app-state))))))
 
 (defn rpg-container []
   (sab/html
@@ -256,9 +265,9 @@
              take-chipu!
              go-to-location!
              #(find-trouble! true)
+             (choosable-monsters (get-state :team))
              (chosen-monster)
-             (and (can-attack? (chosen-monster))
-                  (not (battle-over? (chosen-monster) (:battling @(app-state)))))
+             (chosen-can-attack?)
              (battle-over? (chosen-monster) (:battling @(app-state)))
              attack!
              sleep-at-home!
@@ -266,7 +275,8 @@
              store-items
              store-items-lookup
              buy-item!
-             throw-mokebox!)))
+             throw-mokebox!
+             choose-monster!)))
 
 (defn render! []
   (.render js/React
