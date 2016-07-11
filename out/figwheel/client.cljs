@@ -25,40 +25,28 @@
 (def autoload?
   (if (utils/html-env?)
     (fn []
-      (condp = (or (try
-                     (when (js* "typeof localstorage !== 'undefined'")
-                       (.getItem js/localStorage "figwheel_autoload"))
-                     (catch js/Error e
-                       false))
-                   "true")
+      (condp = (or (.getItem js/localStorage "figwheel_autoload") "true")
         "true" true
         "false" false))
     (fn [] true)))
 
 (defn ^:export toggle-autoload []
   (when (utils/html-env?)
-    (try
-      (when (js* "typeof localstorage !== 'undefined'")
-        (.setItem js/localStorage "figwheel_autoload" (not (autoload?))))
-      (utils/log :info
-                 (str "Figwheel autoloading " (if (autoload?) "ON" "OFF")))
-      (catch js/Error e
-        (utils/log :info
-                   (str "Unable to access localStorage"))))))
+    (.setItem js/localStorage "figwheel_autoload" (not (autoload?)))
+    (utils/log :info
+               (str "Figwheel autoloading " (if (autoload?) "ON" "OFF")))))
 
 (defn console-print [args]
   (.apply (.-log js/console) js/console (into-array args))
   args)
 
-(defn repl-print-fn [& args]
-  (-> args
-      console-print
-      figwheel-repl-print)
-  nil)
-
 (defn enable-repl-print! []
   (set! *print-newline* false)
-  (set! *print-fn* repl-print-fn))
+  (set! *print-fn*
+        (fn [& args]
+          (-> args
+            console-print
+            figwheel-repl-print))))
 
 (defn get-essential-messages [ed]
   (when ed
@@ -149,12 +137,15 @@
 (let [base-path (utils/base-url-path)]
   (defn eval-javascript** [code opts result-handler]
     (try
-      (binding [*print-fn* repl-print-fn
+      (binding [*print-fn* (fn [& args]
+                             (-> args
+                               console-print
+                               figwheel-repl-print))
                 *print-newline* false]
         (result-handler
          {:status :success,
           :ua-product (get-ua-product)
-          :value (utils/eval-helper code opts)}))
+          :value (str (utils/eval-helper code opts))}))
       (catch js/Error e
         (result-handler
          {:status :exception
