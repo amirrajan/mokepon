@@ -3,7 +3,8 @@
                  [org.clojure/clojurescript "1.9.76"]
                  [sablono "0.3.6"]
                  [alandipert/storage-atom "2.0.1"]]
-  :plugins [[lein-figwheel "0.5.0-1"]]
+  :plugins [[lein-figwheel "0.5.0-1"]
+            [lein-cljsbuild "1.1.3"]]
   :source-paths ["src"]
   :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
@@ -18,8 +19,8 @@
                                    :main mokepon.core}}
                        {:id "prod"
                         :source-paths ["src"]
-                        :optimizations :advanced
                         :compiler {:output-to "mokepon.js"
                                    :output-dir "out"
+                                   :optimizations :advanced
                                    :main mokepon.core}}]}
   :figwheel {:css-dirs ["css"]})
