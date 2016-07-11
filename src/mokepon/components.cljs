@@ -151,85 +151,6 @@
                  items
                  throw-mokebox-handler)))
 
-(defn forest-view [team
-                   find-trouble-handler
-                   chosen
-                   chosen-can-attack?
-                   battle-over?
-                   battling
-                   go-to-location-handler
-                   attack-handler
-                   active-turn-threshold
-                   items
-                   throw-mokebox-handler]
-  (location-view
-    "You are currently chillin' like a villian in the forest."
-    team
-    find-trouble-handler
-    chosen
-    chosen-can-attack?
-    battle-over?
-    battling
-    go-to-location-handler
-    attack-handler
-    go-to-location-handler
-    active-turn-threshold
-    items
-    throw-mokebox-handler))
-
-(defn canyon-view [team
-                   find-trouble-handler
-                   chosen
-                   chosen-can-attack?
-                   battle-over?
-                   battling
-                   go-to-location-handler
-                   attack-handler
-                   active-turn-threshold
-                   items
-                   throw-mokebox-handler]
-  (location-view
-    "You are currently chillin' like a villian in the canyon."
-    team
-    find-trouble-handler
-    chosen
-    chosen-can-attack?
-    battle-over?
-    battling
-    go-to-location-handler
-    attack-handler
-    go-to-location-handler
-    active-turn-threshold
-    items
-    throw-mokebox-handler))
-
-(defn pool-view [team
-                   find-trouble-handler
-                   chosen
-                   chosen-can-attack?
-                   battle-over?
-                   battling
-                   go-to-location-handler
-                   attack-handler
-                   active-turn-threshold
-                   items
-                   throw-mokebox-handler]
-  (location-view
-    "You are currently chillin' like a villian at the pool."
-    team
-    find-trouble-handler
-    chosen
-    chosen-can-attack?
-    battle-over?
-    battling
-    go-to-location-handler
-    attack-handler
-    go-to-location-handler
-    active-turn-threshold
-    items
-    throw-mokebox-handler))
-
-
 (defn home-view [team
                  team-at-home
                  take-chipu-handler
@@ -305,7 +226,10 @@
                 battling
                 cash
                 items
-                play-by-play]} state]
+                play-by-play]} state
+        location-awesome-text {:forest "You are currently chillin' like a villian in the forest."
+                               :canyon "You are currently chillin' like a villian in the canyon."
+                               :pool   "You are currently chillin' like a villian in the pool. Gross."}]
     [:div
      (title-view)
      (cond
@@ -314,44 +238,20 @@
                      team
                      go-to-location-handler)
 
-       (= location :forest)
-       (forest-view team
-                    find-trouble-handler
-                    chosen
-                    chosen-can-attack?
-                    battle-over?
-                    battling
-                    go-to-location-handler
-                    attack-handler
-                    active-turn-threshold
-                    items
-                    throw-mokebox-handler)
-
-       (= location :canyon)
-       (canyon-view team
-                    find-trouble-handler
-                    chosen
-                    chosen-can-attack?
-                    battle-over?
-                    battling
-                    go-to-location-handler
-                    attack-handler
-                    active-turn-threshold
-                    items
-                    throw-mokebox-handler)
-
-       (= location :pool)
-       (pool-view team
-                  find-trouble-handler
-                  chosen
-                  chosen-can-attack?
-                  battle-over?
-                  battling
-                  go-to-location-handler
-                  attack-handler
-                  active-turn-threshold
-                  items
-                  throw-mokebox-handler)
+       (some #{location} (keys location-awesome-text))
+       (location-view (location location-awesome-text)
+                      team
+                      find-trouble-handler
+                      chosen
+                      chosen-can-attack?
+                      battle-over?
+                      battling
+                      go-to-location-handler
+                      attack-handler
+                      go-to-location-handler
+                      active-turn-threshold
+                      items
+                      throw-mokebox-handler)
 
        (= location :home)
        (home-view team
