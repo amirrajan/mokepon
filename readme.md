@@ -4,6 +4,8 @@ Catching 'em all just got real, yo.
 
 An RPG about catching monsters IRL. Written in React and ClojureScript.
 
+[Play here.](http://amirrajan.net/mokepon) It may or may not work. I hope it does though.
+
 ## Running The Game
 
 - Install Java 8 (1.8 sdk).
