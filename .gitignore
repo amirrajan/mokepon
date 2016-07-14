@@ -10,3 +10,4 @@ target/
 /out-dev
 /.lein-failures
 /.tern-port
+/out/mokepon/.tern-port

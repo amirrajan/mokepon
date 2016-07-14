@@ -350,7 +350,7 @@ Let's take a more focused look at block delimiters. Here is some html:
 ```
 
 Now, at a glance you can immediately grok the structure. This _isn't_
-because of the block delimeters (`<div>`, `<p`>, etc.), it's because
+because of the block delimeters (`<div>`, `<p>`, etc.), it's because
 of the formatting. Here is the same html, but formatted differently:
 
 ```html
