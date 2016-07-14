@@ -83,6 +83,7 @@
         (try-attack chosen battling)]
       {:battling to
        :chosen from
+       :cash-reward (if (is-dead? to) 3 0)
        :play-by-play
        (if attack-occured?
          (conj play-by-play (attack-description from to))

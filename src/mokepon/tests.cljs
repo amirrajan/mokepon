@@ -21,6 +21,11 @@
          assoc-in [:battling :at]
          rpg/active-turn-threshold))
 
+(defn make-chosen-attack-ready []
+  (swap! (tnr/app-state)
+         assoc-in [:team (:chosen-key (state)) :at]
+         rpg/active-turn-threshold))
+
 (defn set-cash [amount]
   (swap! (tnr/app-state) assoc :cash amount))
 
@@ -201,6 +206,24 @@
   (tnr/choose-monster! :sulbabaur)
   (is (= (get-state :team :sulbabaur :at) rpg/active-turn-threshold))
   )
+
+(deftest winning-battle-gives-fiddy
+  "when winning battle you receive 3 fiddy"
+  (set-cash 0)
+  (tnr/set-battle! :chipu mon/sulbabaur)
+  (make-chosen-attack-ready)
+  (swap! (tnr/app-state)
+         assoc-in
+         [:team :chipu :power]
+         50)
+  (tnr/attack!)
+  (is (= (get-state :cash) 0))
+  (make-chosen-attack-ready)
+  (tnr/attack!)
+  (is (rpg/is-dead? (get-state :battling)))
+  (is (= (get-state :cash) 3))
+  )
+
 
 (defn run-tests []
   (.clear js/console)
