@@ -240,7 +240,7 @@
            :location loc :battling nil :chosen-key nil :battle-count-down nil)))
 
 (defn attack! []
-  (let [{:keys [battling chosen play-by-play]}
+  (let [{:keys [battling chosen play-by-play cash-reward]}
         (apply-player-attack
          (chosen-monster)
          (:battling @(app-state))
@@ -249,7 +249,8 @@
            assoc
            :battling battling
            :team (update-in-team (:chosen-key @(app-state)) chosen)
-           :play-by-play play-by-play)))
+           :play-by-play play-by-play
+           :cash (+ (:cash @(app-state)) cash-reward))))
 
 
 (defn set-monsters [chosen-key battling play-by-play]
