@@ -43,6 +43,7 @@
 
 (deftest being-killed
   "being killed by enemy monster removes chosen mokepon form the team"
+
   (swap! (tnr/app-state) assoc-in [:team :sulbabaur] mon/sulbabaur)
   (swap! (tnr/app-state)
          assoc-in

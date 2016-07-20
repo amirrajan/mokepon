@@ -608,8 +608,8 @@ Here is the ClojureScript version using a library called Sablono
 (defn people-view [person-1 person-2]
   (sab/html
     [:div
-      (render-person person-1)
-      (render-person person-2)]))
+      (person-view person-1)
+      (person-view person-2)]))
 
 (people-view
   {:first-name "Jane" :last-name "Doe"}
