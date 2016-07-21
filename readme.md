@@ -76,7 +76,9 @@ An RPG about catching monsters IRL. Written in React and ClojureScript.
 >Gasp! You're using a lisp dialect?! Are you insane??? Do you not see all
 >those parenthesis?!
 
-Watch this video: [Simple Made Easy](https://www.infoq.com/presentations/Simple-Made-Easy)
+Watch this video: [Clojure Made Simple](https://www.youtube.com/watch?v=VSdnJDO-xdg)
+
+And this one: [Simple Made Easy](https://www.infoq.com/presentations/Simple-Made-Easy)
 
 And this one: [Value of Values](https://www.infoq.com/presentations/Value-Values)
 
