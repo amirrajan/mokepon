@@ -114,9 +114,9 @@
         capture-chance (/ (- max-hp hp) max-hp)
         roll (rand)
         captured? (> capture-chance roll)
-        has-mokeball? (:mokebox (:items @(app-state)))
+        has-mokebox? (:mokebox (:items @(app-state)))
         battling (:battling @(app-state))]
-    (if has-mokeball?
+    (if has-mokebox?
       (do
         (decrement-item! :mokebox)
         (if captured?
@@ -139,6 +139,12 @@
            "The Mokébox bounces off "
            (get-state :battling :name)
            ". It's still too strong!"))))))
+
+(defn use-candy! []
+  (let [has-candy? (> (item-count :candy) 0)]
+   (if has-candy?
+    (do
+      (decrement-item! :candy)))))
 
 (defn sleep-at-home! []
   (do

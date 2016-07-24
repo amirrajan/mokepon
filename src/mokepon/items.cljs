@@ -5,14 +5,10 @@
    :name "Mokébox"
    :cost 10
    :description "Use this to catch Moképon."}
-  {:id :battery
-   :name "Battery"
+  {:id :candy
+   :name "Candy"
    :cost 5
-   :description "Use this to heal electric Moképon."}
-  {:id :fertilizer
-   :name "Fertilizer"
-   :cost 5
-   :description "Use this to heal plant Moképon."}])
+   :description "Use this to heal Moképon."}])
 
 (def store-items-lookup
   (into {}

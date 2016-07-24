@@ -225,6 +225,17 @@
   (is (= (get-state :cash) 3))
   )
 
+(deftest using-candy
+  "when using candy your mokepon gains health"
+  (tnr/buy-item! :candy)
+  (is (= (tnr/item-count :candy) 1))
+  (tnr/set-battle! :chipu mon/deogude)
+  (make-enemy-attack-ready)
+  (tnr/tick-battle-core!)
+  (is (= (get-state :team :chipu :hp) 30))
+  (tnr/use-candy!)
+  (is (= (tnr/item-count :candy) 0))
+  (is (= (get-state :team :chipu :hp) 40)))
 
 (defn run-tests []
   (.clear js/console)
