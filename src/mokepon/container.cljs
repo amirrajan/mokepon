@@ -144,6 +144,8 @@
   (let [has-candy? (> (item-count :candy) 0)]
    (if has-candy?
     (do
+      (add-to-play-by-play! (str  (:name (chosen-monster)) " has eated the delicious candy and was healed for 10 hp."))
+      (swap! (app-state) update-in [:team (get-state :chosen-key) :hp] #(+ % 10))
       (decrement-item! :candy)))))
 
 (defn sleep-at-home! []

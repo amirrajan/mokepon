@@ -234,6 +234,7 @@
   (tnr/tick-battle-core!)
   (is (= (get-state :team :chipu :hp) 30))
   (tnr/use-candy!)
+  (has-play-by-play "Chipu has eated the delicious candy and was healed for 10 hp.")
   (is (= (tnr/item-count :candy) 0))
   (is (= (get-state :team :chipu :hp) 40)))
 
