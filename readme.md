@@ -76,18 +76,19 @@ An RPG about catching monsters IRL. Written in React and ClojureScript.
 >Gasp! You're using a lisp dialect?! Are you insane??? Do you not see all
 >those parenthesis?!
 
-Watch this video: [Clojure Made Simple](https://www.youtube.com/watch?v=VSdnJDO-xdg)
+Watch these videos, they set the narrative for using a dynamic functional language over all the other options out there for a client side game:
 
-And this one: [Simple Made Easy](https://www.infoq.com/presentations/Simple-Made-Easy)
-
-And this one: [Value of Values](https://www.infoq.com/presentations/Value-Values)
-
-And this one: [Design, Composition, and Performance](https://www.infoq.com/presentations/Design-Composition-Performance)
+- [Clojure Made Simple](https://www.youtube.com/watch?v=VSdnJDO-xdg): This is a high level talk by Rich Hickey about the value proposition of Clojure.
+- [Simple Made Easy](https://www.infoq.com/presentations/Simple-Made-Easy): This presentation goes into why the current object oriented languages we have are complex, and explains the differences between using the words "easy, hard, simple, complex" when describing software systems.
+- [Value of Values](https://www.infoq.com/presentations/Value-Values): This presentation talks about the benefits of immutablility.
+- [Design, Composition, and Performance](https://www.infoq.com/presentations/Design-Composition-Performance): This presentation goes into what programming languages represent. And how constraints in a progamming language can benefit you.
+- [Boundaries](https://www.destroyallsoftware.com/talks/boundaries): This presentation goes into the benefits of having a functional "core/domain" and pushing all immutability out towards the edges of your system.
+- [The Unreasonable Effectiveness of Dynamic Typing for Practical Programs](https://vimeo.com/74354480): This talk really digs into the static language vs dynamic language debate.
 
 If the ideas presented in these videos don't jibe with you, then
 hacking on this super awesome game probably isn't for you.
 
->I don't have time to watch three hours of videos. Give me the short
+>I don't have time to watch five hours of videos. Give me the short
 >version.
 
 Fine, it comes down to a few questions really.
