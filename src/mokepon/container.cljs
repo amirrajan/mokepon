@@ -37,10 +37,10 @@
   (get-in @(app-state) path))
 
 (defn team-count []
-  (count (:team @(app-state))))
+  (count (get-state :team)))
 
 (defn chosen-monster []
-  (get-state :team (:chosen-key @(app-state))))
+  (get-state :team (get-state :chosen-key)))
 
 (defn set-battle [chosen-key battling]
   (assoc @(app-state)
@@ -54,10 +54,10 @@
          :battling nil))
 
 (defn update-in-team [monster-key new-value]
-  (assoc (:team @(app-state)) monster-key new-value))
+  (assoc (get-state :team) monster-key new-value))
 
 (defn add-to-play-by-play [& text]
-  (conj (:play-by-play @(app-state)) (apply str text)))
+  (conj (get-state :play-by-play) (apply str text)))
 
 (defn decrement-item! [item-key]
   (swap! (app-state)
@@ -87,7 +87,7 @@
 
 (defn buy-item! [item-id]
   (let [item (item-id store-items-lookup)
-        current-cash (:cash @(app-state))
+        current-cash (get-state :cash)
         afford? (>= current-cash (:cost item))
         new-cash (- current-cash (:cost item))]
     (if afford?
@@ -110,12 +110,12 @@
        "He wonders if you were taught common core math."))))
 
 (defn throw-mokebox! []
-  (let [{:keys [max-hp hp]} (:battling @(app-state))
+  (let [{:keys [max-hp hp]} (get-state :battling)
         capture-chance (/ (- max-hp hp) max-hp)
         roll (rand)
         captured? (> capture-chance roll)
-        has-mokebox? (:mokebox (:items @(app-state)))
-        battling (:battling @(app-state))]
+        has-mokebox? (get-state :items :mokebox)
+        battling (get-state :battling)]
     (when has-mokebox?
       (decrement-item! :mokebox)
       (when captured?
@@ -163,15 +163,15 @@
 (defn tick-battle-core! []
   (let [{:keys [battling chosen play-by-play]}
         (tick-battle (chosen-monster)
-                     (:battling @(app-state))
-                     (:play-by-play @(app-state)))]
+                     (get-state :battling)
+                     (get-state :play-by-play))]
     (swap! (app-state)
            assoc
            :battling battling
-           :team (update-in-team (:chosen-key @(app-state)) chosen)
+           :team (update-in-team (get-state :chosen-key) chosen)
            :play-by-play play-by-play)
     (let [live-member-key (first-live-team-member)
-          live-monster (get-in @(app-state) [:team live-member-key])
+          live-monster (get-state :team live-member-key)
           need-to-auto-swap (and (is-dead? chosen) live-member-key)]
       (when need-to-auto-swap
         (add-to-play-by-play! (str (:name live-monster) " dashes into battle!"))
@@ -181,7 +181,7 @@
   (map (fn [[k v]] k)
        (filter
         (fn [[k v]] (is-dead? v))
-        (:team @(app-state)))))
+        (get-state :team))))
 
 (defn remove-dead-team-members! []
   (swap! (app-state)
@@ -196,7 +196,7 @@
 (defn tick-battle! []
   (if (not (battle-over?
             (chosen-monster)
-            (:battling @(app-state))))
+            (get-state :battling)))
       (cond (not (get-state :battle-count-down))
             (do
               (swap! (app-state) assoc :battle-count-down 5000)
@@ -231,7 +231,7 @@
 (defn take-chipu! []
   (swap! (app-state)
          assoc
-         :team (assoc (:team @(app-state)) :chipu chipu)))
+         :team (assoc (get-state :team) :chipu chipu)))
 
 (defn go-to-location! [loc]
   (remove-dead-team-members!)
@@ -243,21 +243,21 @@
   (let [{:keys [battling chosen play-by-play cash-reward]}
         (apply-player-attack
          (chosen-monster)
-         (:battling @(app-state))
-         (:play-by-play @(app-state)))]
+         (get-state :battling)
+         (get-state :play-by-play))]
     (swap! (app-state)
            assoc
            :battling battling
-           :team (update-in-team (:chosen-key @(app-state)) chosen)
+           :team (update-in-team (get-state :chosen-key) chosen)
            :play-by-play play-by-play
-           :cash (+ (:cash @(app-state)) cash-reward))))
+           :cash (+ (get-state :cash) cash-reward))))
 
 
 (defn set-monsters [chosen-key battling play-by-play]
   {:chosen-key chosen-key
    :battling battling
    :play-by-play (add-to-play-by-play
-                  "It has begun! " (:name (chosen-key (:team @(app-state))))
+                  "It has begun! " (get-state :team chosen-key :name)
                   " vs " (:name battling) "!")})
 
 (defn set-battle! [chosen-key battling]
@@ -265,7 +265,7 @@
          merge
          (set-monsters chosen-key
                        battling
-                       (:play-by-play @(app-state)))))
+                       (get-state :play-by-play))))
 
 (defn location-monsters []
   {:forest sulbabaur
@@ -273,13 +273,14 @@
    :pool   tirsqule})
 
 (defn find-trouble! [kick-off-battle]
-  (let [team (:team @(app-state))
-        location (:location @(app-state))
+  (let [team (get-state :team)
+        location (get-state :location)
         first-team-member (first-live-team-member)
         monster-for-location (location (location-monsters))]
     (cond
       (empty? team)
       false
+
       monster-for-location
       (do
         (set-battle! first-team-member
@@ -288,7 +289,7 @@
 
 (defn chosen-can-attack? []
   (and (can-attack? (chosen-monster))
-       (not (battle-over? (chosen-monster) (:battling @(app-state))))))
+       (not (battle-over? (chosen-monster) (get-state :battling)))))
 
 (defn rpg-container []
   (sab/html
@@ -299,7 +300,7 @@
              (choosable-monsters (get-state :team))
              (chosen-monster)
              (chosen-can-attack?)
-             (battle-over? (chosen-monster) (:battling @(app-state)))
+             (battle-over? (chosen-monster) (get-state :battling))
              attack!
              sleep-at-home!
              active-turn-threshold
