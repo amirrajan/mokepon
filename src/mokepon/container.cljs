@@ -76,11 +76,10 @@
    (apply add-to-play-by-play message)))
 
 (defn choose-monster! [team-key]
-  (if (not= (get-state :chosen-key) team-key)
-    (do
-      (swap! (app-state) assoc :chosen-key team-key)
-      (swap! (app-state) assoc :team (reset-team-at (get-state :team)))
-      (add-to-play-by-play! "You have chosen " (get-state :team team-key :name) " to fight!"))))
+  (when (not= (get-state :chosen-key) team-key)
+    (swap! (app-state) assoc :chosen-key team-key)
+    (swap! (app-state) assoc :team (reset-team-at (get-state :team)))
+    (add-to-play-by-play! "You have chosen " (get-state :team team-key :name) " to fight!")))
 
 (defn first-live-team-member []
   (first
@@ -92,18 +91,19 @@
         afford? (>= current-cash (:cost item))
         new-cash (- current-cash (:cost item))]
     (if afford?
-      (do (swap!
-           (app-state)
-           assoc
-           :cash new-cash)
-          (add-to-play-by-play!
-           "You take the " (:name item)
-           " from the midget's saggy, squishy hand. "
-           "He smiles and gives you a tip of his top hat.")
-          (swap! (app-state)
-                 update-in
-                 [:items item-id]
-                 #(inc (item-count item-id))))
+      (do
+        (swap!
+         (app-state)
+         assoc
+         :cash new-cash)
+        (add-to-play-by-play!
+         "You take the " (:name item)
+         " from the midget's saggy, squishy hand. "
+         "He smiles and gives you a tip of his top hat.")
+        (swap! (app-state)
+               update-in
+               [:items item-id]
+               #(inc (item-count item-id))))
 
       (add-to-play-by-play!
        "The midget bitch slaps you saying that you can't afford that. "
@@ -116,47 +116,42 @@
         captured? (> capture-chance roll)
         has-mokebox? (:mokebox (:items @(app-state)))
         battling (:battling @(app-state))]
-    (if has-mokebox?
-      (do
-        (decrement-item! :mokebox)
-        (if captured?
-          (do
-            (add-to-play-by-play!
-             "The Mokébox knocks out the "
-             (get-state :battling :name)
-             ". It's been captured!")
-            (swap! (app-state)
-                   assoc-in
-                   [:battling :captured]
-                   true)
-            (swap! (app-state)
-                   update-in
-                   [:team]
-                   #(assoc %
-                           (:id battling)
-                           battling)))
-          (add-to-play-by-play!
-           "The Mokébox bounces off "
-           (get-state :battling :name)
-           ". It's still too strong!"))))))
+    (when has-mokebox?
+      (decrement-item! :mokebox)
+      (when captured?
+        (add-to-play-by-play!
+         "The Mokébox knocks out the "
+         (get-state :battling :name)
+         ". It's been captured!")
+        (swap! (app-state)
+               assoc-in
+               [:battling :captured]
+               true)
+        (swap! (app-state)
+               update-in
+               [:team]
+               #(assoc %
+                       (:id battling)
+                       battling))
+        (add-to-play-by-play!
+         "The Mokébox bounces off "
+         (get-state :battling :name)
+         ". It's still too strong!")))))
 
 (defn use-candy! []
-  (let [has-candy? (> (item-count :candy) 0)]
-   (if has-candy?
-    (do
-      (add-to-play-by-play! (str  (:name (chosen-monster)) " has eated the delicious candy and was healed for 10 hp."))
-      (swap! (app-state) update-in [:team (get-state :chosen-key) :hp] #(+ % 10))
-      (decrement-item! :candy)))))
+  (when-let [has-candy? (> (item-count :candy) 0)]
+    (add-to-play-by-play! (str  (:name (chosen-monster)) " has eated the delicious candy and was healed for 10 hp."))
+    (swap! (app-state) update-in [:team (get-state :chosen-key) :hp] #(+ % 10))
+    (decrement-item! :candy)))
 
 (defn sleep-at-home! []
-  (do
-    (add-to-play-by-play!
-     "You've slept. Your posse has been healed.")
-    (swap!
-     (app-state)
-     update-in
-     [:team]
-     #(heal-team %))))
+  (add-to-play-by-play!
+   "You've slept. Your posse has been healed.")
+  (swap!
+   (app-state)
+   update-in
+   [:team]
+   #(heal-team %)))
 
 (defn reset-team-at! []
   (swap!
@@ -170,18 +165,17 @@
         (tick-battle (chosen-monster)
                      (:battling @(app-state))
                      (:play-by-play @(app-state)))]
-    (do
-      (swap! (app-state)
-             assoc
-             :battling battling
-             :team (update-in-team (:chosen-key @(app-state)) chosen)
-             :play-by-play play-by-play)
-      (let [live-member-key (first-live-team-member)
-            live-monster (get-in @(app-state) [:team live-member-key])]
-        (if (and (is-dead? chosen) live-member-key)
-          (do
-            (add-to-play-by-play! (str (:name live-monster) " dashes into battle!"))
-            (swap! (app-state) assoc :chosen-key live-member-key)))))))
+    (swap! (app-state)
+           assoc
+           :battling battling
+           :team (update-in-team (:chosen-key @(app-state)) chosen)
+           :play-by-play play-by-play)
+    (let [live-member-key (first-live-team-member)
+          live-monster (get-in @(app-state) [:team live-member-key])
+          need-to-auto-swap (and (is-dead? chosen) live-member-key)]
+      (when need-to-auto-swap
+        (add-to-play-by-play! (str (:name live-monster) " dashes into battle!"))
+        (swap! (app-state) assoc :chosen-key live-member-key)))))
 
 (defn dead-team-member-keys []
   (map (fn [[k v]] k)
@@ -195,10 +189,9 @@
          #(apply dissoc % (dead-team-member-keys))))
 
 (defn count-down! [message callback]
-  (do
-    (if message (add-to-play-by-play! message))
-    (swap! (app-state) assoc :battle-count-down (- (get-state :battle-count-down) 250))
-    (.setTimeout js/window callback 250)))
+  (if message (add-to-play-by-play! message))
+  (swap! (app-state) assoc :battle-count-down (- (get-state :battle-count-down) 250))
+  (.setTimeout js/window callback 250))
 
 (defn tick-battle! []
   (if (not (battle-over?
@@ -241,11 +234,10 @@
          :team (assoc (:team @(app-state)) :chipu chipu)))
 
 (defn go-to-location! [loc]
-  (do
-    (remove-dead-team-members!)
-    (swap! (app-state)
-           assoc
-           :location loc :battling nil :chosen-key nil :battle-count-down nil)))
+  (remove-dead-team-members!)
+  (swap! (app-state)
+         assoc
+         :location loc :battling nil :chosen-key nil :battle-count-down nil))
 
 (defn attack! []
   (let [{:keys [battling chosen play-by-play cash-reward]}
@@ -292,7 +284,7 @@
       (do
         (set-battle! first-team-member
                      monster-for-location)
-        (if kick-off-battle (tick-battle!))))))
+        (when kick-off-battle (tick-battle!))))))
 
 (defn chosen-can-attack? []
   (and (can-attack? (chosen-monster))
