@@ -59,9 +59,38 @@
         (assoc :chosen-key team-key)
         (assoc :team (reset-team-at (:team game-state)))
         (conj-play-by-play
-         "You have chosen " (get-in game-state [:team team-key :name]) " to fight!"))
+         "You have chosen "
+         (get-in game-state [:team team-key :name])
+         " to fight!"))
 
     game-state))
+
+(defn throw-mokebox [game-state]
+  (let [battling (:battling game-state)
+        {:keys [max-hp hp]} battling
+        capture-chance (/ (- max-hp hp) max-hp)
+        roll (rand)
+        captured? (> capture-chance roll)
+        has-mokebox? (get-in game-state [:items :mokebox])
+        game-state-with-used-mokebox (update-in game-state [:items :mokebox] dec)
+        new-team (assoc (:team game-state) (:id battling) battling)]
+    (if has-mokebox?
+      (if captured?
+        (-> game-state-with-used-mokebox
+            (assoc-in [:battling :captured] true)
+            (assoc :team new-team)
+            (conj-play-by-play
+             "The Mokébox knocks out the "
+             (get-in game-state [:battling :name])
+             ". It's been captured!"))
+
+        (conj-play-by-play
+         game-state-with-used-mokebox
+         "The Mokébox bounces off "
+         (get-in game-state [:battling :name])
+         ". It's still too strong!"))
+
+      game-state)))
 
 (def affinities
   {[:electric  :grass] 0.5

@@ -14,6 +14,7 @@
                                  buy-item
                                  reset-team-at
                                  choose-monster
+                                 throw-mokebox
                                  active-turn-threshold]]
             [mokepon.components :refer [rpg-view]]))
 
@@ -34,13 +35,6 @@
   (if (= (:value @current-app-state) :game)
     game-app-state
     test-app-state))
-
-(defn understanding-swap [game-state param2 param3]
-  (.log js/console (clj->js game-state) param2 param3)
-  game-state)
-
-(defn understanding-swap! []
-  (swap! (app-state) understanding-swap "hello" "hi"))
 
 (defn get-state [& path]
   (get-in @(app-state) path))
@@ -91,7 +85,6 @@
   (first
    (choosable-monsters (get-state :team))))
 
-
 (defn buy-item! [item-id]
   (swap! (app-state)
          buy-item
@@ -99,33 +92,7 @@
          store-items-lookup))
 
 (defn throw-mokebox! []
-  (let [{:keys [max-hp hp]} (get-state :battling)
-        capture-chance (/ (- max-hp hp) max-hp)
-        roll (rand)
-        captured? (> capture-chance roll)
-        has-mokebox? (get-state :items :mokebox)
-        battling (get-state :battling)]
-    (when has-mokebox?
-      (decrement-item! :mokebox)
-      (when captured?
-        (add-to-play-by-play!
-         "The Mokébox knocks out the "
-         (get-state :battling :name)
-         ". It's been captured!")
-        (swap! (app-state)
-               assoc-in
-               [:battling :captured]
-               true)
-        (swap! (app-state)
-               update-in
-               [:team]
-               #(assoc %
-                       (:id battling)
-                       battling))
-        (add-to-play-by-play!
-         "The Mokébox bounces off "
-         (get-state :battling :name)
-         ". It's still too strong!")))))
+  (swap! (app-state) throw-mokebox))
 
 (defn use-candy! []
   (when-let [has-candy? (> (item-count :candy) 0)]
@@ -226,7 +193,10 @@
   (remove-dead-team-members!)
   (swap! (app-state)
          assoc
-         :location loc :battling nil :chosen-key nil :battle-count-down nil))
+         :location loc
+         :battling nil
+         :chosen-key nil
+         :battle-count-down nil))
 
 (defn attack! []
   (let [{:keys [battling chosen play-by-play cash-reward]}
@@ -256,7 +226,7 @@
                        battling
                        (get-state :play-by-play))))
 
-(defn location-monsters []
+(def location-monsters
   {:forest sulbabaur
    :canyon deogude
    :pool   tirsqule})
@@ -265,7 +235,7 @@
   (let [team (get-state :team)
         location (get-state :location)
         first-team-member (first-live-team-member)
-        monster-for-location (location (location-monsters))]
+        monster-for-location (location location-monsters)]
     (cond
       (empty? team)
       false
