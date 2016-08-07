@@ -11,7 +11,9 @@
                                  can-attack?
                                  heal-team
                                  choosable-monsters
+                                 buy-item
                                  reset-team-at
+                                 choose-monster
                                  active-turn-threshold]]
             [mokepon.components :refer [rpg-view]]))
 
@@ -83,40 +85,18 @@
    (apply add-to-play-by-play message)))
 
 (defn choose-monster! [team-key]
-  (when (not= (get-state :chosen-key) team-key)
-    (swap! (app-state) assoc :chosen-key team-key)
-    (swap! (app-state) assoc :team (reset-team-at (get-state :team)))
-    (add-to-play-by-play! "You have chosen " (get-state :team team-key :name) " to fight!")))
+  (swap! (app-state) choose-monster team-key))
 
 (defn first-live-team-member []
   (first
    (choosable-monsters (get-state :team))))
 
-(defn buy-item [game-state item-id]
-  (let [item (item-id store-items-lookup)
-        current-cash (get-state :cash)
-        afford? (>= current-cash (:cost item))
-        new-cash (- current-cash (:cost item))]
-    (if afford?
-      (assoc
-       (update-in
-        (assoc game-state :cash new-cash)
-        [:items item-id]
-        #(inc (item-count item-id)))
-       :play-by-play
-       (add-to-play-by-play
-        "You take the " (:name item)
-        " from the midget's saggy, squishy hand. "
-        "He smiles and gives you a tip of his top hat."))
 
-      (assoc
-       game-state
-       :play-by-play
-       (add-to-play-by-play
-        "The midget bitch slaps you saying that you can't afford that. "
-        "He wonders if you were taught common core math.")))))
-
-(defn buy-item! [item-id] (swap! (app-state) buy-item item-id))
+(defn buy-item! [item-id]
+  (swap! (app-state)
+         buy-item
+         item-id
+         store-items-lookup))
 
 (defn throw-mokebox! []
   (let [{:keys [max-hp hp]} (get-state :battling)

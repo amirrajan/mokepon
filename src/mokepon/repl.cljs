@@ -1,12 +1,12 @@
 (ns mokepon.container)
 
-(defn go-find-trouble-in [location]
+(comment defn go-find-trouble-in [location]
   (reset! (app-state) mokepon.rpg/new-game)
   (on-take-chipu)
   (on-go-to-location location)
   (on-find-trouble))
 
-(defn repl []
+(comment defn repl []
   (go-find-trouble-in :forest)
   (swap! app-state merge {:cash 100})
   (on-attack)

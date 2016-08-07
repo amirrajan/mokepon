@@ -26,6 +26,18 @@
 
 (def active-turn-threshold 1800)
 
+(defn conj-play-by-play [game-state & strings]
+  (assoc game-state
+         :play-by-play
+         (conj (:play-by-play game-state)
+               (apply str strings))))
+
+(defn reset-monster-at [monster]
+  (assoc monster :at 0))
+
+(defn reset-team-at [team]
+  (apply-to-all-values reset-monster-at team))
+
 (defn active-turn-percentage [{:keys [at]} monster]
   (if (>= at active-turn-threshold) 1
       (/ at active-turn-threshold)))
@@ -40,6 +52,16 @@
   (if (not (can-attack? monster))
       (assoc monster :at (+ (:at monster) (:speed monster)))
       monster))
+
+(defn choose-monster [game-state team-key]
+  (if (not= (:chosen-key game-state) team-key)
+    (-> game-state
+        (assoc :chosen-key team-key)
+        (assoc :team (reset-team-at (:team game-state)))
+        (conj-play-by-play
+         "You have chosen " (get-in game-state [:team team-key :name]) " to fight!"))
+
+    game-state))
 
 (def affinities
   {[:electric  :grass] 0.5
@@ -101,14 +123,28 @@
          (conj play-by-play (attack-description from to))
          play-by-play)}))
 
+(defn buy-item [game-state item-id store-items-lookup]
+  (let [item (item-id store-items-lookup)
+        current-cash (:cash game-state)
+        afford? (>= current-cash (:cost item))
+        new-cash (- current-cash (:cost item))]
+    (if afford?
+      (-> game-state
+          (assoc :cash new-cash)
+          (update-in [:items item-id]
+                     #(inc (or (get-in game-state [:items item-id]) 0)))
+          (conj-play-by-play
+           "You take the " (:name item)
+           " from the midget's saggy, squishy hand. "
+           "He smiles and gives you a tip of his top hat."))
+      (->
+       game-state
+       (conj-play-by-play
+        "The midget bitch slaps you saying that you can't afford that. "
+        "He wonders if you were taught common core math.")))))
+
 (defn heal-monster [monster]
   (assoc monster :hp (:max-hp monster)))
-
-(defn reset-monster-at [monster]
-  (assoc monster :at 0))
-
-(defn reset-team-at [team]
-  (apply-to-all-values reset-monster-at team))
 
 (defn heal-team [team]
   (apply-to-all-values heal-monster team))
