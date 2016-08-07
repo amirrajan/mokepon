@@ -33,6 +33,13 @@
     game-app-state
     test-app-state))
 
+(defn understanding-swap [game-state param2 param3]
+  (.log js/console (clj->js game-state) param2 param3)
+  game-state)
+
+(defn understanding-swap! []
+  (swap! (app-state) understanding-swap "hello" "hi"))
+
 (defn get-state [& path]
   (get-in @(app-state) path))
 
@@ -85,29 +92,31 @@
   (first
    (choosable-monsters (get-state :team))))
 
-(defn buy-item! [item-id]
+(defn buy-item [game-state item-id]
   (let [item (item-id store-items-lookup)
         current-cash (get-state :cash)
         afford? (>= current-cash (:cost item))
         new-cash (- current-cash (:cost item))]
     (if afford?
-      (do
-        (swap!
-         (app-state)
-         assoc
-         :cash new-cash)
-        (add-to-play-by-play!
-         "You take the " (:name item)
-         " from the midget's saggy, squishy hand. "
-         "He smiles and gives you a tip of his top hat.")
-        (swap! (app-state)
-               update-in
-               [:items item-id]
-               #(inc (item-count item-id))))
+      (assoc
+       (update-in
+        (assoc game-state :cash new-cash)
+        [:items item-id]
+        #(inc (item-count item-id)))
+       :play-by-play
+       (add-to-play-by-play
+        "You take the " (:name item)
+        " from the midget's saggy, squishy hand. "
+        "He smiles and gives you a tip of his top hat."))
 
-      (add-to-play-by-play!
-       "The midget bitch slaps you saying that you can't afford that. "
-       "He wonders if you were taught common core math."))))
+      (assoc
+       game-state
+       :play-by-play
+       (add-to-play-by-play
+        "The midget bitch slaps you saying that you can't afford that. "
+        "He wonders if you were taught common core math.")))))
+
+(defn buy-item! [item-id] (swap! (app-state) buy-item item-id))
 
 (defn throw-mokebox! []
   (let [{:keys [max-hp hp]} (get-state :battling)
