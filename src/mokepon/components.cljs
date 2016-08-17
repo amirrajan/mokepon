@@ -255,7 +255,6 @@
                 choose-monster-handler
                 candy-handler]
 
-  (.log js/console candy-handler)
   (let [{:keys [location
                 team
                 team-at-home
