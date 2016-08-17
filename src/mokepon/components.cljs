@@ -99,9 +99,15 @@
                            battle-over?
                            items
                            throw-mokebox-handler
-                           choose-monster-handler]
+                           choose-monster-handler
+                           candy-handler]
   (section
    (conditional-a chosen-can-attack? "Attack!" attack-handler)
+   (if (:candy items)
+     (conditional-a (and (not battle-over?)
+                         (pos? (:candy items)))
+                    "Candy!"
+                    candy-handler))
    (if (:mokebox items)
      (conditional-a (and (not battle-over?)
                          (> (:mokebox items) 0))
@@ -122,7 +128,8 @@
                    go-to-location-handler
                    items
                    throw-mokebox-handler
-                   choose-monster-handler]
+                   choose-monster-handler
+                   candy-handler]
   [:div
    (battler-view battling active-turn-threshold)
    (battler-view chosen active-turn-threshold)
@@ -133,7 +140,8 @@
                         battle-over?
                         items
                         throw-mokebox-handler
-                        choose-monster-handler)
+                        choose-monster-handler
+                        candy-handler)
    (battle-report-view battle-over? go-to-location-handler)])
 
 (defn location-view [location-description
@@ -150,7 +158,8 @@
                      active-turn-threshold
                      items
                      throw-mokebox-handler
-                     choose-monster-handler]
+                     choose-monster-handler
+                     candy-handler]
   (if (nil? battling)
     [:div
      (section [:p location-description])
@@ -170,7 +179,8 @@
                  go-to-location-handler
                  items
                  throw-mokebox-handler
-                 choose-monster-handler)))
+                 choose-monster-handler
+                 candy-handler)))
 
 (defn home-view [team
                  team-at-home
@@ -242,7 +252,10 @@
                 store-items-lookup
                 buy-item-handler
                 throw-mokebox-handler
-                choose-monster-handler]
+                choose-monster-handler
+                candy-handler]
+
+  (.log js/console candy-handler)
   (let [{:keys [location
                 team
                 team-at-home
@@ -276,7 +289,8 @@
                       active-turn-threshold
                       items
                       throw-mokebox-handler
-                      choose-monster-handler)
+                      choose-monster-handler
+                      candy-handler)
 
        (= location :home)
        (home-view team

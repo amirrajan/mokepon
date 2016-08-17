@@ -226,6 +226,9 @@
                        battling
                        (get-state :play-by-play))))
 
+(defn set-cash! [cash]
+  (swap! (app-state) assoc :cash cash))
+
 (def location-monsters
   {:forest sulbabaur
    :canyon deogude
@@ -267,7 +270,8 @@
              store-items-lookup
              buy-item!
              throw-mokebox!
-             choose-monster!)))
+             choose-monster!
+             use-candy!)))
 
 (defn render! []
   (.render js/React
