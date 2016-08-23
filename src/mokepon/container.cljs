@@ -104,13 +104,7 @@
   (swap! (app-state) use-candy))
 
 (defn sleep-at-home! []
-  (add-to-play-by-play!
-   "You've slept. Your posse has been healed.")
-  (swap!
-   (app-state)
-   update-in
-   [:team]
-   #(heal-team %)))
+  (swap! (app-state) heal-team))
 
 (defn reset-team-at! []
   (swap!

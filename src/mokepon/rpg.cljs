@@ -72,13 +72,10 @@
   (or (get-in game-state [:items item-key]) 0))
 
 (defn use-candy [game-state]
-  (when-let [has-candy? (> (item-count game-state :candy) 0)]
+  (when-let [has-candy? (pos? (item-count game-state :candy))]
     (-> game-state
         (update-in [:team (get-in game-state [:chosen-key]) :hp]
-                   (fn [current-hp]
-                     (let [new-hp (+ current-hp 10)
-                           max-hp (:max-hp (chosen-monster game-state))]
-                       (if (> new-hp max-hp) max-hp new-hp))))
+                   #(min (:max-hp (chosen-monster game-state)) (+ % 10)))
         (update-in [:items :candy] #(dec (or % 0)))
         (conj-play-by-play (:name (chosen-monster game-state))
                            " has eated the delicious candy and was healed for 10 hp."))))
@@ -193,8 +190,13 @@
 (defn heal-monster [monster]
   (assoc monster :hp (:max-hp monster)))
 
-(defn heal-team [team]
-  (apply-to-all-values heal-monster team))
+(defn heal-team [game-state]
+  (-> game-state
+      (conj-play-by-play "You've slept. Your posse has been healed.")
+      (assoc :team
+             (apply-to-all-values
+              heal-monster
+              (:team game-state)))))
 
 (defn choosable-monsters [team]
   (filter-key #(not (is-dead? %)) team))

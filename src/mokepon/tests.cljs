@@ -62,9 +62,18 @@
 
 (deftest healing-team
   "anyone with low hp is healed to max"
-  (is (= (rpg/heal-team
-          {:chipu {:hp 10 :max-hp 50}
-           :deogude {:hp 5  :max-hp 100}})
+  (swap!
+   (tnr/app-state)
+   assoc
+   :team
+   {:chipu   {:hp 10 :max-hp 50}
+    :deogude {:hp 5  :max-hp 100}})
+
+  (tnr/sleep-at-home!)
+
+  (has-play-by-play "You've slept. Your posse has been healed.")
+
+  (is (= (get-state :team)
          {:chipu {:hp 50   :max-hp 50}
           :deogude {:hp 100  :max-hp 100}})))
 
