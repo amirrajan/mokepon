@@ -195,6 +195,17 @@
         (assoc-in [:team (:chosen-key game-state)] to)
         auto-swap-team-member)))
 
+(defn dead-team-member-keys [game-state]
+  (->> (:team game-state)
+       (filter (fn [[_ v]] (is-dead? v)))
+       (map (fn [[k _]] k))))
+
+(defn remove-dead-team-members [game-state]
+  (let [dead-keys (dead-team-member-keys game-state)]
+    (update-in game-state
+               [:team]
+               #(apply dissoc % dead-keys))))
+
 (defn buy-item [game-state item-id store-items-lookup]
   (let [item (item-id store-items-lookup)
         current-cash (:cash game-state)

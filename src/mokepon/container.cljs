@@ -15,7 +15,9 @@
                                  use-candy
                                  reset-team-at
                                  choose-monster
+                                 chosen-monster
                                  throw-mokebox
+                                 remove-dead-team-members
                                  active-turn-threshold]]
             [mokepon.components :refer [rpg-view]]))
 
@@ -48,9 +50,6 @@
 
 (defn team-count []
   (count (get-state :team)))
-
-(defn chosen-monster []
-  (get-state :team (get-state :chosen-key)))
 
 (defn set-battle [chosen-key battling]
   (assoc @(app-state)
@@ -122,19 +121,23 @@
         (get-state :team))))
 
 (defn remove-dead-team-members! []
-  (swap! (app-state)
-         update-in [:team]
-         #(apply dissoc % (dead-team-member-keys))))
+  (swap! (app-state) remove-dead-team-members))
 
 (defn count-down! [message callback]
   (if message (add-to-play-by-play! message))
   (swap! (app-state) assoc :battle-count-down (- (get-state :battle-count-down) 250))
   (.setTimeout js/window callback 250))
 
+(defn .chosen-monster []
+  (chosen-monster @(app-state)))
+
+(defn .battling
+  (.battling))
+
 (defn tick-battle! []
   (if (not (battle-over?
-            (chosen-monster)
-            (get-state :battling)))
+            (.chosen-monster)
+            (.battling)))
       (cond (not (get-state :battle-count-down))
             (do
               (swap! (app-state) assoc :battle-count-down 5000)
@@ -183,8 +186,8 @@
 (defn attack! []
   (let [{:keys [battling chosen play-by-play cash-reward]}
         (apply-player-attack
-         (chosen-monster)
-         (get-state :battling)
+         (.chosen-monster)
+         (.battling)
          (get-state :play-by-play))]
     (swap! (app-state)
            assoc
@@ -232,8 +235,9 @@
         (when kick-off-battle (tick-battle!))))))
 
 (defn chosen-can-attack? []
-  (and (can-attack? (chosen-monster))
-       (not (battle-over? (chosen-monster) (get-state :battling)))))
+  (and (can-attack? (.chosen-monster))
+       (not (battle-over? (.chosen-monster)
+                          (.battling)))))
 
 (defn rpg-container []
   (sab/html
@@ -242,9 +246,9 @@
              go-to-location!
              #(find-trouble! true)
              (choosable-monsters (get-state :team))
-             (chosen-monster)
+             (.chosen-monster)
              (chosen-can-attack?)
-             (battle-over? (chosen-monster) (get-state :battling))
+             (battle-over? (.chosen-monster) (.battling))
              attack!
              sleep-at-home!
              active-turn-threshold
