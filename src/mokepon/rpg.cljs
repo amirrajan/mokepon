@@ -108,11 +108,11 @@
       game-state)))
 
 (def affinities
-  {[:electric  :grass] 0.5
-   [:ground :electric] 2
-   [:electric  :water] 2
-   [:water  :electric] 1
-   [:electric :ground] 0})
+  {[:electric  :grass]    0.5
+   [:ground    :electric] 2
+   [:electric  :water]    2
+   [:water     :electric] 1
+   [:electric  :ground]   0})
 
 (defn affinity-lookup [from to]
   (let [from-type (:type from)
