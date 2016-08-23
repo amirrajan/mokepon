@@ -48,7 +48,6 @@
 
 (deftest being-killed
   "being killed by enemy monster removes chosen mokepon form the team"
-
   (swap! (tnr/app-state) assoc-in [:team :sulbabaur] mon/sulbabaur)
   (swap! (tnr/app-state)
          assoc-in
@@ -239,8 +238,7 @@
   (make-chosen-attack-ready)
   (tnr/attack!)
   (is (rpg/is-dead? (get-state :battling)))
-  (is (= (get-state :cash) 3))
-  )
+  (is (= (get-state :cash) 3)))
 
 (deftest using-candy
   "when using candy your mokepon gains health"
