@@ -155,17 +155,45 @@
          (conj play-by-play (attack-description from to))
          play-by-play)}))
 
-(defn tick-battle [chosen battling play-by-play]
-  (let [chosen-ticked (tick-monster chosen)
-        battling-ticked (tick-monster battling)
-        {:keys [from to attack-occured?]}
-        (try-attack battling-ticked chosen-ticked)]
-    {:chosen to
-     :battling from
-     :play-by-play
-     (if attack-occured?
-         (conj play-by-play (attack-description from to))
-         play-by-play)}))
+(defn attack-result-play-by-play [attack-result play-by-play]
+  (let [{:keys [from to attack-occured?]} attack-result
+        attack-description (attack-description from to)]
+    (if attack-occured?
+      (conj play-by-play attack-description)
+      play-by-play)))
+
+(defn choosable-monsters [team]
+  (filter-key #(not (is-dead? %)) team))
+
+(defn first-live-team-member [game-state]
+  (first (choosable-monsters (:team game-state))))
+
+(defn auto-swap-team-member [game-state]
+  (let [chosen (chosen-monster game-state)
+        live-member-key (first-live-team-member game-state)
+        live-monster-name (get-in game-state
+                                  [:team live-member-key :name])
+        need-to-auto-swap (and (is-dead? chosen) live-member-key)]
+    (if need-to-auto-swap
+      (-> game-state
+          (conj-play-by-play live-monster-name " dashes into battle!")
+          (assoc :chosen-key live-member-key))
+      game-state)))
+
+(defn tick-battle [game-state]
+  (let [chosen-ticked (-> game-state chosen-monster tick-monster)
+        battling-ticked (-> game-state :battling tick-monster)
+        {:keys [from to] :as attack-result}
+        (try-attack battling-ticked chosen-ticked)
+        new-play-by-play
+        (attack-result-play-by-play attack-result
+                                    (:play-by-play game-state))
+        need-to-auto-swap (and (is-dead? to))]
+    (-> game-state
+        (assoc :battling from
+               :play-by-play new-play-by-play)
+        (assoc-in [:team (:chosen-key game-state)] to)
+        auto-swap-team-member)))
 
 (defn buy-item [game-state item-id store-items-lookup]
   (let [item (item-id store-items-lookup)
@@ -181,11 +209,11 @@
            "You take the " (:name item)
            " from the midget's saggy, squishy hand. "
            "He smiles and gives you a tip of his top hat."))
-      (->
-       game-state
-       (conj-play-by-play
-        "The midget bitch slaps you saying that you can't afford that. "
-        "He wonders if you were taught common core math.")))))
+
+      (-> game-state
+          (conj-play-by-play
+           "The midget bitch slaps you saying that you can't afford that. "
+           "He wonders if you were taught common core math.")))))
 
 (defn heal-monster [monster]
   (assoc monster :hp (:max-hp monster)))
@@ -197,6 +225,3 @@
              (apply-to-all-values
               heal-monster
               (:team game-state)))))
-
-(defn choosable-monsters [team]
-  (filter-key #(not (is-dead? %)) team))

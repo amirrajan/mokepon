@@ -113,22 +113,7 @@
    [:team]
    #(reset-team-at %)))
 
-(defn tick-battle-core! []
-  (let [{:keys [battling chosen play-by-play]}
-        (tick-battle (chosen-monster)
-                     (get-state :battling)
-                     (get-state :play-by-play))]
-    (swap! (app-state)
-           assoc
-           :battling battling
-           :team (update-in-team (get-state :chosen-key) chosen)
-           :play-by-play play-by-play)
-    (let [live-member-key (first-live-team-member)
-          live-monster (get-state :team live-member-key)
-          need-to-auto-swap (and (is-dead? chosen) live-member-key)]
-      (when need-to-auto-swap
-        (add-to-play-by-play! (str (:name live-monster) " dashes into battle!"))
-        (swap! (app-state) assoc :chosen-key live-member-key)))))
+(defn tick-battle-core! [] (swap! (app-state) tick-battle))
 
 (defn dead-team-member-keys []
   (map (fn [[k v]] k)
