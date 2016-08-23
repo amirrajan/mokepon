@@ -65,6 +65,24 @@
 
     game-state))
 
+(defn chosen-monster [game-state]
+  (get-in game-state [:team (get-in game-state [:chosen-key])]))
+
+(defn item-count [game-state item-key]
+  (or (get-in game-state [:items item-key]) 0))
+
+(defn use-candy [game-state]
+  (when-let [has-candy? (> (item-count game-state :candy) 0)]
+    (-> game-state
+        (update-in [:team (get-in game-state [:chosen-key]) :hp]
+                   (fn [current-hp]
+                     (let [new-hp (+ current-hp 10)
+                           max-hp (:max-hp (chosen-monster game-state))]
+                       (if (> new-hp max-hp) max-hp new-hp))))
+        (update-in [:items :candy] #(dec (or % 0)))
+        (conj-play-by-play (:name (chosen-monster game-state))
+                           " has eated the delicious candy and was healed for 10 hp."))))
+
 (defn throw-mokebox [game-state]
   (let [battling (:battling game-state)
         {:keys [max-hp hp]} battling

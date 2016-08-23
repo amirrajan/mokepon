@@ -246,6 +246,16 @@
   (is (= (tnr/item-count :candy) 0))
   (is (= (get-state :team :chipu :hp) 40)))
 
+(deftest using-candy-max-hp
+  "using candy doesn't over heal"
+  (tnr/buy-item! :candy)
+  (is (= (tnr/item-count :candy) 1))
+  (tnr/set-battle! :chipu mon/deogude)
+  (tnr/use-candy!)
+  (has-play-by-play "Chipu has eated the delicious candy and was healed for 10 hp.")
+  (is (= (tnr/item-count :candy) 0))
+  (is (= (get-state :team :chipu :hp) 50)))
+
 (defn run-tests []
   (.clear js/console)
   (cljs.test/run-all-tests #"mokepon.tests"))

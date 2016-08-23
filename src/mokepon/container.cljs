@@ -12,6 +12,7 @@
                                  heal-team
                                  choosable-monsters
                                  buy-item
+                                 use-candy
                                  reset-team-at
                                  choose-monster
                                  throw-mokebox
@@ -38,6 +39,12 @@
 
 (defn get-state [& path]
   (get-in @(app-state) path))
+
+(defn log [o]
+  (.log js/console (clj->js o)))
+
+(defn log-state [& path]
+  (log (apply get-state path)))
 
 (defn team-count []
   (count (get-state :team)))
@@ -91,14 +98,10 @@
          item-id
          store-items-lookup))
 
-(defn throw-mokebox! []
-  (swap! (app-state) throw-mokebox))
+(defn throw-mokebox! [] (swap! (app-state) throw-mokebox))
 
 (defn use-candy! []
-  (when-let [has-candy? (> (item-count :candy) 0)]
-    (add-to-play-by-play! (str  (:name (chosen-monster)) " has eated the delicious candy and was healed for 10 hp."))
-    (swap! (app-state) update-in [:team (get-state :chosen-key) :hp] #(+ % 10))
-    (decrement-item! :candy)))
+  (swap! (app-state) use-candy))
 
 (defn sleep-at-home! []
   (add-to-play-by-play!
