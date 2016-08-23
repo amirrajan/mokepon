@@ -19,23 +19,23 @@ mokepon.components.todo = (function mokepon$components$todo(){
 return window.alert("todo");
 });
 mokepon.components.section = (function mokepon$components$section(var_args){
-var args__29094__auto__ = [];
-var len__29087__auto___50040 = arguments.length;
-var i__29088__auto___50041 = (0);
+var args__19546__auto__ = [];
+var len__19539__auto___30803 = arguments.length;
+var i__19540__auto___30804 = (0);
 while(true){
-if((i__29088__auto___50041 < len__29087__auto___50040)){
-args__29094__auto__.push((arguments[i__29088__auto___50041]));
+if((i__19540__auto___30804 < len__19539__auto___30803)){
+args__19546__auto__.push((arguments[i__19540__auto___30804]));
 
-var G__50042 = (i__29088__auto___50041 + (1));
-i__29088__auto___50041 = G__50042;
+var G__30805 = (i__19540__auto___30804 + (1));
+i__19540__auto___30804 = G__30805;
 continue;
 } else {
 }
 break;
 }
 
-var argseq__29095__auto__ = ((((0) < args__29094__auto__.length))?(new cljs.core.IndexedSeq(args__29094__auto__.slice((0)),(0),null)):null);
-return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(argseq__29095__auto__);
+var argseq__19547__auto__ = ((((0) < args__19546__auto__.length))?(new cljs.core.IndexedSeq(args__19546__auto__.slice((0)),(0),null)):null);
+return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(argseq__19547__auto__);
 });
 
 mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic = (function (elements){
@@ -44,32 +44,32 @@ return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMP
 
 mokepon.components.section.cljs$lang$maxFixedArity = (0);
 
-mokepon.components.section.cljs$lang$applyTo = (function (seq50039){
-return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq50039));
+mokepon.components.section.cljs$lang$applyTo = (function (seq30802){
+return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq30802));
 });
 
 mokepon.components.team_view = (function mokepon$components$team_view(team,header,empty_text){
-return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,header], null),((cljs.core.empty_QMARK_(team))?new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$p,empty_text], null):null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$ul,(function (){var iter__28792__auto__ = (function mokepon$components$team_view_$_iter__50061(s__50062){
+return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,header], null),((cljs.core.empty_QMARK_(team))?new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$p,empty_text], null):null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$ul,(function (){var iter__19244__auto__ = (function mokepon$components$team_view_$_iter__30824(s__30825){
 return (new cljs.core.LazySeq(null,(function (){
-var s__50062__$1 = s__50062;
+var s__30825__$1 = s__30825;
 while(true){
-var temp__4657__auto__ = cljs.core.seq(s__50062__$1);
+var temp__4657__auto__ = cljs.core.seq(s__30825__$1);
 if(temp__4657__auto__){
-var s__50062__$2 = temp__4657__auto__;
-if(cljs.core.chunked_seq_QMARK_(s__50062__$2)){
-var c__28790__auto__ = cljs.core.chunk_first(s__50062__$2);
-var size__28791__auto__ = cljs.core.count(c__28790__auto__);
-var b__50064 = cljs.core.chunk_buffer(size__28791__auto__);
-if((function (){var i__50063 = (0);
+var s__30825__$2 = temp__4657__auto__;
+if(cljs.core.chunked_seq_QMARK_(s__30825__$2)){
+var c__19242__auto__ = cljs.core.chunk_first(s__30825__$2);
+var size__19243__auto__ = cljs.core.count(c__19242__auto__);
+var b__30827 = cljs.core.chunk_buffer(size__19243__auto__);
+if((function (){var i__30826 = (0);
 while(true){
-if((i__50063 < size__28791__auto__)){
-var vec__50073 = cljs.core._nth.cljs$core$IFn$_invoke$arity$2(c__28790__auto__,i__50063);
-var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50073,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50073,(1),null);
-cljs.core.chunk_append(b__50064,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$li,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$key,cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(v)], null),[cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(v)),cljs.core.str(" (hp: "),cljs.core.str(cljs.core.cst$kw$hp.cljs$core$IFn$_invoke$arity$1(v)),cljs.core.str("/"),cljs.core.str(cljs.core.cst$kw$max_DASH_hp.cljs$core$IFn$_invoke$arity$1(v)),cljs.core.str(")")].join('')], null));
+if((i__30826 < size__19243__auto__)){
+var vec__30836 = cljs.core._nth.cljs$core$IFn$_invoke$arity$2(c__19242__auto__,i__30826);
+var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__30836,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__30836,(1),null);
+cljs.core.chunk_append(b__30827,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$li,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$key,cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(v)], null),[cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(v)),cljs.core.str(" (hp: "),cljs.core.str(cljs.core.cst$kw$hp.cljs$core$IFn$_invoke$arity$1(v)),cljs.core.str("/"),cljs.core.str(cljs.core.cst$kw$max_DASH_hp.cljs$core$IFn$_invoke$arity$1(v)),cljs.core.str(")")].join('')], null));
 
-var G__50079 = (i__50063 + (1));
-i__50063 = G__50079;
+var G__30842 = (i__30826 + (1));
+i__30826 = G__30842;
 continue;
 } else {
 return true;
@@ -77,15 +77,15 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons(cljs.core.chunk(b__50064),mokepon$components$team_view_$_iter__50061(cljs.core.chunk_rest(s__50062__$2)));
+return cljs.core.chunk_cons(cljs.core.chunk(b__30827),mokepon$components$team_view_$_iter__30824(cljs.core.chunk_rest(s__30825__$2)));
 } else {
-return cljs.core.chunk_cons(cljs.core.chunk(b__50064),null);
+return cljs.core.chunk_cons(cljs.core.chunk(b__30827),null);
 }
 } else {
-var vec__50076 = cljs.core.first(s__50062__$2);
-var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50076,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50076,(1),null);
-return cljs.core.cons(new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$li,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$key,cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(v)], null),[cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(v)),cljs.core.str(" (hp: "),cljs.core.str(cljs.core.cst$kw$hp.cljs$core$IFn$_invoke$arity$1(v)),cljs.core.str("/"),cljs.core.str(cljs.core.cst$kw$max_DASH_hp.cljs$core$IFn$_invoke$arity$1(v)),cljs.core.str(")")].join('')], null),mokepon$components$team_view_$_iter__50061(cljs.core.rest(s__50062__$2)));
+var vec__30839 = cljs.core.first(s__30825__$2);
+var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__30839,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__30839,(1),null);
+return cljs.core.cons(new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$li,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$key,cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(v)], null),[cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(v)),cljs.core.str(" (hp: "),cljs.core.str(cljs.core.cst$kw$hp.cljs$core$IFn$_invoke$arity$1(v)),cljs.core.str("/"),cljs.core.str(cljs.core.cst$kw$max_DASH_hp.cljs$core$IFn$_invoke$arity$1(v)),cljs.core.str(")")].join('')], null),mokepon$components$team_view_$_iter__30824(cljs.core.rest(s__30825__$2)));
 }
 } else {
 return null;
@@ -94,7 +94,7 @@ break;
 }
 }),null,null));
 });
-return iter__28792__auto__(team);
+return iter__19244__auto__(team);
 })()], null)], 0));
 });
 mokepon.components.ask_mommy_view = (function mokepon$components$ask_mommy_view(team,team_at_home,take_chipu_handler){
@@ -119,25 +119,25 @@ mokepon.components.battler_view = (function mokepon$components$battler_view(mons
 return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$h2,[cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(monster)),cljs.core.str(" (hp: "),cljs.core.str(cljs.core.cst$kw$hp.cljs$core$IFn$_invoke$arity$1(monster)),cljs.core.str(")")].join('')], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$hr], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$p,cljs.core.cst$kw$battle_DASH_text.cljs$core$IFn$_invoke$arity$1(monster)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$hr], null),mokepon.components.progress_bar_view((cljs.core.cst$kw$at.cljs$core$IFn$_invoke$arity$1(monster) / full_active_turn))], 0));
 });
 mokepon.components.play_by_play_view = (function mokepon$components$play_by_play_view(play_by_play){
-return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([(function (){var iter__28792__auto__ = (function mokepon$components$play_by_play_view_$_iter__50086(s__50087){
+return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([(function (){var iter__19244__auto__ = (function mokepon$components$play_by_play_view_$_iter__30849(s__30850){
 return (new cljs.core.LazySeq(null,(function (){
-var s__50087__$1 = s__50087;
+var s__30850__$1 = s__30850;
 while(true){
-var temp__4657__auto__ = cljs.core.seq(s__50087__$1);
+var temp__4657__auto__ = cljs.core.seq(s__30850__$1);
 if(temp__4657__auto__){
-var s__50087__$2 = temp__4657__auto__;
-if(cljs.core.chunked_seq_QMARK_(s__50087__$2)){
-var c__28790__auto__ = cljs.core.chunk_first(s__50087__$2);
-var size__28791__auto__ = cljs.core.count(c__28790__auto__);
-var b__50089 = cljs.core.chunk_buffer(size__28791__auto__);
-if((function (){var i__50088 = (0);
+var s__30850__$2 = temp__4657__auto__;
+if(cljs.core.chunked_seq_QMARK_(s__30850__$2)){
+var c__19242__auto__ = cljs.core.chunk_first(s__30850__$2);
+var size__19243__auto__ = cljs.core.count(c__19242__auto__);
+var b__30852 = cljs.core.chunk_buffer(size__19243__auto__);
+if((function (){var i__30851 = (0);
 while(true){
-if((i__50088 < size__28791__auto__)){
-var i = cljs.core._nth.cljs$core$IFn$_invoke$arity$2(c__28790__auto__,i__50088);
-cljs.core.chunk_append(b__50089,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,i], null));
+if((i__30851 < size__19243__auto__)){
+var i = cljs.core._nth.cljs$core$IFn$_invoke$arity$2(c__19242__auto__,i__30851);
+cljs.core.chunk_append(b__30852,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,i], null));
 
-var G__50092 = (i__50088 + (1));
-i__50088 = G__50092;
+var G__30855 = (i__30851 + (1));
+i__30851 = G__30855;
 continue;
 } else {
 return true;
@@ -145,13 +145,13 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons(cljs.core.chunk(b__50089),mokepon$components$play_by_play_view_$_iter__50086(cljs.core.chunk_rest(s__50087__$2)));
+return cljs.core.chunk_cons(cljs.core.chunk(b__30852),mokepon$components$play_by_play_view_$_iter__30849(cljs.core.chunk_rest(s__30850__$2)));
 } else {
-return cljs.core.chunk_cons(cljs.core.chunk(b__50089),null);
+return cljs.core.chunk_cons(cljs.core.chunk(b__30852),null);
 }
 } else {
-var i = cljs.core.first(s__50087__$2);
-return cljs.core.cons(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,i], null),mokepon$components$play_by_play_view_$_iter__50086(cljs.core.rest(s__50087__$2)));
+var i = cljs.core.first(s__30850__$2);
+return cljs.core.cons(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,i], null),mokepon$components$play_by_play_view_$_iter__30849(cljs.core.rest(s__30850__$2)));
 }
 } else {
 return null;
@@ -160,7 +160,7 @@ break;
 }
 }),null,null));
 });
-return iter__28792__auto__(cljs.core.take.cljs$core$IFn$_invoke$arity$2((25),cljs.core.reverse(play_by_play)));
+return iter__19244__auto__(cljs.core.take.cljs$core$IFn$_invoke$arity$2((25),cljs.core.reverse(play_by_play)));
 })()], 0));
 });
 mokepon.components.battle_report_view = (function mokepon$components$battle_report_view(battle_over_QMARK_,go_to_location_handler){
@@ -172,30 +172,30 @@ return (go_to_location_handler.cljs$core$IFn$_invoke$arity$1 ? go_to_location_ha
 return null;
 }
 });
-mokepon.components.battle_actions_view = (function mokepon$components$battle_actions_view(team,choosable_monsters,chosen_can_attack_QMARK_,attack_handler,battle_over_QMARK_,items,throw_mokebox_handler,choose_monster_handler){
-return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([mokepon.components.conditional_a(chosen_can_attack_QMARK_,"Attack!",attack_handler),(cljs.core.truth_(cljs.core.cst$kw$mokebox.cljs$core$IFn$_invoke$arity$1(items))?mokepon.components.conditional_a((cljs.core.not(battle_over_QMARK_)) && ((cljs.core.cst$kw$mokebox.cljs$core$IFn$_invoke$arity$1(items) > (0))),"Throw Mok\u00E9box!",throw_mokebox_handler):null),(((cljs.core.not(battle_over_QMARK_)) && ((cljs.core.count(choosable_monsters) > (1))))?(function (){var iter__28792__auto__ = (function mokepon$components$battle_actions_view_$_iter__50099(s__50100){
+mokepon.components.battle_actions_view = (function mokepon$components$battle_actions_view(team,choosable_monsters,chosen_can_attack_QMARK_,attack_handler,battle_over_QMARK_,items,throw_mokebox_handler,choose_monster_handler,candy_handler){
+return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([mokepon.components.conditional_a(chosen_can_attack_QMARK_,"Attack!",attack_handler),(cljs.core.truth_(cljs.core.cst$kw$candy.cljs$core$IFn$_invoke$arity$1(items))?mokepon.components.conditional_a((cljs.core.not(battle_over_QMARK_)) && ((cljs.core.cst$kw$candy.cljs$core$IFn$_invoke$arity$1(items) > (0))),"Candy!",candy_handler):null),(cljs.core.truth_(cljs.core.cst$kw$mokebox.cljs$core$IFn$_invoke$arity$1(items))?mokepon.components.conditional_a((cljs.core.not(battle_over_QMARK_)) && ((cljs.core.cst$kw$mokebox.cljs$core$IFn$_invoke$arity$1(items) > (0))),"Throw Mok\u00E9box!",throw_mokebox_handler):null),(((cljs.core.not(battle_over_QMARK_)) && ((cljs.core.count(choosable_monsters) > (1))))?(function (){var iter__19244__auto__ = (function mokepon$components$battle_actions_view_$_iter__30862(s__30863){
 return (new cljs.core.LazySeq(null,(function (){
-var s__50100__$1 = s__50100;
+var s__30863__$1 = s__30863;
 while(true){
-var temp__4657__auto__ = cljs.core.seq(s__50100__$1);
+var temp__4657__auto__ = cljs.core.seq(s__30863__$1);
 if(temp__4657__auto__){
-var s__50100__$2 = temp__4657__auto__;
-if(cljs.core.chunked_seq_QMARK_(s__50100__$2)){
-var c__28790__auto__ = cljs.core.chunk_first(s__50100__$2);
-var size__28791__auto__ = cljs.core.count(c__28790__auto__);
-var b__50102 = cljs.core.chunk_buffer(size__28791__auto__);
-if((function (){var i__50101 = (0);
+var s__30863__$2 = temp__4657__auto__;
+if(cljs.core.chunked_seq_QMARK_(s__30863__$2)){
+var c__19242__auto__ = cljs.core.chunk_first(s__30863__$2);
+var size__19243__auto__ = cljs.core.count(c__19242__auto__);
+var b__30865 = cljs.core.chunk_buffer(size__19243__auto__);
+if((function (){var i__30864 = (0);
 while(true){
-if((i__50101 < size__28791__auto__)){
-var m = cljs.core._nth.cljs$core$IFn$_invoke$arity$2(c__28790__auto__,i__50101);
-cljs.core.chunk_append(b__50102,mokepon.components.a([cljs.core.str("Choose "),cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1((m.cljs$core$IFn$_invoke$arity$1 ? m.cljs$core$IFn$_invoke$arity$1(team) : m.call(null,team)))),cljs.core.str("!")].join(''),((function (i__50101,m,c__28790__auto__,size__28791__auto__,b__50102,s__50100__$2,temp__4657__auto__){
+if((i__30864 < size__19243__auto__)){
+var m = cljs.core._nth.cljs$core$IFn$_invoke$arity$2(c__19242__auto__,i__30864);
+cljs.core.chunk_append(b__30865,mokepon.components.a([cljs.core.str("Choose "),cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1((m.cljs$core$IFn$_invoke$arity$1 ? m.cljs$core$IFn$_invoke$arity$1(team) : m.call(null,team)))),cljs.core.str("!")].join(''),((function (i__30864,m,c__19242__auto__,size__19243__auto__,b__30865,s__30863__$2,temp__4657__auto__){
 return (function (){
 return (choose_monster_handler.cljs$core$IFn$_invoke$arity$1 ? choose_monster_handler.cljs$core$IFn$_invoke$arity$1(m) : choose_monster_handler.call(null,m));
-});})(i__50101,m,c__28790__auto__,size__28791__auto__,b__50102,s__50100__$2,temp__4657__auto__))
+});})(i__30864,m,c__19242__auto__,size__19243__auto__,b__30865,s__30863__$2,temp__4657__auto__))
 ));
 
-var G__50105 = (i__50101 + (1));
-i__50101 = G__50105;
+var G__30868 = (i__30864 + (1));
+i__30864 = G__30868;
 continue;
 } else {
 return true;
@@ -203,17 +203,17 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons(cljs.core.chunk(b__50102),mokepon$components$battle_actions_view_$_iter__50099(cljs.core.chunk_rest(s__50100__$2)));
+return cljs.core.chunk_cons(cljs.core.chunk(b__30865),mokepon$components$battle_actions_view_$_iter__30862(cljs.core.chunk_rest(s__30863__$2)));
 } else {
-return cljs.core.chunk_cons(cljs.core.chunk(b__50102),null);
+return cljs.core.chunk_cons(cljs.core.chunk(b__30865),null);
 }
 } else {
-var m = cljs.core.first(s__50100__$2);
-return cljs.core.cons(mokepon.components.a([cljs.core.str("Choose "),cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1((m.cljs$core$IFn$_invoke$arity$1 ? m.cljs$core$IFn$_invoke$arity$1(team) : m.call(null,team)))),cljs.core.str("!")].join(''),((function (m,s__50100__$2,temp__4657__auto__){
+var m = cljs.core.first(s__30863__$2);
+return cljs.core.cons(mokepon.components.a([cljs.core.str("Choose "),cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1((m.cljs$core$IFn$_invoke$arity$1 ? m.cljs$core$IFn$_invoke$arity$1(team) : m.call(null,team)))),cljs.core.str("!")].join(''),((function (m,s__30863__$2,temp__4657__auto__){
 return (function (){
 return (choose_monster_handler.cljs$core$IFn$_invoke$arity$1 ? choose_monster_handler.cljs$core$IFn$_invoke$arity$1(m) : choose_monster_handler.call(null,m));
-});})(m,s__50100__$2,temp__4657__auto__))
-),mokepon$components$battle_actions_view_$_iter__50099(cljs.core.rest(s__50100__$2)));
+});})(m,s__30863__$2,temp__4657__auto__))
+),mokepon$components$battle_actions_view_$_iter__30862(cljs.core.rest(s__30863__$2)));
 }
 } else {
 return null;
@@ -222,19 +222,19 @@ break;
 }
 }),null,null));
 });
-return iter__28792__auto__(choosable_monsters);
+return iter__19244__auto__(choosable_monsters);
 })():null)], 0));
 });
-mokepon.components.battle_view = (function mokepon$components$battle_view(team,choosable_monsters,chosen,chosen_can_attack_QMARK_,battle_over_QMARK_,battling,active_turn_threshold,attack_handler,go_to_location_handler,items,throw_mokebox_handler,choose_monster_handler){
-return new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,mokepon.components.battler_view(battling,active_turn_threshold),mokepon.components.battler_view(chosen,active_turn_threshold),mokepon.components.battle_actions_view(team,choosable_monsters,chosen_can_attack_QMARK_,attack_handler,battle_over_QMARK_,items,throw_mokebox_handler,choose_monster_handler),mokepon.components.battle_report_view(battle_over_QMARK_,go_to_location_handler)], null);
+mokepon.components.battle_view = (function mokepon$components$battle_view(team,choosable_monsters,chosen,chosen_can_attack_QMARK_,battle_over_QMARK_,battling,active_turn_threshold,attack_handler,go_to_location_handler,items,throw_mokebox_handler,choose_monster_handler,candy_handler){
+return new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,mokepon.components.battler_view(battling,active_turn_threshold),mokepon.components.battler_view(chosen,active_turn_threshold),mokepon.components.battle_actions_view(team,choosable_monsters,chosen_can_attack_QMARK_,attack_handler,battle_over_QMARK_,items,throw_mokebox_handler,choose_monster_handler,candy_handler),mokepon.components.battle_report_view(battle_over_QMARK_,go_to_location_handler)], null);
 });
-mokepon.components.location_view = (function mokepon$components$location_view(location_description,team,find_trouble_handler,choosable_monsters,chosen,chosen_can_attack_QMARK_,battle_over_QMARK_,battling,go_to_location_handler,attack_handler,go_to_location_handler__$1,active_turn_threshold,items,throw_mokebox_handler,choose_monster_handler){
+mokepon.components.location_view = (function mokepon$components$location_view(location_description,team,find_trouble_handler,choosable_monsters,chosen,chosen_can_attack_QMARK_,battle_over_QMARK_,battling,go_to_location_handler,attack_handler,go_to_location_handler__$1,active_turn_threshold,items,throw_mokebox_handler,choose_monster_handler,candy_handler){
 if((battling == null)){
 return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$p,location_description], null)], 0)),mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([((cljs.core.empty_QMARK_(team))?mokepon.components.disabled_a("Go look for some trouble."):mokepon.components.a("Go look for some trouble.",find_trouble_handler)),mokepon.components.a("Head back.",(function (){
 return (go_to_location_handler__$1.cljs$core$IFn$_invoke$arity$1 ? go_to_location_handler__$1.cljs$core$IFn$_invoke$arity$1(cljs.core.cst$kw$outside) : go_to_location_handler__$1.call(null,cljs.core.cst$kw$outside));
 }))], 0))], null);
 } else {
-return mokepon.components.battle_view(team,choosable_monsters,chosen,chosen_can_attack_QMARK_,battle_over_QMARK_,battling,active_turn_threshold,attack_handler,go_to_location_handler__$1,items,throw_mokebox_handler,choose_monster_handler);
+return mokepon.components.battle_view(team,choosable_monsters,chosen,chosen_can_attack_QMARK_,battle_over_QMARK_,battling,active_turn_threshold,attack_handler,go_to_location_handler__$1,items,throw_mokebox_handler,choose_monster_handler,candy_handler);
 }
 });
 mokepon.components.home_view = (function mokepon$components$home_view(team,team_at_home,take_chipu_handler,go_to_location_handler,sleep_at_home_handler){
@@ -243,30 +243,30 @@ return (go_to_location_handler.cljs$core$IFn$_invoke$arity$1 ? go_to_location_ha
 }))], 0))], null);
 });
 mokepon.components.store_view = (function mokepon$components$store_view(store_items,buy_item_handler,go_to_location_handler){
-return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$p,[cljs.core.str("You walk into the store. A midget stands behind the counter on a stool. "),cljs.core.str("He occasionally props himself up with locked arms and dangles his feet in the air.")].join('')], null),(function (){var iter__28792__auto__ = (function mokepon$components$store_view_$_iter__50116(s__50117){
+return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$p,[cljs.core.str("You walk into the store. A midget stands behind the counter on a stool. "),cljs.core.str("He occasionally props himself up with locked arms and dangles his feet in the air.")].join('')], null),(function (){var iter__19244__auto__ = (function mokepon$components$store_view_$_iter__30879(s__30880){
 return (new cljs.core.LazySeq(null,(function (){
-var s__50117__$1 = s__50117;
+var s__30880__$1 = s__30880;
 while(true){
-var temp__4657__auto__ = cljs.core.seq(s__50117__$1);
+var temp__4657__auto__ = cljs.core.seq(s__30880__$1);
 if(temp__4657__auto__){
-var s__50117__$2 = temp__4657__auto__;
-if(cljs.core.chunked_seq_QMARK_(s__50117__$2)){
-var c__28790__auto__ = cljs.core.chunk_first(s__50117__$2);
-var size__28791__auto__ = cljs.core.count(c__28790__auto__);
-var b__50119 = cljs.core.chunk_buffer(size__28791__auto__);
-if((function (){var i__50118 = (0);
+var s__30880__$2 = temp__4657__auto__;
+if(cljs.core.chunked_seq_QMARK_(s__30880__$2)){
+var c__19242__auto__ = cljs.core.chunk_first(s__30880__$2);
+var size__19243__auto__ = cljs.core.count(c__19242__auto__);
+var b__30882 = cljs.core.chunk_buffer(size__19243__auto__);
+if((function (){var i__30881 = (0);
 while(true){
-if((i__50118 < size__28791__auto__)){
-var item = cljs.core._nth.cljs$core$IFn$_invoke$arity$2(c__28790__auto__,i__50118);
-cljs.core.chunk_append(b__50119,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$a,new cljs.core.PersistentArrayMap(null, 3, [cljs.core.cst$kw$style,new cljs.core.PersistentArrayMap(null, 2, [cljs.core.cst$kw$margin,(0),cljs.core.cst$kw$padding,(0)], null),cljs.core.cst$kw$href,"javascript:;",cljs.core.cst$kw$on_DASH_click,((function (i__50118,item,c__28790__auto__,size__28791__auto__,b__50119,s__50117__$2,temp__4657__auto__){
+if((i__30881 < size__19243__auto__)){
+var item = cljs.core._nth.cljs$core$IFn$_invoke$arity$2(c__19242__auto__,i__30881);
+cljs.core.chunk_append(b__30882,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$a,new cljs.core.PersistentArrayMap(null, 3, [cljs.core.cst$kw$style,new cljs.core.PersistentArrayMap(null, 2, [cljs.core.cst$kw$margin,(0),cljs.core.cst$kw$padding,(0)], null),cljs.core.cst$kw$href,"javascript:;",cljs.core.cst$kw$on_DASH_click,((function (i__30881,item,c__19242__auto__,size__19243__auto__,b__30882,s__30880__$2,temp__4657__auto__){
 return (function (){
-var G__50124 = cljs.core.cst$kw$id.cljs$core$IFn$_invoke$arity$1(item);
-return (buy_item_handler.cljs$core$IFn$_invoke$arity$1 ? buy_item_handler.cljs$core$IFn$_invoke$arity$1(G__50124) : buy_item_handler.call(null,G__50124));
-});})(i__50118,item,c__28790__auto__,size__28791__auto__,b__50119,s__50117__$2,temp__4657__auto__))
+var G__30887 = cljs.core.cst$kw$id.cljs$core$IFn$_invoke$arity$1(item);
+return (buy_item_handler.cljs$core$IFn$_invoke$arity$1 ? buy_item_handler.cljs$core$IFn$_invoke$arity$1(G__30887) : buy_item_handler.call(null,G__30887));
+});})(i__30881,item,c__19242__auto__,size__19243__auto__,b__30882,s__30880__$2,temp__4657__auto__))
 ], null),[cljs.core.str("Buy "),cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(item)),cljs.core.str(" ("),cljs.core.str(cljs.core.cst$kw$cost.cljs$core$IFn$_invoke$arity$1(item)),cljs.core.str(" \u0191iddy)")].join('')], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$p,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$style,new cljs.core.PersistentArrayMap(null, 4, [cljs.core.cst$kw$margin,(0),cljs.core.cst$kw$padding,(0),cljs.core.cst$kw$margin_DASH_bottom,"10px",cljs.core.cst$kw$font_DASH_size,"smaller"], null)], null),cljs.core.cst$kw$description.cljs$core$IFn$_invoke$arity$1(item)], null)], null));
 
-var G__50126 = (i__50118 + (1));
-i__50118 = G__50126;
+var G__30889 = (i__30881 + (1));
+i__30881 = G__30889;
 continue;
 } else {
 return true;
@@ -274,18 +274,18 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons(cljs.core.chunk(b__50119),mokepon$components$store_view_$_iter__50116(cljs.core.chunk_rest(s__50117__$2)));
+return cljs.core.chunk_cons(cljs.core.chunk(b__30882),mokepon$components$store_view_$_iter__30879(cljs.core.chunk_rest(s__30880__$2)));
 } else {
-return cljs.core.chunk_cons(cljs.core.chunk(b__50119),null);
+return cljs.core.chunk_cons(cljs.core.chunk(b__30882),null);
 }
 } else {
-var item = cljs.core.first(s__50117__$2);
-return cljs.core.cons(new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$a,new cljs.core.PersistentArrayMap(null, 3, [cljs.core.cst$kw$style,new cljs.core.PersistentArrayMap(null, 2, [cljs.core.cst$kw$margin,(0),cljs.core.cst$kw$padding,(0)], null),cljs.core.cst$kw$href,"javascript:;",cljs.core.cst$kw$on_DASH_click,((function (item,s__50117__$2,temp__4657__auto__){
+var item = cljs.core.first(s__30880__$2);
+return cljs.core.cons(new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$a,new cljs.core.PersistentArrayMap(null, 3, [cljs.core.cst$kw$style,new cljs.core.PersistentArrayMap(null, 2, [cljs.core.cst$kw$margin,(0),cljs.core.cst$kw$padding,(0)], null),cljs.core.cst$kw$href,"javascript:;",cljs.core.cst$kw$on_DASH_click,((function (item,s__30880__$2,temp__4657__auto__){
 return (function (){
-var G__50125 = cljs.core.cst$kw$id.cljs$core$IFn$_invoke$arity$1(item);
-return (buy_item_handler.cljs$core$IFn$_invoke$arity$1 ? buy_item_handler.cljs$core$IFn$_invoke$arity$1(G__50125) : buy_item_handler.call(null,G__50125));
-});})(item,s__50117__$2,temp__4657__auto__))
-], null),[cljs.core.str("Buy "),cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(item)),cljs.core.str(" ("),cljs.core.str(cljs.core.cst$kw$cost.cljs$core$IFn$_invoke$arity$1(item)),cljs.core.str(" \u0191iddy)")].join('')], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$p,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$style,new cljs.core.PersistentArrayMap(null, 4, [cljs.core.cst$kw$margin,(0),cljs.core.cst$kw$padding,(0),cljs.core.cst$kw$margin_DASH_bottom,"10px",cljs.core.cst$kw$font_DASH_size,"smaller"], null)], null),cljs.core.cst$kw$description.cljs$core$IFn$_invoke$arity$1(item)], null)], null),mokepon$components$store_view_$_iter__50116(cljs.core.rest(s__50117__$2)));
+var G__30888 = cljs.core.cst$kw$id.cljs$core$IFn$_invoke$arity$1(item);
+return (buy_item_handler.cljs$core$IFn$_invoke$arity$1 ? buy_item_handler.cljs$core$IFn$_invoke$arity$1(G__30888) : buy_item_handler.call(null,G__30888));
+});})(item,s__30880__$2,temp__4657__auto__))
+], null),[cljs.core.str("Buy "),cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(item)),cljs.core.str(" ("),cljs.core.str(cljs.core.cst$kw$cost.cljs$core$IFn$_invoke$arity$1(item)),cljs.core.str(" \u0191iddy)")].join('')], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$p,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$style,new cljs.core.PersistentArrayMap(null, 4, [cljs.core.cst$kw$margin,(0),cljs.core.cst$kw$padding,(0),cljs.core.cst$kw$margin_DASH_bottom,"10px",cljs.core.cst$kw$font_DASH_size,"smaller"], null)], null),cljs.core.cst$kw$description.cljs$core$IFn$_invoke$arity$1(item)], null)], null),mokepon$components$store_view_$_iter__30879(cljs.core.rest(s__30880__$2)));
 }
 } else {
 return null;
@@ -294,7 +294,7 @@ break;
 }
 }),null,null));
 });
-return iter__28792__auto__(store_items);
+return iter__19244__auto__(store_items);
 })(),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$hr], null),mokepon.components.a("Head back.",(function (){
 return (go_to_location_handler.cljs$core$IFn$_invoke$arity$1 ? go_to_location_handler.cljs$core$IFn$_invoke$arity$1(cljs.core.cst$kw$outside) : go_to_location_handler.call(null,cljs.core.cst$kw$outside));
 }))], 0));
@@ -306,27 +306,27 @@ mokepon.components.title_view = (function mokepon$components$title_view(){
 return mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$h1,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$id,"title"], null),"Mok\u00E9pon"], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$h2,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$id,"tag-line"], null),"Catching 'em all just got real, yo"], null)], 0));
 });
 mokepon.components.status_view = (function mokepon$components$status_view(cash,items,store_items_lookup,team,play_by_play){
-return new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq(["Cash: ",cash," \u0191iddy"], 0)),mokepon.components.team_view(team,"Your posse:","No one. Cause you're worthless."),mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,"Items:"], null),((cljs.core.empty_QMARK_(items))?new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$p,"None. Cause you're worthless."], null):new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$ul,(function (){var iter__28792__auto__ = (function mokepon$components$status_view_$_iter__50145(s__50146){
+return new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq(["Cash: ",cash," \u0191iddy"], 0)),mokepon.components.team_view(team,"Your posse:","No one. Cause you're worthless."),mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,"Items:"], null),((cljs.core.empty_QMARK_(items))?new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$p,"None. Cause you're worthless."], null):new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$ul,(function (){var iter__19244__auto__ = (function mokepon$components$status_view_$_iter__30908(s__30909){
 return (new cljs.core.LazySeq(null,(function (){
-var s__50146__$1 = s__50146;
+var s__30909__$1 = s__30909;
 while(true){
-var temp__4657__auto__ = cljs.core.seq(s__50146__$1);
+var temp__4657__auto__ = cljs.core.seq(s__30909__$1);
 if(temp__4657__auto__){
-var s__50146__$2 = temp__4657__auto__;
-if(cljs.core.chunked_seq_QMARK_(s__50146__$2)){
-var c__28790__auto__ = cljs.core.chunk_first(s__50146__$2);
-var size__28791__auto__ = cljs.core.count(c__28790__auto__);
-var b__50148 = cljs.core.chunk_buffer(size__28791__auto__);
-if((function (){var i__50147 = (0);
+var s__30909__$2 = temp__4657__auto__;
+if(cljs.core.chunked_seq_QMARK_(s__30909__$2)){
+var c__19242__auto__ = cljs.core.chunk_first(s__30909__$2);
+var size__19243__auto__ = cljs.core.count(c__19242__auto__);
+var b__30911 = cljs.core.chunk_buffer(size__19243__auto__);
+if((function (){var i__30910 = (0);
 while(true){
-if((i__50147 < size__28791__auto__)){
-var vec__50157 = cljs.core._nth.cljs$core$IFn$_invoke$arity$2(c__28790__auto__,i__50147);
-var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50157,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50157,(1),null);
-cljs.core.chunk_append(b__50148,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$li,[cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1((k.cljs$core$IFn$_invoke$arity$1 ? k.cljs$core$IFn$_invoke$arity$1(store_items_lookup) : k.call(null,store_items_lookup)))),cljs.core.str(": "),cljs.core.str(v)].join('')], null));
+if((i__30910 < size__19243__auto__)){
+var vec__30920 = cljs.core._nth.cljs$core$IFn$_invoke$arity$2(c__19242__auto__,i__30910);
+var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__30920,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__30920,(1),null);
+cljs.core.chunk_append(b__30911,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$li,[cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1((k.cljs$core$IFn$_invoke$arity$1 ? k.cljs$core$IFn$_invoke$arity$1(store_items_lookup) : k.call(null,store_items_lookup)))),cljs.core.str(": "),cljs.core.str(v)].join('')], null));
 
-var G__50163 = (i__50147 + (1));
-i__50147 = G__50163;
+var G__30926 = (i__30910 + (1));
+i__30910 = G__30926;
 continue;
 } else {
 return true;
@@ -334,15 +334,15 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons(cljs.core.chunk(b__50148),mokepon$components$status_view_$_iter__50145(cljs.core.chunk_rest(s__50146__$2)));
+return cljs.core.chunk_cons(cljs.core.chunk(b__30911),mokepon$components$status_view_$_iter__30908(cljs.core.chunk_rest(s__30909__$2)));
 } else {
-return cljs.core.chunk_cons(cljs.core.chunk(b__50148),null);
+return cljs.core.chunk_cons(cljs.core.chunk(b__30911),null);
 }
 } else {
-var vec__50160 = cljs.core.first(s__50146__$2);
-var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50160,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50160,(1),null);
-return cljs.core.cons(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$li,[cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1((k.cljs$core$IFn$_invoke$arity$1 ? k.cljs$core$IFn$_invoke$arity$1(store_items_lookup) : k.call(null,store_items_lookup)))),cljs.core.str(": "),cljs.core.str(v)].join('')], null),mokepon$components$status_view_$_iter__50145(cljs.core.rest(s__50146__$2)));
+var vec__30923 = cljs.core.first(s__30909__$2);
+var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__30923,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__30923,(1),null);
+return cljs.core.cons(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$li,[cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1((k.cljs$core$IFn$_invoke$arity$1 ? k.cljs$core$IFn$_invoke$arity$1(store_items_lookup) : k.call(null,store_items_lookup)))),cljs.core.str(": "),cljs.core.str(v)].join('')], null),mokepon$components$status_view_$_iter__30908(cljs.core.rest(s__30909__$2)));
 }
 } else {
 return null;
@@ -351,24 +351,24 @@ break;
 }
 }),null,null));
 });
-return iter__28792__auto__(items);
+return iter__19244__auto__(items);
 })()], null))], 0)),mokepon.components.play_by_play_view(play_by_play)], null);
 });
-mokepon.components.rpg_view = (function mokepon$components$rpg_view(state,take_chipu_handler,go_to_location_handler,find_trouble_handler,choosable_monsters,chosen,chosen_can_attack_QMARK_,battle_over_QMARK_,attack_handler,sleep_at_home_handler,active_turn_threshold,store_items,store_items_lookup,buy_item_handler,throw_mokebox_handler,choose_monster_handler){
-var map__50166 = state;
-var map__50166__$1 = ((((!((map__50166 == null)))?((((map__50166.cljs$lang$protocol_mask$partition0$ & (64))) || (map__50166.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__50166):map__50166);
-var location = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50166__$1,cljs.core.cst$kw$location);
-var team = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50166__$1,cljs.core.cst$kw$team);
-var team_at_home = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50166__$1,cljs.core.cst$kw$team_DASH_at_DASH_home);
-var battling = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50166__$1,cljs.core.cst$kw$battling);
-var cash = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50166__$1,cljs.core.cst$kw$cash);
-var items = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50166__$1,cljs.core.cst$kw$items);
-var play_by_play = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50166__$1,cljs.core.cst$kw$play_DASH_by_DASH_play);
+mokepon.components.rpg_view = (function mokepon$components$rpg_view(state,take_chipu_handler,go_to_location_handler,find_trouble_handler,choosable_monsters,chosen,chosen_can_attack_QMARK_,battle_over_QMARK_,attack_handler,sleep_at_home_handler,active_turn_threshold,store_items,store_items_lookup,buy_item_handler,throw_mokebox_handler,choose_monster_handler,candy_handler){
+var map__30929 = state;
+var map__30929__$1 = ((((!((map__30929 == null)))?((((map__30929.cljs$lang$protocol_mask$partition0$ & (64))) || (map__30929.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__30929):map__30929);
+var location = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__30929__$1,cljs.core.cst$kw$location);
+var team = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__30929__$1,cljs.core.cst$kw$team);
+var team_at_home = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__30929__$1,cljs.core.cst$kw$team_DASH_at_DASH_home);
+var battling = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__30929__$1,cljs.core.cst$kw$battling);
+var cash = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__30929__$1,cljs.core.cst$kw$cash);
+var items = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__30929__$1,cljs.core.cst$kw$items);
+var play_by_play = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__30929__$1,cljs.core.cst$kw$play_DASH_by_DASH_play);
 var location_awesome_text = new cljs.core.PersistentArrayMap(null, 3, [cljs.core.cst$kw$forest,"You are currently chillin' like a villian in the forest.",cljs.core.cst$kw$canyon,"You are currently chillin' like a villian in the canyon.",cljs.core.cst$kw$pool,"You are currently chillin' like a villian in the pool. Gross."], null);
-return new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,mokepon.components.title_view(),((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(location,cljs.core.cst$kw$outside))?mokepon.components.outside_view(location,team,go_to_location_handler):(cljs.core.truth_(cljs.core.some(cljs.core.PersistentHashSet.fromArray([location], true),cljs.core.keys(location_awesome_text)))?mokepon.components.location_view((location.cljs$core$IFn$_invoke$arity$1 ? location.cljs$core$IFn$_invoke$arity$1(location_awesome_text) : location.call(null,location_awesome_text)),team,find_trouble_handler,choosable_monsters,chosen,chosen_can_attack_QMARK_,battle_over_QMARK_,battling,go_to_location_handler,attack_handler,go_to_location_handler,active_turn_threshold,items,throw_mokebox_handler,choose_monster_handler):((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(location,cljs.core.cst$kw$home))?mokepon.components.home_view(team,team_at_home,take_chipu_handler,go_to_location_handler,sleep_at_home_handler):((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(location,cljs.core.cst$kw$store))?mokepon.components.store_view(store_items,buy_item_handler,go_to_location_handler):mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([[cljs.core.str("Location "),cljs.core.str(location),cljs.core.str(" not handled.")].join(''),mokepon.components.a("Go back.",((function (map__50166,map__50166__$1,location,team,team_at_home,battling,cash,items,play_by_play,location_awesome_text){
+return new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$div,mokepon.components.title_view(),((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(location,cljs.core.cst$kw$outside))?mokepon.components.outside_view(location,team,go_to_location_handler):(cljs.core.truth_(cljs.core.some(cljs.core.PersistentHashSet.fromArray([location], true),cljs.core.keys(location_awesome_text)))?mokepon.components.location_view((location.cljs$core$IFn$_invoke$arity$1 ? location.cljs$core$IFn$_invoke$arity$1(location_awesome_text) : location.call(null,location_awesome_text)),team,find_trouble_handler,choosable_monsters,chosen,chosen_can_attack_QMARK_,battle_over_QMARK_,battling,go_to_location_handler,attack_handler,go_to_location_handler,active_turn_threshold,items,throw_mokebox_handler,choose_monster_handler,candy_handler):((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(location,cljs.core.cst$kw$home))?mokepon.components.home_view(team,team_at_home,take_chipu_handler,go_to_location_handler,sleep_at_home_handler):((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(location,cljs.core.cst$kw$store))?mokepon.components.store_view(store_items,buy_item_handler,go_to_location_handler):mokepon.components.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.array_seq([[cljs.core.str("Location "),cljs.core.str(location),cljs.core.str(" not handled.")].join(''),mokepon.components.a("Go back.",((function (map__30929,map__30929__$1,location,team,team_at_home,battling,cash,items,play_by_play,location_awesome_text){
 return (function (){
 return (go_to_location_handler.cljs$core$IFn$_invoke$arity$1 ? go_to_location_handler.cljs$core$IFn$_invoke$arity$1(cljs.core.cst$kw$outside) : go_to_location_handler.call(null,cljs.core.cst$kw$outside));
-});})(map__50166,map__50166__$1,location,team,team_at_home,battling,cash,items,play_by_play,location_awesome_text))
+});})(map__30929,map__30929__$1,location,team,team_at_home,battling,cash,items,play_by_play,location_awesome_text))
 )], 0))
 )))),mokepon.components.status_view(cash,items,store_items_lookup,team,play_by_play)], null);
 });
