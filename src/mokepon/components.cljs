@@ -35,34 +35,6 @@
    [:p description]
    (a action-text #(go-to-location-handler key))))
 
-(defn adventures-view [location team go-to-location-handler]
-  [:div
-   (adventure-view
-    "Your mother's home stands in the distance. Smoke bellows from the chimney."
-    "Go home."
-    :home
-    go-to-location-handler)
-   (adventure-view
-    "There is a Moképon store with a half working neon sign flashing. Looks kinda shady."
-    "Go shop."
-    :store
-    go-to-location-handler)
-   (adventure-view
-    "There is a rock face jutting out. It looks freaking scary."
-    "Go be awesome in the canyon."
-    :canyon
-    go-to-location-handler)
-   (adventure-view
-    "There is a line of trees off in the distance."
-    "Go be awesome in the forest."
-    :forest
-    go-to-location-handler)
-   (adventure-view
-    "The neighborhood pool hasn't been cleaned in a while. Smells like poop."
-    "Go be awesome in the pool."
-    :pool
-    go-to-location-handler)])
-
 (defn progress-bar-view [percentage]
   [:div
    {:style {:border "solid 1px black"
@@ -195,6 +167,13 @@
     (a "Sleep. Cause you're a lazy worthless millenial." sleep-at-home-handler)
     (a "Head back." #(go-to-location-handler :outside)))])
 
+(defn phone-view [go-to-location-handler]
+  [:div
+   (section [:p "The soft glow of your phone, oh so nice."])
+   (adventure-view "There is an app on your phone called Mokedex." "Open app." :mokedex go-to-location-handler)
+   (adventure-view "There are no new text messages." "View text messages." :messages go-to-location-handler)
+   (section (a "Put phone away." #(go-to-location-handler :outside)))])
+
 (defn store-view [store-items buy-item-handler go-to-location-handler]
   (section
    [:p (str "You walk into the store. A midget stands behind the counter on a stool. "
@@ -219,7 +198,37 @@
                     go-to-location-handler]
   [:div
    (section [:p "You are being worthless outside."])
-   (adventures-view location team go-to-location-handler)])
+   [:div
+    (adventure-view
+     "You smart phone chillaxes in your pocket."
+     "Bust out phone."
+     :phone
+     go-to-location-handler)
+    (adventure-view
+     "Your mother's home stands in the distance. Smoke bellows from the chimney."
+     "Go home."
+     :home
+     go-to-location-handler)
+    (adventure-view
+     "There is a Moképon store with a half working neon sign flashing. Looks kinda shady."
+     "Go shop."
+     :store
+     go-to-location-handler)
+    (adventure-view
+     "There is a rock face jutting out. It looks freaking scary."
+     "Go be awesome in the canyon."
+     :canyon
+     go-to-location-handler)
+    (adventure-view
+     "There is a line of trees off in the distance."
+     "Go be awesome in the forest."
+     :forest
+     go-to-location-handler)
+    (adventure-view
+     "The neighborhood pool hasn't been cleaned in a while. Smells like poop."
+     "Go be awesome in the pool."
+     :pool
+     go-to-location-handler)]])
 
 (defn title-view []
   (section
@@ -302,6 +311,9 @@
        (store-view store-items
                    buy-item-handler
                    go-to-location-handler)
+
+       (= location :phone)
+       (phone-view go-to-location-handler)
 
        :else
        (section (str "Location " location " not handled.")
