@@ -19,6 +19,11 @@ a {
   padding-bottom: 5px;
 }
 
+a.disabled{
+  color: #a0a0a0;
+  cursor: default;
+}
+
 #title {
   line-height: 0
 }
@@ -32,6 +37,22 @@ hr {
   border: 0;
   height: 1px;
   background: #a0a0a0;
+}
+
+ol.mokedex li {
+  margin-bottom: 5px;
+}
+
+ol.mokedex li span {
+  font-size: small;
+}
+
+ul.messages {
+  padding-left: 25px;
+}
+
+ul.messages li span {
+  font-size: small;
 }
 
 .wordwrap {

@@ -5,7 +5,7 @@
   [:a {:href "javascript:;" :on-click on-click} text])
 
 (defn disabled-a [text]
-  [:a {:href "javascript:;" :style {:color "#a0a0a0" :cursor "default"}} text])
+  [:a.disabled {:href "javascript:;"} text])
 
 (defn conditional-a [predicate text on-click]
   (if predicate (a text on-click) (disabled-a text)))
@@ -167,11 +167,42 @@
     (a "Sleep. Cause you're a lazy worthless millenial." sleep-at-home-handler)
     (a "Head back." #(go-to-location-handler :outside)))])
 
+(defn mokedex-view [go-to-location-handler]
+  [:div
+   (section [:p "Mokedex"])
+   (section [:p "You have captured 1 out of 5 mokepon."])
+   (section
+    [:ol.mokedex
+     [:li [:div "Chikapu"]
+      [:span "Electric mokepon, weak against rock, strong against water. Poop attracts metal."]]
+     [:li "???"]
+     [:li "???"]
+     [:li "???"]
+     [:li "???"]])
+   (section (a "Back." #(go-to-location-handler :phone)))])
+
+(defn messages-view [go-to-location-handler]
+  [:div
+   (section [:p "Messages"])
+   (section
+    [:p "Messages from Mom"]
+    [:ul.messages
+     [:li
+      [:div "Where are you? Have you found a job yet?!" ]
+      [:span "one day ago"]]])
+   (section (a "Back" #(go-to-location-handler :phone)))])
+
 (defn phone-view [go-to-location-handler]
   [:div
    (section [:p "The soft glow of your phone, oh so nice."])
-   (adventure-view "There is an app on your phone called Mokedex." "Open app." :mokedex go-to-location-handler)
-   (adventure-view "There are no new text messages." "View text messages." :messages go-to-location-handler)
+   (adventure-view "There is an app on your phone called Mokedex."
+                   "Open Mokedex."
+                   :mokedex
+                   go-to-location-handler)
+   (adventure-view "Le Messages."
+                   "Open Messages. 1 new text message(s)."
+                   :messages
+                   go-to-location-handler)
    (section (a "Put phone away." #(go-to-location-handler :outside)))])
 
 (defn store-view [store-items buy-item-handler go-to-location-handler]
@@ -192,7 +223,6 @@
    (a "Head back." #(go-to-location-handler :outside))))
 
 
-
 (defn outside-view [location
                     team
                     go-to-location-handler]
@@ -200,8 +230,8 @@
    (section [:p "You are being worthless outside."])
    [:div
     (adventure-view
-     "You smart phone chillaxes in your pocket."
-     "Bust out phone."
+     "Your smart phone bulges from your skinny jeans."
+     "Bust out phone. 1 new notification(s)."
      :phone
      go-to-location-handler)
     (adventure-view
@@ -314,6 +344,12 @@
 
        (= location :phone)
        (phone-view go-to-location-handler)
+
+       (= location :messages)
+       (messages-view go-to-location-handler)
+
+       (= location :mokedex)
+       (mokedex-view go-to-location-handler)
 
        :else
        (section (str "Location " location " not handled.")
