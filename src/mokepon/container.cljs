@@ -128,16 +128,15 @@
   (swap! (app-state) assoc :battle-count-down (- (get-state :battle-count-down) 250))
   (.setTimeout js/window callback 250))
 
-(defn .chosen-monster []
+(defn app-state-chosen-monster []
   (chosen-monster @(app-state)))
 
-(defn .battling
-  (.battling))
+(defn app-state-battling [] (:battling @(app-state)))
 
 (defn tick-battle! []
   (if (not (battle-over?
-            (.chosen-monster)
-            (.battling)))
+            (app-state-chosen-monster)
+            (app-state-battling)))
       (cond (not (get-state :battle-count-down))
             (do
               (swap! (app-state) assoc :battle-count-down 5000)
@@ -186,8 +185,8 @@
 (defn attack! []
   (let [{:keys [battling chosen play-by-play cash-reward]}
         (apply-player-attack
-         (.chosen-monster)
-         (.battling)
+         (app-state-chosen-monster)
+         (app-state-battling)
          (get-state :play-by-play))]
     (swap! (app-state)
            assoc
@@ -235,9 +234,9 @@
         (when kick-off-battle (tick-battle!))))))
 
 (defn chosen-can-attack? []
-  (and (can-attack? (.chosen-monster))
-       (not (battle-over? (.chosen-monster)
-                          (.battling)))))
+  (and (can-attack? (app-state-chosen-monster))
+       (not (battle-over? (app-state-chosen-monster)
+                          (app-state-battling)))))
 
 (defn rpg-container []
   (sab/html
@@ -246,9 +245,9 @@
              go-to-location!
              #(find-trouble! true)
              (choosable-monsters (get-state :team))
-             (.chosen-monster)
+             (app-state-chosen-monster)
              (chosen-can-attack?)
-             (battle-over? (.chosen-monster) (.battling))
+             (battle-over? (app-state-chosen-monster) (app-state-battling))
              attack!
              sleep-at-home!
              active-turn-threshold
