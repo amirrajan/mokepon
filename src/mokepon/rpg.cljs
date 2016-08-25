@@ -13,6 +13,7 @@
              (into [] (map #(assoc % :captured false :encountered false)
                            [monsters/chipu
                             monsters/tirsqule
+                            monsters/sulbabaur
                             monsters/deogude]))}
    :play-by-play ["You sit outside. You needed a break from your mother yelling at you."]})
 
@@ -22,6 +23,13 @@
 (defn filter-key [predicate dict]
   (map (fn [[k v]] k)
        (filter (fn [[k v]] (predicate v)) dict)))
+
+(defn index-of [predicate s]
+  (loop [idx 0 items s]
+    (cond
+      (empty? items) nil
+      (predicate (first items)) idx
+      :else (recur (inc idx) (rest items)))))
 
 (defn battle-over? [chosen battling]
   (or (nil? chosen)
@@ -85,6 +93,27 @@
         (update-in [:items :candy] #(dec (or % 0)))
         (conj-play-by-play (:name (chosen-monster game-state))
                            " has eated the delicious candy and was healed for 10 hp."))))
+
+(defn mokedex-captured [game-state monster-id]
+  (let [team-monster (get-in game-state [:team monster-id])
+        mokedex-monsters (get-in game-state [:mokedex :monsters])
+        mokedex-index (index-of #(= monster-id (:id %)) mokedex-monsters)
+        path [:mokedex :monsters mokedex-index]]
+    (cond mokedex-index
+          (cond team-monster
+                (update-in game-state
+                           path
+                           #(assoc % :captured true :encountered true))
+                :else
+                (update-in game-state
+                           path
+                           #(assoc % :captured false :encountered true)))
+          :else (do
+                  (.log js/console (str "WARNING: " monster-id " not in mokedex! Update rpg/new-game to include " monster-id "."))
+                  game-state))))
+
+(defn take-chipu [game-state]
+  (mokedex-captured (assoc-in game-state [:team :chipu] monsters/chipu) :chipu))
 
 (defn throw-mokebox [game-state]
   (let [battling (:battling game-state)
@@ -207,10 +236,12 @@
        (map (fn [[k _]] k))))
 
 (defn remove-dead-team-members [game-state]
-  (let [dead-keys (dead-team-member-keys game-state)]
-    (update-in game-state
-               [:team]
-               #(apply dissoc % dead-keys))))
+  (let [dead-keys (dead-team-member-keys game-state)
+        new-state (update-in game-state
+                             [:team]
+                             #(apply dissoc % dead-keys))]
+    (reduce (fn [gs key] (mokedex-captured gs key))
+            new-state dead-keys)))
 
 (defn buy-item [game-state item-id store-items-lookup]
   (let [item (item-id store-items-lookup)

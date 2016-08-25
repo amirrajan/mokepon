@@ -9,13 +9,17 @@
    :ground "Ground"})
 
 (defn mokedex-item [monster]
-  (let [{:keys [name mokedex-text type]} monster]
-    [:li
-     [:div name]
-     [:div {:class "info"}
-      [:div mokedex-text]
-      [:div "Captured: Yes"]
-      [:div (str "Type: " (type monster-type-string))]]]))
+  (let [{:keys [name mokedex-text type captured encountered]} monster]
+    (cond encountered
+          [:li
+           [:div name]
+           [:div {:class "info"}
+            [:div mokedex-text]
+            [:div (str "Captured: " (if captured "Yes" "No"))]
+            [:div (str "Type: " (type monster-type-string))]]]
+
+          :else
+          [:li "???"])))
 
 (defn view [go-to-location-handler mokedex]
   [:div

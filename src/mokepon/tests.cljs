@@ -42,9 +42,9 @@
   "begin attacked by enemy monster lowers the chosen mokepon's hp"
   (tnr/set-battle! :chipu mon/sulbabaur)
   (has-play-by-play "It has begun! Chipu vs Sulbabaur!")
-  (comment make-enemy-attack-ready)
-  (comment tnr/tick-battle-core!)
-  (comment is (= (:hp (tnr/app-state-chosen-monster)) 40)))
+  (make-enemy-attack-ready)
+  (tnr/tick-battle-core!)
+  (is (= (:hp (tnr/app-state-chosen-monster)) 40)))
 
 (deftest being-killed
   "being killed by enemy monster removes chosen mokepon form the team"
@@ -52,11 +52,13 @@
   (swap! (tnr/app-state)
          assoc-in
          [:team :sulbabaur :hp] 0)
+
   (swap! (tnr/app-state)
          assoc-in
          [:team :chipu :hp] 0)
 
   (tnr/remove-dead-team-members!)
+
   (is (= (tnr/team-count) 0)))
 
 (deftest healing-team
@@ -263,12 +265,30 @@
   (is (= (tnr/item-count :candy) 0))
   (is (= (get-state :team :chipu :hp) 50)))
 
-(deftest mokedex-captured
-  "captured monsters"
+(deftest mokedex-captured-encountered
+  "after mom gives chipu it is considered captured and encountered,
+   once killed, it is still considered encountered"
+
   (is (= (get-state :mokedex :monsters 0 :id)
          :chipu))
+
+  (is (= (get-state :mokedex :monsters 0 :encountered)
+         true))
+
   (is (= (get-state :mokedex :monsters 0 :captured)
-         true)))
+         true))
+
+  (swap! (tnr/app-state)
+         assoc-in
+         [:team :chipu :hp] 0)
+
+  (tnr/remove-dead-team-members!)
+
+  (is (= (get-state :mokedex :monsters 0 :encountered)
+         true))
+
+  (is (= (get-state :mokedex :monsters 0 :captured)
+         false)))
 
 (defn run-tests []
   (.clear js/console)

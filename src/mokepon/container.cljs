@@ -18,6 +18,7 @@
                                  chosen-monster
                                  throw-mokebox
                                  remove-dead-team-members
+                                 take-chipu
                                  active-turn-threshold]]
             [mokepon.components :refer [rpg-view]]))
 
@@ -114,12 +115,6 @@
 
 (defn tick-battle-core! [] (swap! (app-state) tick-battle))
 
-(defn dead-team-member-keys []
-  (map (fn [[k v]] k)
-       (filter
-        (fn [[k v]] (is-dead? v))
-        (get-state :team))))
-
 (defn remove-dead-team-members! []
   (swap! (app-state) remove-dead-team-members))
 
@@ -169,9 +164,7 @@
 
 
 (defn take-chipu! []
-  (swap! (app-state)
-         assoc
-         :team (assoc (get-state :team) :chipu chipu)))
+  (swap! (app-state) take-chipu))
 
 (defn go-to-location! [loc]
   (remove-dead-team-members!)
