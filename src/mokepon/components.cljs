@@ -1,18 +1,8 @@
 (ns mokepon.components
-  (:require [sablono.core :as sab]))
-
-(defn a [text on-click]
-  [:a {:href "javascript:;" :on-click on-click} text])
-
-(defn disabled-a [text]
-  [:a.disabled {:href "javascript:;"} text])
-
-(defn conditional-a [predicate text on-click]
-  (if predicate (a text on-click) (disabled-a text)))
-
-(def todo #(.alert js/window "todo"))
-
-(defn section [& elements] [:div elements [:hr]])
+  (:require [sablono.core :as sab]
+            [mokepon.mokedex :as mokepon.mokedex]
+            [mokepon.battle :as mokepon.battle]
+            [mokepon.elements :refer [a disabled-a conditional-a section todo progress-bar]]))
 
 (defn team-view [team header empty-text]
   (section
@@ -23,7 +13,7 @@
            (str (:name v) " (hp: " (:hp v) "/" (:max-hp v) ")")])]))
 
 (defn ask-mommy-view [team team-at-home take-chipu-handler]
-  (if (and (empty? team) (empty? team-at-home))
+  (when (and (empty? team) (empty? team-at-home))
     (section
      [:p "Your mom feels pity for your sorry ass."]
      [:p "From her extended arm, a Chipu whimpers, hanging by the scruff of its neck."]
@@ -35,86 +25,8 @@
    [:p description]
    (a action-text #(go-to-location-handler key))))
 
-(defn progress-bar-view [percentage]
-  [:div
-   {:style {:border "solid 1px black"
-            :width "100%"
-            :height "10px"}}
-   [:div
-    {:style {:background "green"
-             :margin "0px"
-             :padding "0px"
-             :width (str (* 100 percentage) "%")
-             :height "100%"}}]])
-
-(defn battler-view [monster full-active-turn]
-  (section
-   [:h2 (str (:name monster) " (hp: " (:hp monster) ")" )]
-   [:hr]
-   [:p (:battle-text monster)]
-   [:hr]
-   (progress-bar-view (/ (:at monster) full-active-turn))))
-
 (defn play-by-play-view [play-by-play]
   (section (for [i (take 25 (reverse play-by-play))] [:div i])))
-
-(defn battle-report-view [battle-over? go-to-location-handler]
-  (if battle-over?
-    (section
-     [:p "The fight has ended."]
-     (a "Head back." #(go-to-location-handler :outside)))))
-
-(defn battle-actions-view [team
-                           choosable-monsters
-                           chosen-can-attack?
-                           attack-handler
-                           battle-over?
-                           items
-                           throw-mokebox-handler
-                           choose-monster-handler
-                           candy-handler]
-  (section
-   (conditional-a chosen-can-attack? "Attack!" attack-handler)
-   (if (:candy items)
-     (conditional-a (and (not battle-over?)
-                         (pos? (:candy items)))
-                    "Candy!"
-                    candy-handler))
-   (if (:mokebox items)
-     (conditional-a (and (not battle-over?)
-                         (> (:mokebox items) 0))
-                    "Throw Mokébox!"
-                    throw-mokebox-handler))
-   (if (and (not battle-over?) (> (count choosable-monsters) 1))
-     (for [m choosable-monsters]
-       (a (str "Choose " (:name (m team) )"!") #(choose-monster-handler m))))))
-
-(defn battle-view [team
-                   choosable-monsters
-                   chosen
-                   chosen-can-attack?
-                   battle-over?
-                   battling
-                   active-turn-threshold
-                   attack-handler
-                   go-to-location-handler
-                   items
-                   throw-mokebox-handler
-                   choose-monster-handler
-                   candy-handler]
-  [:div
-   (battler-view battling active-turn-threshold)
-   (battler-view chosen active-turn-threshold)
-   (battle-actions-view team
-                        choosable-monsters
-                        chosen-can-attack?
-                        attack-handler
-                        battle-over?
-                        items
-                        throw-mokebox-handler
-                        choose-monster-handler
-                        candy-handler)
-   (battle-report-view battle-over? go-to-location-handler)])
 
 (defn location-view [location-description
                      team
@@ -140,7 +52,7 @@
         (disabled-a "Go look for some trouble.")
         (a "Go look for some trouble." find-trouble-handler))
       (a "Head back." #(go-to-location-handler :outside)))]
-    (battle-view team
+    (mokepon.battle/view team
                  choosable-monsters
                  chosen
                  chosen-can-attack?
@@ -164,33 +76,24 @@
    (ask-mommy-view team team-at-home take-chipu-handler)
    (team-view team-at-home "Moképon chillin' at the crib:" "None.")
    (section
-    (a "Sleep. Cause you're a lazy worthless millenial." sleep-at-home-handler)
+    (a "Sleep. Cause you're a lazy worthless millenial."
+       sleep-at-home-handler)
     (a "Head back." #(go-to-location-handler :outside)))])
 
-(defn mokedex-view [go-to-location-handler]
-  [:div
-   (section [:p "Mokedex"])
-   (section [:p "You have captured 1 out of 5 mokepon."])
-   (section
-    [:ol.mokedex
-     [:li [:div "Chikapu"]
-      [:span "Electric mokepon, weak against rock, strong against water. Poop attracts metal."]]
-     [:li "???"]
-     [:li "???"]
-     [:li "???"]
-     [:li "???"]])
-   (section (a "Back." #(go-to-location-handler :phone)))])
-
 (defn messages-view [go-to-location-handler]
-  [:div
-   (section [:p "Messages"])
-   (section
-    [:p "Messages from Mom"]
-    [:ul.messages
-     [:li
-      [:div "Where are you? Have you found a job yet?!" ]
-      [:span "one day ago"]]])
-   (section (a "Back" #(go-to-location-handler :phone)))])
+  (let [messages
+        [{:from {:id :mom :name "Mom" }
+          :messages [{:days-ago 0
+                      :text "Where are you? Have you found a job yet?!"}]}]]
+    [:div
+     (section [:p "Messages"])
+     (section
+      [:p "Messages from Mom"]
+      [:ul.messages
+       [:li
+        [:div "Where are you? Have you found a job yet?!" ]
+        [:span "one day ago"]]])
+     (section (a "Back" #(go-to-location-handler :phone)))]))
 
 (defn phone-view [go-to-location-handler]
   [:div
@@ -267,8 +170,8 @@
 
 (defn status-view [cash items store-items-lookup team play-by-play]
   [:div
-   (section "Cash: " cash " Ƒiddy")
    (team-view team "Your posse:" "No one. Cause you're worthless.")
+   (section "Cash: " cash " Ƒiddy")
    (section
     [:div "Items:"]
     (if (empty? items)
@@ -349,7 +252,7 @@
        (messages-view go-to-location-handler)
 
        (= location :mokedex)
-       (mokedex-view go-to-location-handler)
+       (mokepon.mokedex/view go-to-location-handler)
 
        :else
        (section (str "Location " location " not handled.")

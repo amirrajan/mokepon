@@ -43,8 +43,8 @@ ol.mokedex li {
   margin-bottom: 5px;
 }
 
-ol.mokedex li span {
-  font-size: small;
+ol.mokedex li div.info {
+  font-size: smaller;
 }
 
 ul.messages {
