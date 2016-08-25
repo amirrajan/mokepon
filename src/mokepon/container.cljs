@@ -29,10 +29,10 @@
   (atom {:value :game}))
 
 (defonce game-app-state
-  (local-storage (atom new-game) :game))
+  (local-storage (atom (new-game)) :game))
 
 (defonce test-app-state
-  (atom new-game))
+  (atom (new-game)))
 
 (defn app-state []
   (if (= (:value @current-app-state) :game)

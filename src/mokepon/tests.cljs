@@ -11,7 +11,7 @@
   (.log js/console (clj->js o)))
 
 (defn reset-game []
-  (reset! (tnr/app-state) rpg/new-game)
+  (reset! (tnr/app-state) (rpg/new-game))
   (tnr/take-chipu!))
 
 (use-fixtures :each {:before reset-game})
@@ -262,6 +262,13 @@
   (has-play-by-play "Chipu has eated the delicious candy and was healed for 10 hp.")
   (is (= (tnr/item-count :candy) 0))
   (is (= (get-state :team :chipu :hp) 50)))
+
+(deftest mokedex-captured
+  "captured monsters"
+  (is (= (get-state :mokedex :monsters 0 :id)
+         :chipu))
+  (is (= (get-state :mokedex :monsters 0 :captured)
+         true)))
 
 (defn run-tests []
   (.clear js/console)

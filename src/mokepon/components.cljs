@@ -179,7 +179,7 @@
       [:ul (for [[k v] items] [:li (str (:name (k store-items-lookup))  ": " v)])]))
    (play-by-play-view play-by-play)])
 
-(defn rpg-view [state
+(defn rpg-view [game-state
                 take-chipu-handler
                 go-to-location-handler
                 find-trouble-handler
@@ -203,7 +203,8 @@
                 battling
                 cash
                 items
-                play-by-play]} state
+                play-by-play
+                mokedex]} game-state
         location-awesome-text {:forest "You are currently chillin' like a villian in the forest."
                                :canyon "You are currently chillin' like a villian in the canyon."
                                :pool   "You are currently chillin' like a villian in the pool. Gross."}]
@@ -252,7 +253,7 @@
        (messages-view go-to-location-handler)
 
        (= location :mokedex)
-       (mokepon.mokedex/view go-to-location-handler)
+       (mokepon.mokedex/view go-to-location-handler mokedex)
 
        :else
        (section (str "Location " location " not handled.")

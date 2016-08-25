@@ -1,6 +1,7 @@
-(ns mokepon.rpg)
+(ns mokepon.rpg
+  (:require [mokepon.monsters :as monsters]))
 
-(def new-game
+(defn new-game []
   {:team-at-home []
    :team {}
    :location :outside
@@ -8,6 +9,11 @@
    :cash 100
    :battling nil
    :items {}
+   :mokedex {:monsters
+             (into [] (map #(assoc % :captured false :encountered false)
+                           [monsters/chipu
+                            monsters/tirsqule
+                            monsters/deogude]))}
    :play-by-play ["You sit outside. You needed a break from your mother yelling at you."]})
 
 (defn apply-to-all-values [f dict]
