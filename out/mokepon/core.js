@@ -3,6 +3,8 @@ goog.provide('mokepon.core');
 goog.require('cljs.core');
 goog.require('mokepon.tests');
 goog.require('mokepon.container');
+goog.require('mokepon.mokedex');
+goog.require('mokepon.battle');
 mokepon.core.main_BANG_ = (function mokepon$core$main_BANG_(){
 cljs.core.enable_console_print_BANG_();
 
