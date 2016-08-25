@@ -47,12 +47,17 @@ An RPG about catching monsters IRL. Written in React and ClojureScript.
      (paredit-mode)
      (modify-syntax-entry ?- "w"))))
 
+(defun user/cljs-buffer ()
+ (first
+  (-filter (lambda (x) (string-match ".*CLJS.*" (buffer-name x)))
+           (cider-connections))))
+
 (defun user/cider-send-to-repl ()
   (interactive)
   (let ((s (buffer-substring-no-properties
             (nth 0 (cider-last-sexp 'bounds))
             (nth 1 (cider-last-sexp 'bounds)))))
-    (with-current-buffer (cider-current-connection)
+    (with-current-buffer (user/cljs-buffer)
       (insert s)
       (cider-repl-return))))
 ```
