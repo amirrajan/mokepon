@@ -12,7 +12,7 @@
                    :source-paths ["cljs_src" "dev"]}}
   :clean-targets [:target-path "out"]
   :cljsbuild {:builds [{:id "dev"
-                        :source-paths ["src", "src/views"]
+                        :source-paths ["src"]
                         :figwheel true
                         :compiler {:output-to "mokepon-dev.js"
                                    :output-dir "out-dev"
