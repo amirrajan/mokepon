@@ -267,7 +267,7 @@
 
 (deftest mokedex-captured-encountered
   "after mom gives chipu it is considered captured and encountered,
-   once killed, it is still considered encountered"
+   once killed, it is still considered only encountered."
 
   (is (= (get-state :mokedex :monsters 0 :id)
          :chipu))
@@ -278,16 +278,25 @@
   (is (= (get-state :mokedex :monsters 0 :captured)
          true))
 
-  (swap! (tnr/app-state)
-         assoc-in
-         [:team :chipu :hp] 0)
-
+  ;;kill chipu
+  (swap! (tnr/app-state) assoc-in [:team :chipu :hp] 0)
   (tnr/remove-dead-team-members!)
 
   (is (= (get-state :mokedex :monsters 0 :encountered)
          true))
 
   (is (= (get-state :mokedex :monsters 0 :captured)
+         false)))
+
+(deftest mokedex-battle-encountered
+  "a battle with a mokepon marks it as encountered"
+
+  (tnr/set-battle! :chipu mon/sulbabaur)
+
+  (is (= (get-state :mokedex :monsters 2 :encountered)
+         true))
+
+  (is (= (get-state :mokedex :monsters 2 :captured)
          false)))
 
 (defn run-tests []

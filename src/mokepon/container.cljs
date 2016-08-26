@@ -13,12 +13,14 @@
                                  choosable-monsters
                                  buy-item
                                  use-candy
+                                 find-trouble
                                  reset-team-at
                                  choose-monster
                                  chosen-monster
                                  throw-mokebox
                                  remove-dead-team-members
                                  take-chipu
+                                 set-battle
                                  active-turn-threshold]]
             [mokepon.components :refer [rpg-view]]))
 
@@ -51,11 +53,6 @@
 
 (defn team-count []
   (count (get-state :team)))
-
-(defn set-battle [chosen-key battling]
-  (assoc @(app-state)
-         :chosen-key chosen-key
-         :battling battling))
 
 (defn clear-battle! []
   (swap! (app-state)
@@ -189,19 +186,10 @@
            :cash (+ (get-state :cash) cash-reward))))
 
 
-(defn set-monsters [chosen-key battling play-by-play]
-  {:chosen-key chosen-key
-   :battling battling
-   :play-by-play (add-to-play-by-play
-                  "It has begun! " (get-state :team chosen-key :name)
-                  " vs " (:name battling) "!")})
-
 (defn set-battle! [chosen-key battling]
   (swap! (app-state)
-         merge
-         (set-monsters chosen-key
-                       battling
-                       (get-state :play-by-play))))
+         set-battle
+         chosen-key battling))
 
 (defn set-cash! [cash]
   (swap! (app-state) assoc :cash cash))
@@ -212,19 +200,8 @@
    :pool   tirsqule})
 
 (defn find-trouble! [kick-off-battle]
-  (let [team (get-state :team)
-        location (get-state :location)
-        first-team-member (first-live-team-member)
-        monster-for-location (location location-monsters)]
-    (cond
-      (empty? team)
-      false
-
-      monster-for-location
-      (do
-        (set-battle! first-team-member
-                     monster-for-location)
-        (when kick-off-battle (tick-battle!))))))
+  (swap! (app-state) find-trouble)
+  (when kick-off-battle (tick-battle!)))
 
 (defn chosen-can-attack? []
   (and (can-attack? (app-state-chosen-monster))

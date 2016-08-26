@@ -273,3 +273,44 @@
              (apply-to-all-values
               heal-monster
               (:team game-state)))))
+
+(def location-monsters
+  {:forest monsters/sulbabaur
+   :canyon monsters/deogude
+   :pool   monsters/tirsqule})
+
+(defn mokedex-encountered [game-state monster-id]
+  (let [mokedex-monsters (get-in game-state [:mokedex :monsters])
+        mokedex-index (index-of #(= monster-id (:id %)) mokedex-monsters)
+        path [:mokedex :monsters mokedex-index]]
+    (cond mokedex-index
+          (update-in game-state
+                     path
+                     #(assoc % :encountered true))
+          :else (do
+                  (.log js/console (str "WARNING: " monster-id " not in mokedex! Update rpg/new-game to include " monster-id "."))
+                  game-state))))
+
+(defn set-battle [game-state chosen-key battling]
+  (-> game-state
+      (assoc
+       :chosen-key chosen-key
+       :battling battling)
+      (conj-play-by-play
+       "It has begun! " (get-in game-state [:team chosen-key :name])
+       " vs " (:name battling) "!")
+      (mokedex-encountered (:id battling))))
+
+(defn find-trouble [game-state]
+  (let [team (:team game-state)
+        location (:location game-state)
+        first-team-member (first-live-team-member game-state)
+        monster-for-location (location location-monsters)]
+    (cond
+      (empty? team)
+      game-state
+
+      monster-for-location
+      (set-battle game-state
+                  first-team-member
+                  monster-for-location))))
