@@ -2,8 +2,8 @@
   (:require
    [mokepon.tests :refer [run-tests]]
    [mokepon.container :refer [current-app-state render!]]
-   [mokepon.mokedex]
-   [mokepon.battle]))
+   [mokepon.mokedex :as mokepon.mokedex]
+   [mokepon.battle :as mokepon.battle]))
 
 (defn main! []
   (enable-console-print!)
