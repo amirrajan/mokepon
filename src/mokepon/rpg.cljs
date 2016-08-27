@@ -100,17 +100,14 @@
         mokedex-index (index-of #(= monster-id (:id %)) mokedex-monsters)
         path [:mokedex :monsters mokedex-index]]
     (cond mokedex-index
-          (cond team-monster
-                (update-in game-state
-                           path
-                           #(assoc % :captured true :encountered true))
-                :else
-                (update-in game-state
-                           path
-                           #(assoc % :captured false :encountered true)))
-          :else (do
-                  (.log js/console (str "WARNING: " monster-id " not in mokedex! Update rpg/new-game to include " monster-id "."))
-                  game-state))))
+          (update-in game-state
+                     path
+                     #(assoc % :captured true
+                             :encountered true))
+          :else
+          (do
+            (.log js/console (str "WARNING: " monster-id " not in mokedex! Update rpg/new-game to include " monster-id "."))
+            game-state))))
 
 (defn take-chipu [game-state]
   (mokedex-captured (assoc-in game-state [:team :chipu] monsters/chipu) :chipu))

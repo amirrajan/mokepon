@@ -15,7 +15,7 @@
 
 (deftest mokedex-captured-encountered
   "after mom gives chipu it is considered captured and encountered,
-   once killed, it is still considered only encountered."
+   once killed, it is still considered captured and encountered."
 
   (is (= (get-state :mokedex :monsters 0 :id)
          :chipu))
@@ -34,7 +34,7 @@
          true))
 
   (is (= (get-state :mokedex :monsters 0 :captured)
-         false)))
+         true)))
 
 (deftest mokedex-battle-encountered
   "a battle with a mokepon marks it as encountered"
