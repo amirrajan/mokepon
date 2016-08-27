@@ -1,7 +1,7 @@
 (ns mokepon.components
   (:require [sablono.core :as sab]
-            [mokepon.mokedex :as mokepon.mokedex]
-            [mokepon.battle :as mokepon.battle]
+            [mokepon.views.mokedex :as mokedex]
+            [mokepon.views.battle :as battle]
             [mokepon.elements :refer [a disabled-a conditional-a section todo progress-bar]]))
 
 (defn team-view [team header empty-text]
@@ -52,7 +52,7 @@
         (disabled-a "Go look for some trouble.")
         (a "Go look for some trouble." find-trouble-handler))
       (a "Head back." #(go-to-location-handler :outside)))]
-    (mokepon.battle/view team
+    (battle/view team
                  choosable-monsters
                  chosen
                  chosen-can-attack?
@@ -253,7 +253,7 @@
        (messages-view go-to-location-handler)
 
        (= location :mokedex)
-       (mokepon.mokedex/view go-to-location-handler mokedex)
+       (mokedex/view go-to-location-handler mokedex)
 
        :else
        (section (str "Location " location " not handled.")

@@ -1,9 +1,15 @@
 (ns mokepon.core
   (:require
-   [mokepon.tests :refer [run-tests]]
+   [mokepon.tests.core :refer [run-tests]]
+   [mokepon.tests.battle]
+   [mokepon.tests.affinities]
+   [mokepon.tests.store]
+   [mokepon.tests.home]
+   [mokepon.tests.mokedex]
+
    [mokepon.container :refer [current-app-state render!]]
-   [mokepon.mokedex :as mokepon.mokedex]
-   [mokepon.battle :as mokepon.battle]))
+   [mokepon.views.mokedex]
+   [mokepon.views.battle]))
 
 (defn main! []
   (enable-console-print!)

@@ -1,4 +1,4 @@
-(ns mokepon.battle
+(ns mokepon.views.battle
   (:require [sablono.core :as sab]
             [mokepon.elements :refer [a disabled-a conditional-a section todo progress-bar]]))
 

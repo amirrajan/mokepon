@@ -1,4 +1,4 @@
-(ns mokepon.mokedex
+(ns mokepon.views.mokedex
   (:require [sablono.core :as sab]
             [mokepon.elements :refer [a disabled-a conditional-a section todo progress-bar]]))
 
