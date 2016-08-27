@@ -132,7 +132,8 @@
             (conj-play-by-play
              "The Mokébox knocks out the "
              (get-in game-state [:battling :name])
-             ". It's been captured!"))
+             ". It's been captured!")
+            (mokedex-captured (get-in game-state [:battling :id])))
 
         (conj-play-by-play
          game-state-with-used-mokebox

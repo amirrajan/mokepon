@@ -47,4 +47,23 @@
   (is (= (get-state :mokedex :monsters 2 :captured)
          false)))
 
-(deftest mokedex-capture-mokepon)
+(deftest capturing-mokepon-show-up-in-mokedex
+  "capturing a moster with a mokebox marks it as caputured"
+  (set-cash 20)
+  (tnr/set-battle! :chipu mon/sulbabaur)
+
+  (tnr/buy-item! :mokebox)
+
+  ;;capture probability is based on hp of monster
+  ;;setting max-hp to hp ratio really really high
+  (swap! (tnr/app-state) assoc-in [:battling :max-hp] 100000000)
+  (tnr/throw-mokebox!)
+
+  (is (= (get-state :mokedex :monsters 2 :id)
+         :sulbabaur))
+
+  (is (= (get-state :mokedex :monsters 2 :encountered)
+         true))
+
+  (is (= (get-state :mokedex :monsters 2 :captured)
+         true)))
