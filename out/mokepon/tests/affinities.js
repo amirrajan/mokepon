@@ -34,7 +34,7 @@ return cljs.core._conj(cljs.core.List.EMPTY,x__19298__auto__);
 }
 
 return result__23054__auto__;
-}catch (e40144){var t__23091__auto__ = e40144;
+}catch (e27477){var t__23091__auto__ = e27477;
 return cljs.test.do_report(new cljs.core.PersistentArrayMap(null, 4, [cljs.core.cst$kw$type,cljs.core.cst$kw$error,cljs.core.cst$kw$expected,cljs.core.list(cljs.core.cst$sym$_EQ_,cljs.core.list(cljs.core.cst$sym$get_DASH_state,cljs.core.cst$kw$battling,cljs.core.cst$kw$hp),(45)),cljs.core.cst$kw$actual,t__23091__auto__,cljs.core.cst$kw$message,null], null));
 }});
 
@@ -66,7 +66,7 @@ return cljs.core._conj(cljs.core.List.EMPTY,x__19298__auto__);
 }
 
 return result__23054__auto__;
-}catch (e40145){var t__23091__auto__ = e40145;
+}catch (e27478){var t__23091__auto__ = e27478;
 return cljs.test.do_report(new cljs.core.PersistentArrayMap(null, 4, [cljs.core.cst$kw$type,cljs.core.cst$kw$error,cljs.core.cst$kw$expected,cljs.core.list(cljs.core.cst$sym$_EQ_,cljs.core.list(cljs.core.cst$sym$get_DASH_state,cljs.core.cst$kw$team,cljs.core.cst$kw$chipu,cljs.core.cst$kw$hp),(30)),cljs.core.cst$kw$actual,t__23091__auto__,cljs.core.cst$kw$message,null], null));
 }});
 
@@ -96,7 +96,7 @@ return cljs.core._conj(cljs.core.List.EMPTY,x__19298__auto__);
 }
 
 return result__23054__auto__;
-}catch (e40146){var t__23091__auto__ = e40146;
+}catch (e27479){var t__23091__auto__ = e27479;
 return cljs.test.do_report(new cljs.core.PersistentArrayMap(null, 4, [cljs.core.cst$kw$type,cljs.core.cst$kw$error,cljs.core.cst$kw$expected,cljs.core.list(cljs.core.cst$sym$_EQ_,cljs.core.list(cljs.core.cst$sym$get_DASH_state,cljs.core.cst$kw$battling,cljs.core.cst$kw$hp),(50)),cljs.core.cst$kw$actual,t__23091__auto__,cljs.core.cst$kw$message,null], null));
 }});
 
@@ -126,7 +126,7 @@ return cljs.core._conj(cljs.core.List.EMPTY,x__19298__auto__);
 }
 
 return result__23054__auto__;
-}catch (e40147){var t__23091__auto__ = e40147;
+}catch (e27480){var t__23091__auto__ = e27480;
 return cljs.test.do_report(new cljs.core.PersistentArrayMap(null, 4, [cljs.core.cst$kw$type,cljs.core.cst$kw$error,cljs.core.cst$kw$expected,cljs.core.list(cljs.core.cst$sym$_EQ_,cljs.core.list(cljs.core.cst$sym$get_DASH_state,cljs.core.cst$kw$battling,cljs.core.cst$kw$hp),(30)),cljs.core.cst$kw$actual,t__23091__auto__,cljs.core.cst$kw$message,null], null));
 }});
 
@@ -158,7 +158,7 @@ return cljs.core._conj(cljs.core.List.EMPTY,x__19298__auto__);
 }
 
 return result__23054__auto__;
-}catch (e40148){var t__23091__auto__ = e40148;
+}catch (e27481){var t__23091__auto__ = e27481;
 return cljs.test.do_report(new cljs.core.PersistentArrayMap(null, 4, [cljs.core.cst$kw$type,cljs.core.cst$kw$error,cljs.core.cst$kw$expected,cljs.core.list(cljs.core.cst$sym$_EQ_,cljs.core.list(cljs.core.cst$sym$get_DASH_state,cljs.core.cst$kw$team,cljs.core.cst$kw$chipu,cljs.core.cst$kw$hp),(40)),cljs.core.cst$kw$actual,t__23091__auto__,cljs.core.cst$kw$message,null], null));
 }});
 

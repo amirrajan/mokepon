@@ -34,7 +34,7 @@ return cljs.core._conj(cljs.core.List.EMPTY,x__19298__auto__);
 }
 
 return result__23054__auto__;
-}catch (e40271){var t__23091__auto__ = e40271;
+}catch (e27613){var t__23091__auto__ = e27613;
 return cljs.test.do_report(new cljs.core.PersistentArrayMap(null, 4, [cljs.core.cst$kw$type,cljs.core.cst$kw$error,cljs.core.cst$kw$expected,cljs.core.list(cljs.core.cst$sym$_EQ_,cljs.core.list(cljs.core.cst$sym$get_DASH_state,cljs.core.cst$kw$team),new cljs.core.PersistentArrayMap(null, 2, [cljs.core.cst$kw$chipu,new cljs.core.PersistentArrayMap(null, 2, [cljs.core.cst$kw$hp,(50),cljs.core.cst$kw$max_DASH_hp,(50)], null),cljs.core.cst$kw$deogude,new cljs.core.PersistentArrayMap(null, 2, [cljs.core.cst$kw$hp,(100),cljs.core.cst$kw$max_DASH_hp,(100)], null)], null)),cljs.core.cst$kw$actual,t__23091__auto__,cljs.core.cst$kw$message,null], null));
 }});
 

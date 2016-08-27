@@ -3,28 +3,28 @@ goog.provide('mokepon.rpg');
 goog.require('cljs.core');
 goog.require('mokepon.monsters');
 mokepon.rpg.new_game = (function mokepon$rpg$new_game(){
-return cljs.core.PersistentHashMap.fromArrays([cljs.core.cst$kw$team_DASH_at_DASH_home,cljs.core.cst$kw$play_DASH_by_DASH_play,cljs.core.cst$kw$battling,cljs.core.cst$kw$cash,cljs.core.cst$kw$team,cljs.core.cst$kw$mokedex,cljs.core.cst$kw$items,cljs.core.cst$kw$location,cljs.core.cst$kw$chosen_DASH_key],[cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, ["You sit outside. You needed a break from your mother yelling at you."], null),null,(100),cljs.core.PersistentArrayMap.EMPTY,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$monsters,cljs.core.into.cljs$core$IFn$_invoke$arity$2(cljs.core.PersistentVector.EMPTY,cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p1__40001_SHARP_){
-return cljs.core.assoc.cljs$core$IFn$_invoke$arity$variadic(p1__40001_SHARP_,cljs.core.cst$kw$captured,false,cljs.core.array_seq([cljs.core.cst$kw$encountered,false], 0));
+return cljs.core.PersistentHashMap.fromArrays([cljs.core.cst$kw$team_DASH_at_DASH_home,cljs.core.cst$kw$play_DASH_by_DASH_play,cljs.core.cst$kw$battling,cljs.core.cst$kw$cash,cljs.core.cst$kw$team,cljs.core.cst$kw$mokedex,cljs.core.cst$kw$items,cljs.core.cst$kw$location,cljs.core.cst$kw$chosen_DASH_key],[cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, ["You sit outside. You needed a break from your mother yelling at you."], null),null,(100),cljs.core.PersistentArrayMap.EMPTY,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$monsters,cljs.core.into.cljs$core$IFn$_invoke$arity$2(cljs.core.PersistentVector.EMPTY,cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p1__27334_SHARP_){
+return cljs.core.assoc.cljs$core$IFn$_invoke$arity$variadic(p1__27334_SHARP_,cljs.core.cst$kw$captured,false,cljs.core.array_seq([cljs.core.cst$kw$encountered,false], 0));
 }),new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [mokepon.monsters.chipu,mokepon.monsters.tirsqule,mokepon.monsters.sulbabaur,mokepon.monsters.deogude], null)))], null),cljs.core.PersistentArrayMap.EMPTY,cljs.core.cst$kw$outside,null]);
 });
 mokepon.rpg.apply_to_all_values = (function mokepon$rpg$apply_to_all_values(f,dict){
-return cljs.core.into.cljs$core$IFn$_invoke$arity$2(cljs.core.PersistentArrayMap.EMPTY,cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p__40006){
-var vec__40007 = p__40006;
-var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__40007,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__40007,(1),null);
+return cljs.core.into.cljs$core$IFn$_invoke$arity$2(cljs.core.PersistentArrayMap.EMPTY,cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p__27339){
+var vec__27340 = p__27339;
+var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__27340,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__27340,(1),null);
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [k,(f.cljs$core$IFn$_invoke$arity$1 ? f.cljs$core$IFn$_invoke$arity$1(v) : f.call(null,v))], null);
 }),dict));
 });
 mokepon.rpg.filter_key = (function mokepon$rpg$filter_key(predicate,dict){
-return cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p__40018){
-var vec__40019 = p__40018;
-var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__40019,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__40019,(1),null);
+return cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p__27351){
+var vec__27352 = p__27351;
+var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__27352,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__27352,(1),null);
 return k;
-}),cljs.core.filter.cljs$core$IFn$_invoke$arity$2((function (p__40022){
-var vec__40023 = p__40022;
-var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__40023,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__40023,(1),null);
+}),cljs.core.filter.cljs$core$IFn$_invoke$arity$2((function (p__27355){
+var vec__27356 = p__27355;
+var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__27356,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__27356,(1),null);
 return (predicate.cljs$core$IFn$_invoke$arity$1 ? predicate.cljs$core$IFn$_invoke$arity$1(v) : predicate.call(null,v));
 }),dict));
 });
@@ -35,15 +35,15 @@ while(true){
 if(cljs.core.empty_QMARK_(items)){
 return null;
 } else {
-if(cljs.core.truth_((function (){var G__40027 = cljs.core.first(items);
-return (predicate.cljs$core$IFn$_invoke$arity$1 ? predicate.cljs$core$IFn$_invoke$arity$1(G__40027) : predicate.call(null,G__40027));
+if(cljs.core.truth_((function (){var G__27360 = cljs.core.first(items);
+return (predicate.cljs$core$IFn$_invoke$arity$1 ? predicate.cljs$core$IFn$_invoke$arity$1(G__27360) : predicate.call(null,G__27360));
 })())){
 return idx;
 } else {
-var G__40028 = (idx + (1));
-var G__40029 = cljs.core.rest(items);
-idx = G__40028;
-items = G__40029;
+var G__27361 = (idx + (1));
+var G__27362 = cljs.core.rest(items);
+idx = G__27361;
+items = G__27362;
 continue;
 
 }
@@ -77,14 +77,14 @@ return cljs.core.cst$kw$captured.cljs$core$IFn$_invoke$arity$1(battling);
 mokepon.rpg.active_turn_threshold = (1800);
 mokepon.rpg.conj_play_by_play = (function mokepon$rpg$conj_play_by_play(var_args){
 var args__19546__auto__ = [];
-var len__19539__auto___40032 = arguments.length;
-var i__19540__auto___40033 = (0);
+var len__19539__auto___27365 = arguments.length;
+var i__19540__auto___27366 = (0);
 while(true){
-if((i__19540__auto___40033 < len__19539__auto___40032)){
-args__19546__auto__.push((arguments[i__19540__auto___40033]));
+if((i__19540__auto___27366 < len__19539__auto___27365)){
+args__19546__auto__.push((arguments[i__19540__auto___27366]));
 
-var G__40034 = (i__19540__auto___40033 + (1));
-i__19540__auto___40033 = G__40034;
+var G__27367 = (i__19540__auto___27366 + (1));
+i__19540__auto___27366 = G__27367;
 continue;
 } else {
 }
@@ -101,10 +101,10 @@ return cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(game_state,cljs.core.cst$kw
 
 mokepon.rpg.conj_play_by_play.cljs$lang$maxFixedArity = (1);
 
-mokepon.rpg.conj_play_by_play.cljs$lang$applyTo = (function (seq40030){
-var G__40031 = cljs.core.first(seq40030);
-var seq40030__$1 = cljs.core.next(seq40030);
-return mokepon.rpg.conj_play_by_play.cljs$core$IFn$_invoke$arity$variadic(G__40031,seq40030__$1);
+mokepon.rpg.conj_play_by_play.cljs$lang$applyTo = (function (seq27363){
+var G__27364 = cljs.core.first(seq27363);
+var seq27363__$1 = cljs.core.next(seq27363);
+return mokepon.rpg.conj_play_by_play.cljs$core$IFn$_invoke$arity$variadic(G__27364,seq27363__$1);
 });
 
 mokepon.rpg.reset_monster_at = (function mokepon$rpg$reset_monster_at(monster){
@@ -113,10 +113,10 @@ return cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(monster,cljs.core.cst$kw$at
 mokepon.rpg.reset_team_at = (function mokepon$rpg$reset_team_at(team){
 return mokepon.rpg.apply_to_all_values(mokepon.rpg.reset_monster_at,team);
 });
-mokepon.rpg.active_turn_percentage = (function mokepon$rpg$active_turn_percentage(p__40035,monster){
-var map__40038 = p__40035;
-var map__40038__$1 = ((((!((map__40038 == null)))?((((map__40038.cljs$lang$protocol_mask$partition0$ & (64))) || (map__40038.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__40038):map__40038);
-var at = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__40038__$1,cljs.core.cst$kw$at);
+mokepon.rpg.active_turn_percentage = (function mokepon$rpg$active_turn_percentage(p__27368,monster){
+var map__27371 = p__27368;
+var map__27371__$1 = ((((!((map__27371 == null)))?((((map__27371.cljs$lang$protocol_mask$partition0$ & (64))) || (map__27371.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__27371):map__27371);
+var at = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__27371__$1,cljs.core.cst$kw$at);
 if((at >= mokepon.rpg.active_turn_threshold)){
 return (1);
 } else {
@@ -159,14 +159,14 @@ var temp__4657__auto__ = (mokepon.rpg.item_count(game_state,cljs.core.cst$kw$can
 if(temp__4657__auto__){
 var has_candy_QMARK_ = temp__4657__auto__;
 return mokepon.rpg.conj_play_by_play.cljs$core$IFn$_invoke$arity$variadic(cljs.core.update_in.cljs$core$IFn$_invoke$arity$3(cljs.core.update_in.cljs$core$IFn$_invoke$arity$3(game_state,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$team,cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(game_state,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$chosen_DASH_key], null)),cljs.core.cst$kw$hp], null),((function (has_candy_QMARK_,temp__4657__auto__){
-return (function (p1__40040_SHARP_){
+return (function (p1__27373_SHARP_){
 var x__18802__auto__ = cljs.core.cst$kw$max_DASH_hp.cljs$core$IFn$_invoke$arity$1(mokepon.rpg.chosen_monster(game_state));
-var y__18803__auto__ = (p1__40040_SHARP_ + (10));
+var y__18803__auto__ = (p1__27373_SHARP_ + (10));
 return ((x__18802__auto__ < y__18803__auto__) ? x__18802__auto__ : y__18803__auto__);
 });})(has_candy_QMARK_,temp__4657__auto__))
 ),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$items,cljs.core.cst$kw$candy], null),((function (has_candy_QMARK_,temp__4657__auto__){
-return (function (p1__40041_SHARP_){
-return ((function (){var or__18464__auto__ = p1__40041_SHARP_;
+return (function (p1__27374_SHARP_){
+return ((function (){var or__18464__auto__ = p1__27374_SHARP_;
 if(cljs.core.truth_(or__18464__auto__)){
 return or__18464__auto__;
 } else {
@@ -183,22 +183,22 @@ mokepon.rpg.mokedex_captured = (function mokepon$rpg$mokedex_captured(game_state
 var team_monster = cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(game_state,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$team,monster_id], null));
 var mokedex_monsters = cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(game_state,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$mokedex,cljs.core.cst$kw$monsters], null));
 var mokedex_index = mokepon.rpg.index_of(((function (team_monster,mokedex_monsters){
-return (function (p1__40042_SHARP_){
-return cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(monster_id,cljs.core.cst$kw$id.cljs$core$IFn$_invoke$arity$1(p1__40042_SHARP_));
+return (function (p1__27375_SHARP_){
+return cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(monster_id,cljs.core.cst$kw$id.cljs$core$IFn$_invoke$arity$1(p1__27375_SHARP_));
 });})(team_monster,mokedex_monsters))
 ,mokedex_monsters);
 var path = new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$mokedex,cljs.core.cst$kw$monsters,mokedex_index], null);
 if(cljs.core.truth_(mokedex_index)){
 if(cljs.core.truth_(team_monster)){
 return cljs.core.update_in.cljs$core$IFn$_invoke$arity$3(game_state,path,((function (team_monster,mokedex_monsters,mokedex_index,path){
-return (function (p1__40043_SHARP_){
-return cljs.core.assoc.cljs$core$IFn$_invoke$arity$variadic(p1__40043_SHARP_,cljs.core.cst$kw$captured,true,cljs.core.array_seq([cljs.core.cst$kw$encountered,true], 0));
+return (function (p1__27376_SHARP_){
+return cljs.core.assoc.cljs$core$IFn$_invoke$arity$variadic(p1__27376_SHARP_,cljs.core.cst$kw$captured,true,cljs.core.array_seq([cljs.core.cst$kw$encountered,true], 0));
 });})(team_monster,mokedex_monsters,mokedex_index,path))
 );
 } else {
 return cljs.core.update_in.cljs$core$IFn$_invoke$arity$3(game_state,path,((function (team_monster,mokedex_monsters,mokedex_index,path){
-return (function (p1__40044_SHARP_){
-return cljs.core.assoc.cljs$core$IFn$_invoke$arity$variadic(p1__40044_SHARP_,cljs.core.cst$kw$captured,false,cljs.core.array_seq([cljs.core.cst$kw$encountered,true], 0));
+return (function (p1__27377_SHARP_){
+return cljs.core.assoc.cljs$core$IFn$_invoke$arity$variadic(p1__27377_SHARP_,cljs.core.cst$kw$captured,false,cljs.core.array_seq([cljs.core.cst$kw$encountered,true], 0));
 });})(team_monster,mokedex_monsters,mokedex_index,path))
 );
 
@@ -215,10 +215,10 @@ return mokepon.rpg.mokedex_captured(cljs.core.assoc_in(game_state,new cljs.core.
 });
 mokepon.rpg.throw_mokebox = (function mokepon$rpg$throw_mokebox(game_state){
 var battling = cljs.core.cst$kw$battling.cljs$core$IFn$_invoke$arity$1(game_state);
-var map__40047 = battling;
-var map__40047__$1 = ((((!((map__40047 == null)))?((((map__40047.cljs$lang$protocol_mask$partition0$ & (64))) || (map__40047.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__40047):map__40047);
-var max_hp = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__40047__$1,cljs.core.cst$kw$max_DASH_hp);
-var hp = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__40047__$1,cljs.core.cst$kw$hp);
+var map__27380 = battling;
+var map__27380__$1 = ((((!((map__27380 == null)))?((((map__27380.cljs$lang$protocol_mask$partition0$ & (64))) || (map__27380.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__27380):map__27380);
+var max_hp = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__27380__$1,cljs.core.cst$kw$max_DASH_hp);
+var hp = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__27380__$1,cljs.core.cst$kw$hp);
 var capture_chance = ((max_hp - hp) / max_hp);
 var roll = cljs.core.rand.cljs$core$IFn$_invoke$arity$0();
 var captured_QMARK_ = (capture_chance > roll);
@@ -227,12 +227,14 @@ var game_state_with_used_mokebox = cljs.core.update_in.cljs$core$IFn$_invoke$ari
 var new_team = cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(cljs.core.cst$kw$team.cljs$core$IFn$_invoke$arity$1(game_state),cljs.core.cst$kw$id.cljs$core$IFn$_invoke$arity$1(battling),battling);
 if(cljs.core.truth_(has_mokebox_QMARK_)){
 if(captured_QMARK_){
-return mokepon.rpg.conj_play_by_play.cljs$core$IFn$_invoke$arity$variadic(cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(cljs.core.assoc_in(game_state_with_used_mokebox,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$battling,cljs.core.cst$kw$captured], null),true),cljs.core.cst$kw$team,new_team),cljs.core.array_seq(["The Mok\u00E9box knocks out the ",cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(game_state,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$battling,cljs.core.cst$kw$name], null)),". It's been captured!"], 0));
+return mokepon.rpg.mokedex_captured(mokepon.rpg.conj_play_by_play.cljs$core$IFn$_invoke$arity$variadic(cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(cljs.core.assoc_in(game_state_with_used_mokebox,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$battling,cljs.core.cst$kw$captured], null),true),cljs.core.cst$kw$team,new_team),cljs.core.array_seq(["The Mok\u00E9box knocks out the ",cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(game_state,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$battling,cljs.core.cst$kw$name], null)),". It's been captured!"], 0)),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(game_state,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$battling,cljs.core.cst$kw$id], null)));
 } else {
 return mokepon.rpg.conj_play_by_play.cljs$core$IFn$_invoke$arity$variadic(game_state_with_used_mokebox,cljs.core.array_seq(["The Mok\u00E9box bounces off ",cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(game_state,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$battling,cljs.core.cst$kw$name], null)),". It's still too strong!"], 0));
+
 }
 } else {
 return game_state;
+
 }
 });
 mokepon.rpg.affinities = cljs.core.PersistentArrayMap.fromArray([new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$electric,cljs.core.cst$kw$grass], null),0.5,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$ground,cljs.core.cst$kw$electric], null),(2),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$electric,cljs.core.cst$kw$water], null),(2),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$water,cljs.core.cst$kw$electric], null),(1),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$electric,cljs.core.cst$kw$ground], null),(0)], true, false);
@@ -277,19 +279,19 @@ return [cljs.core.str(cljs.core.cst$kw$name.cljs$core$IFn$_invoke$arity$1(from))
 }
 });
 mokepon.rpg.apply_player_attack = (function mokepon$rpg$apply_player_attack(chosen,battling,play_by_play){
-var map__40051 = mokepon.rpg.try_attack(chosen,battling);
-var map__40051__$1 = ((((!((map__40051 == null)))?((((map__40051.cljs$lang$protocol_mask$partition0$ & (64))) || (map__40051.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__40051):map__40051);
-var from = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__40051__$1,cljs.core.cst$kw$from);
-var to = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__40051__$1,cljs.core.cst$kw$to);
-var attack_occured_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__40051__$1,cljs.core.cst$kw$attack_DASH_occured_QMARK_);
+var map__27384 = mokepon.rpg.try_attack(chosen,battling);
+var map__27384__$1 = ((((!((map__27384 == null)))?((((map__27384.cljs$lang$protocol_mask$partition0$ & (64))) || (map__27384.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__27384):map__27384);
+var from = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__27384__$1,cljs.core.cst$kw$from);
+var to = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__27384__$1,cljs.core.cst$kw$to);
+var attack_occured_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__27384__$1,cljs.core.cst$kw$attack_DASH_occured_QMARK_);
 return new cljs.core.PersistentArrayMap(null, 4, [cljs.core.cst$kw$battling,to,cljs.core.cst$kw$chosen,from,cljs.core.cst$kw$cash_DASH_reward,(cljs.core.truth_(mokepon.rpg.is_dead_QMARK_(to))?(3):(0)),cljs.core.cst$kw$play_DASH_by_DASH_play,(cljs.core.truth_(attack_occured_QMARK_)?cljs.core.conj.cljs$core$IFn$_invoke$arity$2(play_by_play,mokepon.rpg.attack_description(from,to)):play_by_play)], null);
 });
 mokepon.rpg.attack_result_play_by_play = (function mokepon$rpg$attack_result_play_by_play(attack_result,play_by_play){
-var map__40055 = attack_result;
-var map__40055__$1 = ((((!((map__40055 == null)))?((((map__40055.cljs$lang$protocol_mask$partition0$ & (64))) || (map__40055.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__40055):map__40055);
-var from = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__40055__$1,cljs.core.cst$kw$from);
-var to = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__40055__$1,cljs.core.cst$kw$to);
-var attack_occured_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__40055__$1,cljs.core.cst$kw$attack_DASH_occured_QMARK_);
+var map__27388 = attack_result;
+var map__27388__$1 = ((((!((map__27388 == null)))?((((map__27388.cljs$lang$protocol_mask$partition0$ & (64))) || (map__27388.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__27388):map__27388);
+var from = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__27388__$1,cljs.core.cst$kw$from);
+var to = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__27388__$1,cljs.core.cst$kw$to);
+var attack_occured_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__27388__$1,cljs.core.cst$kw$attack_DASH_occured_QMARK_);
 var attack_description = mokepon.rpg.attack_description(from,to);
 if(cljs.core.truth_(attack_occured_QMARK_)){
 return cljs.core.conj.cljs$core$IFn$_invoke$arity$2(play_by_play,attack_description);
@@ -298,8 +300,8 @@ return play_by_play;
 }
 });
 mokepon.rpg.choosable_monsters = (function mokepon$rpg$choosable_monsters(team){
-return mokepon.rpg.filter_key((function (p1__40057_SHARP_){
-return cljs.core.not(mokepon.rpg.is_dead_QMARK_(p1__40057_SHARP_));
+return mokepon.rpg.filter_key((function (p1__27390_SHARP_){
+return cljs.core.not(mokepon.rpg.is_dead_QMARK_(p1__27390_SHARP_));
 }),team);
 });
 mokepon.rpg.first_live_team_member = (function mokepon$rpg$first_live_team_member(game_state){
@@ -325,33 +327,33 @@ return game_state;
 mokepon.rpg.tick_battle = (function mokepon$rpg$tick_battle(game_state){
 var chosen_ticked = mokepon.rpg.tick_monster(mokepon.rpg.chosen_monster(game_state));
 var battling_ticked = mokepon.rpg.tick_monster(cljs.core.cst$kw$battling.cljs$core$IFn$_invoke$arity$1(game_state));
-var map__40060 = mokepon.rpg.try_attack(battling_ticked,chosen_ticked);
-var map__40060__$1 = ((((!((map__40060 == null)))?((((map__40060.cljs$lang$protocol_mask$partition0$ & (64))) || (map__40060.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__40060):map__40060);
-var attack_result = map__40060__$1;
-var from = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__40060__$1,cljs.core.cst$kw$from);
-var to = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__40060__$1,cljs.core.cst$kw$to);
+var map__27393 = mokepon.rpg.try_attack(battling_ticked,chosen_ticked);
+var map__27393__$1 = ((((!((map__27393 == null)))?((((map__27393.cljs$lang$protocol_mask$partition0$ & (64))) || (map__27393.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__27393):map__27393);
+var attack_result = map__27393__$1;
+var from = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__27393__$1,cljs.core.cst$kw$from);
+var to = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__27393__$1,cljs.core.cst$kw$to);
 var new_play_by_play = mokepon.rpg.attack_result_play_by_play(attack_result,cljs.core.cst$kw$play_DASH_by_DASH_play.cljs$core$IFn$_invoke$arity$1(game_state));
 var need_to_auto_swap = mokepon.rpg.is_dead_QMARK_(to);
 return mokepon.rpg.auto_swap_team_member(cljs.core.assoc_in(cljs.core.assoc.cljs$core$IFn$_invoke$arity$variadic(game_state,cljs.core.cst$kw$battling,from,cljs.core.array_seq([cljs.core.cst$kw$play_DASH_by_DASH_play,new_play_by_play], 0)),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$team,cljs.core.cst$kw$chosen_DASH_key.cljs$core$IFn$_invoke$arity$1(game_state)], null),to));
 });
 mokepon.rpg.dead_team_member_keys = (function mokepon$rpg$dead_team_member_keys(game_state){
-return cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p__40070){
-var vec__40071 = p__40070;
-var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__40071,(0),null);
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__40071,(1),null);
+return cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p__27403){
+var vec__27404 = p__27403;
+var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__27404,(0),null);
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__27404,(1),null);
 return k;
-}),cljs.core.filter.cljs$core$IFn$_invoke$arity$2((function (p__40074){
-var vec__40075 = p__40074;
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__40075,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__40075,(1),null);
+}),cljs.core.filter.cljs$core$IFn$_invoke$arity$2((function (p__27407){
+var vec__27408 = p__27407;
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__27408,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__27408,(1),null);
 return mokepon.rpg.is_dead_QMARK_(v);
 }),cljs.core.cst$kw$team.cljs$core$IFn$_invoke$arity$1(game_state)));
 });
 mokepon.rpg.remove_dead_team_members = (function mokepon$rpg$remove_dead_team_members(game_state){
 var dead_keys = mokepon.rpg.dead_team_member_keys(game_state);
 var new_state = cljs.core.update_in.cljs$core$IFn$_invoke$arity$3(game_state,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$team], null),((function (dead_keys){
-return (function (p1__40078_SHARP_){
-return cljs.core.apply.cljs$core$IFn$_invoke$arity$3(cljs.core.dissoc,p1__40078_SHARP_,dead_keys);
+return (function (p1__27411_SHARP_){
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$3(cljs.core.dissoc,p1__27411_SHARP_,dead_keys);
 });})(dead_keys))
 );
 return cljs.core.reduce.cljs$core$IFn$_invoke$arity$3(((function (dead_keys,new_state){
@@ -391,15 +393,15 @@ mokepon.rpg.location_monsters = new cljs.core.PersistentArrayMap(null, 3, [cljs.
 mokepon.rpg.mokedex_encountered = (function mokepon$rpg$mokedex_encountered(game_state,monster_id){
 var mokedex_monsters = cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(game_state,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$mokedex,cljs.core.cst$kw$monsters], null));
 var mokedex_index = mokepon.rpg.index_of(((function (mokedex_monsters){
-return (function (p1__40079_SHARP_){
-return cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(monster_id,cljs.core.cst$kw$id.cljs$core$IFn$_invoke$arity$1(p1__40079_SHARP_));
+return (function (p1__27412_SHARP_){
+return cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(monster_id,cljs.core.cst$kw$id.cljs$core$IFn$_invoke$arity$1(p1__27412_SHARP_));
 });})(mokedex_monsters))
 ,mokedex_monsters);
 var path = new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$kw$mokedex,cljs.core.cst$kw$monsters,mokedex_index], null);
 if(cljs.core.truth_(mokedex_index)){
 return cljs.core.update_in.cljs$core$IFn$_invoke$arity$3(game_state,path,((function (mokedex_monsters,mokedex_index,path){
-return (function (p1__40080_SHARP_){
-return cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(p1__40080_SHARP_,cljs.core.cst$kw$encountered,true);
+return (function (p1__27413_SHARP_){
+return cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(p1__27413_SHARP_,cljs.core.cst$kw$encountered,true);
 });})(mokedex_monsters,mokedex_index,path))
 );
 } else {
