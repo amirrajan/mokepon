@@ -1,7 +1,12 @@
 // Compiled by ClojureScript 1.9.76 {:static-fns true, :optimize-constants true}
 goog.provide('mokepon.core');
 goog.require('cljs.core');
-goog.require('mokepon.tests');
+goog.require('mokepon.tests.core');
+goog.require('mokepon.tests.battle');
+goog.require('mokepon.tests.affinities');
+goog.require('mokepon.tests.store');
+goog.require('mokepon.tests.home');
+goog.require('mokepon.tests.mokedex');
 goog.require('mokepon.container');
 goog.require('mokepon.views.mokedex');
 goog.require('mokepon.views.battle');
@@ -10,7 +15,7 @@ cljs.core.enable_console_print_BANG_();
 
 cljs.core.swap_BANG_.cljs$core$IFn$_invoke$arity$4(mokepon.container.current_app_state,cljs.core.assoc,cljs.core.cst$kw$value,cljs.core.cst$kw$test);
 
-mokepon.tests.run_tests();
+mokepon.tests.core.run_tests();
 
 cljs.core.swap_BANG_.cljs$core$IFn$_invoke$arity$4(mokepon.container.current_app_state,cljs.core.assoc,cljs.core.cst$kw$value,cljs.core.cst$kw$game);
 
