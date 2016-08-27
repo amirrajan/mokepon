@@ -124,8 +124,10 @@
         has-mokebox? (get-in game-state [:items :mokebox])
         game-state-with-used-mokebox (update-in game-state [:items :mokebox] dec)
         new-team (assoc (:team game-state) (:id battling) battling)]
-    (if has-mokebox?
-      (if captured?
+    (cond
+      has-mokebox?
+      (cond
+        captured?
         (-> game-state-with-used-mokebox
             (assoc-in [:battling :captured] true)
             (assoc :team new-team)
@@ -134,13 +136,13 @@
              (get-in game-state [:battling :name])
              ". It's been captured!")
             (mokedex-captured (get-in game-state [:battling :id])))
-
+        :else
         (conj-play-by-play
          game-state-with-used-mokebox
          "The Mokébox bounces off "
          (get-in game-state [:battling :name])
          ". It's still too strong!"))
-
+      :else
       game-state)))
 
 (def affinities

@@ -103,7 +103,7 @@
                    :mokedex
                    go-to-location-handler)
    (adventure-view "Le Messages."
-                   "Open Messages. 1 new text message(s)."
+                   "Open Messages."
                    :messages
                    go-to-location-handler)
    (section (a "Put phone away." #(go-to-location-handler :outside)))])
@@ -134,7 +134,7 @@
    [:div
     (adventure-view
      "Your smart phone bulges from your skinny jeans."
-     "Bust out phone. 1 new notification(s)."
+     "Bust out phone."
      :phone
      go-to-location-handler)
     (adventure-view
