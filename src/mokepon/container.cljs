@@ -22,7 +22,8 @@
                                  take-chipu
                                  set-battle
                                  active-turn-threshold]]
-            [mokepon.components :refer [rpg-view]]))
+            [mokepon.components :refer [rpg-view]]
+            [clojure.string :as string]))
 
 (defn alert [message] #(.alert js/window message))
 
@@ -60,12 +61,6 @@
          :chosen-key nil
          :battling nil))
 
-(defn update-in-team [monster-key new-value]
-  (assoc (get-state :team) monster-key new-value))
-
-(defn add-to-play-by-play [& text]
-  (conj (get-state :play-by-play) (apply str text)))
-
 (defn decrement-item! [item-key]
   (swap! (app-state)
          update-in
@@ -75,12 +70,11 @@
 (defn item-count [item-key]
   (or (get-state :items item-key) 0))
 
+(defn add-to-play-by-play [app-state & text]
+  (update app-state :play-play conj (string/join text)))
+
 (defn add-to-play-by-play! [& message]
-  (swap!
-   (app-state)
-   assoc
-   :play-by-play
-   (apply add-to-play-by-play message)))
+  (swap! (app-state) add-to-play-by-play message))
 
 (defn choose-monster! [team-key]
   (swap! (app-state) choose-monster team-key))
@@ -104,20 +98,19 @@
   (swap! (app-state) heal-team))
 
 (defn reset-team-at! []
-  (swap!
-   (app-state)
-   update-in
-   [:team]
-   #(reset-team-at %)))
+  (swap! (app-state) update :team reset-team-at))
 
 (defn tick-battle-core! [] (swap! (app-state) tick-battle))
 
 (defn remove-dead-team-members! []
   (swap! (app-state) remove-dead-team-members))
 
+(defn count-down [app-state]
+  (assoc app-state :battle-count-down (- (:battle-count-down app-state) 250)))
+
 (defn count-down! [message callback]
-  (if message (add-to-play-by-play! message))
-  (swap! (app-state) assoc :battle-count-down (- (get-state :battle-count-down) 250))
+  (when message (add-to-play-by-play! message))
+  (swap! (app-state) count-down)
   (.setTimeout js/window callback 250))
 
 (defn app-state-chosen-monster []
@@ -126,9 +119,9 @@
 (defn app-state-battling [] (:battling @(app-state)))
 
 (defn tick-battle! []
-  (if (not (battle-over?
+  (if-not (battle-over?
             (app-state-chosen-monster)
-            (app-state-battling)))
+            (app-state-battling))
       (cond (not (get-state :battle-count-down))
             (do
               (swap! (app-state) assoc :battle-count-down 5000)
@@ -149,7 +142,7 @@
             (= (get-state :battle-count-down) 1000)
             (count-down! "Battle starts in 1..." tick-battle!)
 
-            (= (get-state :battle-count-down) 0)
+            (zero? (get-state :battle-count-down))
             (do
               (tick-battle-core!)
               (.setTimeout js/window #(tick-battle!) 300))
@@ -172,19 +165,20 @@
          :chosen-key nil
          :battle-count-down nil))
 
+(defn attack [app-state battling chosen play-by-play cash-reward]
+  (assoc app-state
+    :battling battling
+    :team (assoc (:team app-state) (:chosen-key app-state) chosen)
+    :play-by-play play-by-play
+    :cash (+ (:cash app-state) cash-reward)))
+
 (defn attack! []
   (let [{:keys [battling chosen play-by-play cash-reward]}
         (apply-player-attack
          (app-state-chosen-monster)
          (app-state-battling)
          (get-state :play-by-play))]
-    (swap! (app-state)
-           assoc
-           :battling battling
-           :team (update-in-team (get-state :chosen-key) chosen)
-           :play-by-play play-by-play
-           :cash (+ (get-state :cash) cash-reward))))
-
+    (swap! (app-state) attack battling chosen play-by-play cash-reward)))
 
 (defn set-battle! [chosen-key battling]
   (swap! (app-state)
@@ -209,7 +203,7 @@
                           (app-state-battling)))))
 
 (defn location-available? [location]
-  (> (count (filter #(:captured %) (get-state :mokedex :monsters))) 0))
+  (pos? (count (filter #(:captured %) (get-state :mokedex :monsters)))))
 
 (defn rpg-container []
   (sab/html
