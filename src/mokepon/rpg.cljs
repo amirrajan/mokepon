@@ -1,5 +1,6 @@
 (ns mokepon.rpg
-  (:require [mokepon.monsters :as monsters]))
+  (:require [mokepon.locations :refer [location-monsters]]
+            [mokepon.monsters :as monsters]))
 
 (defn new-game []
   {:team-at-home []
@@ -280,11 +281,6 @@
                (apply-to-all-values
                 heal-monster
                 (:team game-state))))))
-
-(def location-monsters
-  {:forest monsters/sulbabaur
-   :canyon monsters/deogude
-   :pool   monsters/tirsqule})
 
 (defn mokedex-encountered [game-state monster-id]
   (let [mokedex-monsters (get-in game-state [:mokedex :monsters])

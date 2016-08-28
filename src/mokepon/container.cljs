@@ -209,7 +209,7 @@
                           (app-state-battling)))))
 
 (defn location-available? [location]
-  ( > (count (filter #(:captured %) (get-state :mokedex :monsters))) 0))
+  (> (count (filter #(:captured %) (get-state :mokedex :monsters))) 0))
 
 (defn rpg-container []
   (sab/html
