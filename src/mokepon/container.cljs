@@ -204,6 +204,9 @@
        (not (battle-over? (app-state-chosen-monster)
                           (app-state-battling)))))
 
+(defn location-available? [location]
+  (> (count (filter #(:captured %) (get-state :mokedex :monsters))) 0))
+
 (defn rpg-container []
   (sab/html
    (rpg-view @(app-state)
@@ -222,7 +225,8 @@
              buy-item!
              throw-mokebox!
              choose-monster!
-             use-candy!)))
+             use-candy!
+             location-available?)))
 
 (defn render! []
   (.render js/React

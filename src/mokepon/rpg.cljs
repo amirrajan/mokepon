@@ -1,5 +1,6 @@
 (ns mokepon.rpg
-  (:require [mokepon.monsters :as monsters]))
+  (:require [mokepon.locations :refer [location-monsters]]
+            [mokepon.monsters :as monsters]))
 
 (defn new-game []
   {:team-at-home []
@@ -167,10 +168,8 @@
      :from from
      :attack-occured? false}))
 
-(defn attack-description [from to]
-  (cond (is-dead? to)
-        (str (:name to) " has fallen. Mauled and bloodied.")
-        (= (affinity-lookup from to) 2)
+(defn damage-description [from to]
+  (cond (= (affinity-lookup from to) 2)
         (str (:name from) " attacks " (:name to) " for " (attack-damage from to) ". It was super effective.")
         (= (affinity-lookup from to) 0.5)
         (str (:name from) " attacks " (:name to) " for " (attack-damage from to) ". It wasn't very effective.")
@@ -178,6 +177,12 @@
         (str  (:name to) " is immune to " (:name from) "'s attack. No damage was done.")
         :else
         (str (:name from) " attacks " (:name to) " for " (attack-damage from to) ".")))
+
+(defn attack-description [from to]
+  (cond (is-dead? to)
+        [(damage-description from to) (str (:name to) " has fallen. Mauled and bloodied.")]
+        :else
+        [(damage-description from to)]))
 
 (defn apply-player-attack [chosen battling play-by-play]
   (let [{:keys [from to attack-occured?]}
@@ -187,14 +192,14 @@
        :cash-reward (if (is-dead? to) 3 0)
        :play-by-play
        (if attack-occured?
-         (conj play-by-play (attack-description from to))
+         (apply conj play-by-play (attack-description from to))
          play-by-play)}))
 
 (defn attack-result-play-by-play [attack-result play-by-play]
   (let [{:keys [from to attack-occured?]} attack-result
         attack-description (attack-description from to)]
     (if attack-occured?
-      (conj play-by-play attack-description)
+      (apply conj play-by-play attack-description)
       play-by-play)))
 
 (defn choosable-monsters [team]
@@ -267,17 +272,15 @@
   (assoc monster :hp (:max-hp monster)))
 
 (defn heal-team [game-state]
-  (-> game-state
-      (conj-play-by-play "You've slept. Your posse has been healed.")
-      (assoc :team
-             (apply-to-all-values
-              heal-monster
-              (:team game-state)))))
-
-(def location-monsters
-  {:forest monsters/sulbabaur
-   :canyon monsters/deogude
-   :pool   monsters/tirsqule})
+  (let [sleep-message (if (pos? (count (:team game-state)))
+                        "You've slept. Your posse has been healed."
+                        "You've slept.")]
+    (-> game-state
+        (conj-play-by-play sleep-message)
+        (assoc :team
+               (apply-to-all-values
+                heal-monster
+                (:team game-state))))))
 
 (defn mokedex-encountered [game-state monster-id]
   (let [mokedex-monsters (get-in game-state [:mokedex :monsters])
