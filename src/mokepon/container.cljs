@@ -63,9 +63,6 @@
 (defn update-in-team [monster-key new-value]
   (assoc (get-state :team) monster-key new-value))
 
-(defn add-to-play-by-play [& text]
-  (conj (get-state :play-by-play) (apply str text)))
-
 (defn decrement-item! [item-key]
   (swap! (app-state)
          update-in
@@ -75,12 +72,11 @@
 (defn item-count [item-key]
   (or (get-state :items item-key) 0))
 
+(defn add-to-play-by-play [app-state & text]
+  (update app-state :play-play conj (apply str text)))
+
 (defn add-to-play-by-play! [& message]
-  (swap!
-   (app-state)
-   assoc
-   :play-by-play
-   (apply add-to-play-by-play message)))
+  (swap! (app-state) add-to-play-by-play message))
 
 (defn choose-monster! [team-key]
   (swap! (app-state) choose-monster team-key))
