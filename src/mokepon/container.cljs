@@ -71,7 +71,7 @@
   (or (get-state :items item-key) 0))
 
 (defn add-to-play-by-play [app-state & text]
-  (update app-state :play-play conj (string/join text)))
+  (update app-state :play-by-play conj (string/join text)))
 
 (defn add-to-play-by-play! [& message]
   (swap! (app-state) add-to-play-by-play message))
@@ -106,7 +106,7 @@
   (swap! (app-state) remove-dead-team-members))
 
 (defn count-down [app-state]
-  (assoc app-state :battle-count-down (- (:battle-count-down app-state) 250)))
+  (update app-state :battle-count-down - 250))
 
 (defn count-down! [message callback]
   (when message (add-to-play-by-play! message))
@@ -203,7 +203,7 @@
                           (app-state-battling)))))
 
 (defn location-available? [location]
-  (pos? (count (filter #(:captured %) (get-state :mokedex :monsters)))))
+  (pos? (count (filter :captured (get-state :mokedex :monsters)))))
 
 (defn rpg-container []
   (sab/html
