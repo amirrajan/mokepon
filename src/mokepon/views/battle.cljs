@@ -26,7 +26,7 @@
                     "Candy!"
                     candy-handler))
    (if (:mokebox items)
-     (conditional-a (and (not battle-over?) (> (:mokebox items) 0))
+     (conditional-a (and (not battle-over?) (pos? (:mokebox items)))
                     "Throw Mokébox!"
                     throw-mokebox-handler))
    (if (and (not battle-over?) (> (count choosable-monsters) 1))

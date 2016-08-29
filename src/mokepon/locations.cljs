@@ -7,7 +7,7 @@
    :pool   monsters/tirsqule})
 
 (defn captured-monsters-gt-eq [monster-count]
-  (fn [game-state] (>= (count (filter #(:captured %) (get-in game-state [:mokedex :monsters])))
+  (fn [game-state] (>= (count (filter :captured (get-in game-state [:mokedex :monsters])))
                        monster-count)))
 
 (def locations

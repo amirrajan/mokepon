@@ -34,15 +34,15 @@
 
   (tnr/remove-dead-team-members!)
 
-  (is (= (tnr/team-count) 0)))
+  (is (zero? (tnr/team-count))))
 
 (deftest capturing-wild-mokepon
   "attempting to capture wild mokepon decrements mokeboxes"
   (set-cash 20)
   (tnr/set-battle! :chipu mon/sulbabaur)
-  (is (= (tnr/item-count :mokebox) 0))
+  (is (zero? (tnr/item-count :mokebox)))
   (tnr/throw-mokebox!)
-  (is (= (tnr/item-count :mokebox) 0))
+  (is (zero? (tnr/item-count :mokebox)))
 
   ;;buy two mokeboxes
   (tnr/buy-item! :mokebox)
@@ -52,8 +52,7 @@
   ;;capture probability is based on hp of monster
   ;;monsters at full health have 0% of being captured
   (tnr/throw-mokebox!)
-  (is (= (get-state :team :sulbabaur)
-         nil))
+  (is (nil? (get-state :team :sulbabaur)))
   (is (= (tnr/item-count :mokebox) 1))
 
   ;;capture probability is based on hp of monster
@@ -63,7 +62,7 @@
   (is (= (get-state :team :sulbabaur)
          (dissoc (get-state :battling) :captured)))
 
-  (is (= (tnr/item-count :mokebox) 0)))
+  (is (zero? (tnr/item-count :mokebox))))
 
 (deftest battle-is-over-if-mokepon-is-captured
   "capturing a monster ends battle"
@@ -88,7 +87,7 @@
   (is (= (get-state :team :chipu :hp) 30))
   (tnr/use-candy!)
   (has-play-by-play "Chipu has eated the delicious candy and was healed for 10 hp.")
-  (is (= (tnr/item-count :candy) 0))
+  (is (zero? (tnr/item-count :candy)))
   (is (= (get-state :team :chipu :hp) 40)))
 
 (deftest using-candy-max-hp
@@ -98,7 +97,7 @@
   (tnr/set-battle! :chipu mon/deogude)
   (tnr/use-candy!)
   (has-play-by-play "Chipu has eated the delicious candy and was healed for 10 hp.")
-  (is (= (tnr/item-count :candy) 0))
+  (is (zero? (tnr/item-count :candy)))
   (is (= (get-state :team :chipu :hp) 50)))
 
 (deftest choosing-mokepon-within-battle
@@ -111,10 +110,9 @@
   (swap! (tnr/app-state) assoc-in [:team :sulbabaur :at] rpg/active-turn-threshold)
   (tnr/choose-monster! :sulbabaur)
   (is (= (get-state :chosen-key) :sulbabaur))
-  (is (= (get-state :team :chipu :at) 0))
-  (is (= (get-state :team :sulbabaur :at) 0))
+  (is (zero? (get-state :team :chipu :at)))
+  (is (zero? (get-state :team :sulbabaur :at)))
   (has-play-by-play "You have chosen Sulbabaur to fight!")
-
 
   ;;choosing currently chosen monster doesn't do anything
   (swap! (tnr/app-state) assoc-in [:team :sulbabaur :at] rpg/active-turn-threshold)
@@ -157,7 +155,7 @@
          [:team :chipu :power]
          50)
   (tnr/attack!)
-  (is (= (get-state :cash) 0))
+  (is (zero? (get-state :cash)))
   (make-chosen-attack-ready)
   (tnr/attack!)
   (is (rpg/is-dead? (get-state :battling)))

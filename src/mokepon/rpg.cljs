@@ -1,6 +1,7 @@
 (ns mokepon.rpg
   (:require [mokepon.locations :refer [location-monsters]]
-            [mokepon.monsters :as monsters]))
+            [mokepon.monsters :as monsters]
+            [clojure.string :as string]))
 
 (defn new-game []
   {:team-at-home []
@@ -42,10 +43,7 @@
 (def active-turn-threshold 1800)
 
 (defn conj-play-by-play [game-state & strings]
-  (assoc game-state
-         :play-by-play
-         (conj (:play-by-play game-state)
-               (apply str strings))))
+  (update game-state :play-by-play conj (string/join strings)))
 
 (defn reset-monster-at [monster]
   (assoc monster :at 0))
@@ -64,9 +62,9 @@
        (>= (:at monster) active-turn-threshold)))
 
 (defn tick-monster [monster]
-  (if (not (can-attack? monster))
-      (assoc monster :at (+ (:at monster) (:speed monster)))
-      monster))
+  (if-not (can-attack? monster)
+    (update monster :at + (:speed monster))
+    monster))
 
 (defn choose-monster [game-state team-key]
   (if (not= (:chosen-key game-state) team-key)
@@ -173,7 +171,7 @@
         (str (:name from) " attacks " (:name to) " for " (attack-damage from to) ". It was super effective.")
         (= (affinity-lookup from to) 0.5)
         (str (:name from) " attacks " (:name to) " for " (attack-damage from to) ". It wasn't very effective.")
-        (= (affinity-lookup from to) 0)
+        (zero? (affinity-lookup from to))
         (str  (:name to) " is immune to " (:name from) "'s attack. No damage was done.")
         :else
         (str (:name from) " attacks " (:name to) " for " (attack-damage from to) ".")))
@@ -245,8 +243,7 @@
         new-state (update-in game-state
                              [:team]
                              #(apply dissoc % dead-keys))]
-    (reduce (fn [gs key] (mokedex-captured gs key))
-            new-state dead-keys)))
+    (reduce mokedex-captured new-state dead-keys)))
 
 (defn buy-item [game-state item-id store-items-lookup]
   (let [item (item-id store-items-lookup)
