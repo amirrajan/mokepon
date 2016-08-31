@@ -71,7 +71,7 @@
   (or (get-state :items item-key) 0))
 
 (defn add-to-play-by-play [app-state & text]
-  (update app-state :play-by-play conj (string/join text)))
+  (update app-state :play-by-play conj (apply string/join text)))
 
 (defn add-to-play-by-play! [& message]
   (swap! (app-state) add-to-play-by-play message))
