@@ -23,14 +23,14 @@
             :awesome-text "Hodor"
             :available-if (captured-monsters-gt-eq 1)}
    :canyon {:description "There is a rock face jutting out. It looks freaking scary."
-            :action "Go be awesome in the canyon."
+            :action "Go to canyon."
             :awesome-text "You are currently chillin' like a villian in the canyon."
             :available-if (captured-monsters-gt-eq 1)}
    :forest {:description "There is a line of trees off in the distance."
-            :action "Go be awesome in the forest."
+            :action "Go to forest."
             :awesome-text "You are currently chillin' like a villian in the forest."
             :available-if (captured-monsters-gt-eq 1)}
    :pool   {:description "The neighborhood pool hasn't been cleaned in a while. Smells like poop."
-            :action "Go be awesome in the pool."
+            :action "Go to pool."
             :awesome-text "You are currently chillin' like a villian in the pool. Gross."
             :available-if (captured-monsters-gt-eq 1)}})
