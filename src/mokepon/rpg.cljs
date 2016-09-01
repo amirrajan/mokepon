@@ -256,8 +256,7 @@
           (update-in [:items item-id]
                      #(inc (or (get-in game-state [:items item-id]) 0)))
           (conj-play-by-play
-           "You take the " (:name item)
-           " from the midget's saggy, squishy hand. "
+           "You take the " (:name item) " from the midget's saggy, squishy hand. "
            "He smiles and gives you a tip of his top hat."))
 
       (-> game-state

@@ -112,17 +112,18 @@
   (section
    [:p (str "You walk into the store. A midget stands behind the counter on a stool. "
             "He occasionally props himself up with locked arms and dangles his feet in the air.")]
-   (for [item store-items]
-     [:div
-      [:a
-       {:style {:margin 0 :padding 0}
-        :href "javascript:;"
-        :on-click #(buy-item-handler (:id item))}
-       (str "Buy " (:name item) " (" (:cost item) " Ƒiddy)")]
-      [:p
-       {:style {:margin 0 :padding 0 :margin-bottom "10px" :font-size "smaller"}}
-       (:description item)]])
+
    [:hr]
+   (section (for [item store-items]
+              [:div
+               [:a
+                {:style {:margin 0 :padding 0}
+                 :href "javascript:;"
+                 :on-click #(buy-item-handler (:id item))}
+                (str "Buy " (:name item) " (" (:cost item) " Ƒiddy)")]
+               [:p
+                {:style {:margin 0 :padding 0 :margin-bottom "10px" :font-size "smaller"}}
+                (:description item)]]))
    (a "Head back." #(go-to-location-handler :outside))))
 
 
