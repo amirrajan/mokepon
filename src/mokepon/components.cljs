@@ -134,7 +134,7 @@
 
     [:div
      (section [:p "You are being worthless outside."])
-     [:div (for [loc [:phone :home :store :forest :pool]]
+     [:div (for [loc [:phone :home :store :canyon :forest :pool]]
              (when (location-available-handler loc)
                (adventure-view
                 (:description (loc location-info))
@@ -177,7 +177,6 @@
                 candy-handler
                 location-available-handler
                 location-info]
-  (.log js/console (clj->js location-info))
   (let [{:keys [location
                 team
                 team-at-home
@@ -186,9 +185,7 @@
                 items
                 play-by-play
                 mokedex]} game-state
-        location-awesome-text {:forest "You are currently chillin' like a villian in the forest."
-                               :canyon "You are currently chillin' like a villian in the canyon."
-                               :pool   "You are currently chillin' like a villian in the pool. Gross."}]
+        top-level-battle-locations [:forest :canyon :pool]]
     [:div
      (title-view)
      (cond
@@ -199,8 +196,8 @@
                      location-available-handler
                      location-info)
 
-       (some #{location} (keys location-awesome-text))
-       (location-view (location location-awesome-text)
+       (some #{location} top-level-battle-locations)
+       (location-view (:awesome-text (location location-info))
                       team
                       find-trouble-handler
                       choosable-monsters
