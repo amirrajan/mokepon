@@ -9,7 +9,8 @@
 
    [mokepon.container :refer [current-app-state render!]]
    [mokepon.views.mokedex]
-   [mokepon.views.battle]))
+   [mokepon.views.battle]
+   [mokepon.views.store]))
 
 (defn main! []
   (enable-console-print!)

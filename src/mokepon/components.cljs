@@ -2,6 +2,7 @@
   (:require [sablono.core :as sab]
             [mokepon.views.mokedex :as mokedex]
             [mokepon.views.battle :as battle]
+            [mokepon.views.store :as store]
             [mokepon.elements :refer [a disabled-a conditional-a section todo progress-bar]]))
 
 (defn team-view [team header empty-text]
@@ -108,30 +109,6 @@
                    go-to-location-handler)
    (section (a "Put phone away." #(go-to-location-handler :outside)))])
 
-(defn store-view [store-items
-                  buy-item-handler
-                  go-to-location-handler
-                  store-item-available-handler]
-  (section
-   [:p (str "You walk into the store. A midget stands behind the counter on a stool. "
-            "He occasionally props himself up with locked arms and dangles his feet in the air.")]
-
-   [:hr]
-   (section
-    (for [item store-items]
-      (when (store-item-available-handler (:id item))
-        [:div
-         [:a
-          {:style {:margin 0 :padding 0}
-           :href "javascript:;"
-           :on-click #(buy-item-handler (:id item))}
-          (str "Buy " (:name item) " (" (:cost item) " Ƒiddy)")]
-         [:p
-          {:style {:margin 0 :padding 0 :margin-bottom "10px" :font-size "smaller"}}
-          (:description item)]])))
-   (a "Head back." #(go-to-location-handler :outside))))
-
-
 (defn outside-view [location
                     team
                     go-to-location-handler
@@ -229,7 +206,7 @@
                   sleep-at-home-handler)
 
        (= location :store)
-       (store-view store-items
+       (store/view store-items
                    buy-item-handler
                    go-to-location-handler
                    store-item-available-handler)

@@ -19,8 +19,8 @@
     :available-if (fn [_] true)}
    {:id :battery
     :name "Battery"
-    :description "Use this to evolve Electric Moképon."
-    :cost 100
+    :description "Use this to evolve Electric Moképon by sticking it up their rectum."
+    :cost 25
     :available-if (captured-monsters-gt-eq 4)}])
 
 (defn store-items-lookup []
