@@ -129,45 +129,18 @@
 (defn outside-view [location
                     team
                     go-to-location-handler
-                    location-available-handler]
+                    location-available-handler
+                    location-info]
 
     [:div
      (section [:p "You are being worthless outside."])
-     [:div
-      (adventure-view
-       "Your smart phone bulges from your skinny jeans."
-       "Bust out phone."
-       :phone
-       go-to-location-handler)
-      (adventure-view
-       "Your mother's home stands in the distance. Smoke bellows from the chimney."
-       "Go home."
-       :home
-       go-to-location-handler)
-      (when (location-available-handler :store)
-        (adventure-view
-         "There is a Moképon store with a half working neon sign flashing. Looks kinda shady."
-         "Go shop."
-         :store
-         go-to-location-handler))
-      (when (location-available-handler :canyon)
-        (adventure-view
-         "There is a rock face jutting out. It looks freaking scary."
-         "Go be awesome in the canyon."
-         :canyon
-         go-to-location-handler))
-      (when (location-available-handler :forest)
-        (adventure-view
-         "There is a line of trees off in the distance."
-         "Go be awesome in the forest."
-         :forest
-         go-to-location-handler))
-      (when (location-available-handler :pool)
-        (adventure-view
-         "The neighborhood pool hasn't been cleaned in a while. Smells like poop."
-         "Go be awesome in the pool."
-         :pool
-         go-to-location-handler))]])
+     [:div (for [loc [:phone :home :store :forest :pool]]
+             (when (location-available-handler loc)
+               (adventure-view
+                (:description (loc location-info))
+                (:action (loc location-info))
+                loc
+                go-to-location-handler)))]])
 
 (defn title-view []
   (section
@@ -202,8 +175,9 @@
                 throw-mokebox-handler
                 choose-monster-handler
                 candy-handler
-                location-available-handler]
-
+                location-available-handler
+                location-info]
+  (.log js/console (clj->js location-info))
   (let [{:keys [location
                 team
                 team-at-home
@@ -222,7 +196,8 @@
        (outside-view location
                      team
                      go-to-location-handler
-                     location-available-handler)
+                     location-available-handler
+                     location-info)
 
        (some #{location} (keys location-awesome-text))
        (location-view (location location-awesome-text)

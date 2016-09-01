@@ -2,6 +2,7 @@
   (:require [sablono.core :as sab]
             [mokepon.monsters :refer [chipu sulbabaur deogude tirsqule]]
             [mokepon.items :refer [store-items store-items-lookup]]
+            [mokepon.locations :refer [location-info]]
             [alandipert.storage-atom :refer [local-storage]]
             [mokepon.rpg :refer [new-game
                                  is-dead?
@@ -42,6 +43,9 @@
   (if (= (:value @current-app-state) :game)
     game-app-state
     test-app-state))
+
+(defn reset-game! []
+  (reset! (app-state) (new-game)))
 
 (defn get-state [& path]
   (get-in @(app-state) path))
@@ -202,8 +206,9 @@
        (not (battle-over? (app-state-chosen-monster)
                           (app-state-battling)))))
 
+
 (defn location-available? [location]
-  (pos? (count (filter :captured (get-state :mokedex :monsters)))))
+  ((:available-if (location (location-info))) @(app-state)))
 
 (defn rpg-container []
   (sab/html
@@ -224,7 +229,8 @@
              throw-mokebox!
              choose-monster!
              use-candy!
-             location-available?)))
+             location-available?
+             (location-info))))
 
 (defn render! []
   (.render js/React

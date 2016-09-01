@@ -7,10 +7,11 @@
    :pool   monsters/tirsqule})
 
 (defn captured-monsters-gt-eq [monster-count]
-  (fn [game-state] (>= (count (filter :captured (get-in game-state [:mokedex :monsters])))
+  (fn [game-state]
+    (>= (count (filter :captured (get-in game-state [:mokedex :monsters])))
                        monster-count)))
 
-(def locations
+(defn location-info []
   {:phone  {:description "Your smart phone bulges from your skinny jeans."
             :action "Bust out phone."
             :available-if (fn [_] true)}
