@@ -1,16 +1,29 @@
 (ns mokepon.items)
 
-(def store-items
-  [{:id :mokebox
-   :name "Mokébox"
-   :cost 10
-   :description "Use this to catch Moképon."}
-  {:id :candy
-   :name "Candy"
-   :cost 5
-   :description "Use this to heal Moképon."}])
+(defn captured-monsters-gt-eq [monster-count]
+  (fn [game-state]
+    (>= (count (filter :captured
+                       (get-in game-state [:mokedex :monsters])))
+                       monster-count)))
 
-(def store-items-lookup
+(defn store-items []
+  [{:id :mokebox
+    :name "Mokébox"
+    :cost 10
+    :description "Use this to catch Moképon."
+    :available-if (fn [_] true)}
+   {:id :candy
+    :name "Candy"
+    :cost 5
+    :description "Use this to heal Moképon."
+    :available-if (fn [_] true)}
+   {:id :battery
+    :name "Battery"
+    :description "Use this to evolve Electric Moképon."
+    :cost 100
+    :available-if (captured-monsters-gt-eq 4)}])
+
+(defn store-items-lookup []
   (into {}
         (map (fn [item] [(:id item) item])
-             store-items)))
+             (store-items))))

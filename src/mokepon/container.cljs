@@ -91,7 +91,7 @@
   (swap! (app-state)
          buy-item
          item-id
-         store-items-lookup))
+         (store-items-lookup)))
 
 (defn throw-mokebox! [] (swap! (app-state) throw-mokebox))
 
@@ -210,6 +210,9 @@
 (defn location-available? [location]
   ((:available-if (location (location-info))) @(app-state)))
 
+(defn store-item-available? [item]
+  ((:available-if (item (store-items-lookup))) @(app-state)))
+
 (defn rpg-container []
   (sab/html
    (rpg-view @(app-state)
@@ -223,14 +226,15 @@
              attack!
              sleep-at-home!
              active-turn-threshold
-             store-items
-             store-items-lookup
+             (store-items)
+             (store-items-lookup)
              buy-item!
              throw-mokebox!
              choose-monster!
              use-candy!
              location-available?
-             (location-info))))
+             (location-info)
+             store-item-available?)))
 
 (defn render! []
   (.render js/React

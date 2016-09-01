@@ -108,22 +108,27 @@
                    go-to-location-handler)
    (section (a "Put phone away." #(go-to-location-handler :outside)))])
 
-(defn store-view [store-items buy-item-handler go-to-location-handler]
+(defn store-view [store-items
+                  buy-item-handler
+                  go-to-location-handler
+                  store-item-available-handler]
   (section
    [:p (str "You walk into the store. A midget stands behind the counter on a stool. "
             "He occasionally props himself up with locked arms and dangles his feet in the air.")]
 
    [:hr]
-   (section (for [item store-items]
-              [:div
-               [:a
-                {:style {:margin 0 :padding 0}
-                 :href "javascript:;"
-                 :on-click #(buy-item-handler (:id item))}
-                (str "Buy " (:name item) " (" (:cost item) " Ƒiddy)")]
-               [:p
-                {:style {:margin 0 :padding 0 :margin-bottom "10px" :font-size "smaller"}}
-                (:description item)]]))
+   (section
+    (for [item store-items]
+      (when (store-item-available-handler (:id item))
+        [:div
+         [:a
+          {:style {:margin 0 :padding 0}
+           :href "javascript:;"
+           :on-click #(buy-item-handler (:id item))}
+          (str "Buy " (:name item) " (" (:cost item) " Ƒiddy)")]
+         [:p
+          {:style {:margin 0 :padding 0 :margin-bottom "10px" :font-size "smaller"}}
+          (:description item)]])))
    (a "Head back." #(go-to-location-handler :outside))))
 
 
@@ -177,7 +182,8 @@
                 choose-monster-handler
                 candy-handler
                 location-available-handler
-                location-info]
+                location-info
+                store-item-available-handler]
   (let [{:keys [location
                 team
                 team-at-home
@@ -225,7 +231,8 @@
        (= location :store)
        (store-view store-items
                    buy-item-handler
-                   go-to-location-handler)
+                   go-to-location-handler
+                   store-item-available-handler)
 
        (= location :phone)
        (phone-view go-to-location-handler)
