@@ -6,6 +6,7 @@
    [mokepon.tests.store]
    [mokepon.tests.home]
    [mokepon.tests.mokedex]
+   [mokepon.tests.messages]
 
    [mokepon.container :refer [current-app-state render!]]
    [mokepon.views.mokedex]

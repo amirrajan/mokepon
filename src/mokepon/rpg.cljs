@@ -11,6 +11,9 @@
    :cash 100
    :battling nil
    :items {}
+   :messages {:mom
+              [{:text "Where are you? Have you found a job yet?!"
+                :day 0}]}
    :mokedex {:monsters
              (into [] (map #(assoc % :captured false :encountered false)
                            [monsters/chipu
@@ -107,6 +110,9 @@
           (do
             (.log js/console (str "WARNING: " monster-id " not in mokedex! Update rpg/new-game to include " monster-id "."))
             game-state))))
+
+(defn mark-captured-in-mokedex [game-state monster-ids]
+  (reduce mokedex-captured game-state monster-ids))
 
 (defn take-chipu [game-state]
   (mokedex-captured (assoc-in game-state [:team :chipu] monsters/chipu) :chipu))
@@ -238,12 +244,24 @@
        (filter (fn [[_ v]] (is-dead? v)))
        (map (fn [[k _]] k))))
 
+(defn text-from-mom [game-state]
+  (if (empty? (get-in game-state [:team]))
+    (update-in game-state
+               [:messages :mom]
+               #(conj % {:text "You lost all of your Moképon didn't you? Worthless. Come by and I'll give you another Chipu."
+                         :day 0}))
+
+    game-state))
+
 (defn remove-dead-team-members [game-state]
   (let [dead-keys (dead-team-member-keys game-state)
         new-state (update-in game-state
                              [:team]
                              #(apply dissoc % dead-keys))]
-    (reduce mokedex-captured new-state dead-keys)))
+    (-> new-state
+        (mark-captured-in-mokedex dead-keys)
+        (text-from-mom))))
+
 
 (defn buy-item [game-state item-id store-items-lookup]
   (let [item (item-id store-items-lookup)

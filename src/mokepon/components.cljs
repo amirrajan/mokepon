@@ -81,20 +81,16 @@
        sleep-at-home-handler)
     (a "Head back." #(go-to-location-handler :outside)))])
 
-(defn messages-view [go-to-location-handler]
-  (let [messages
-        [{:from {:id :mom :name "Mom" }
-          :messages [{:days-ago 0
-                      :text "Where are you? Have you found a job yet?!"}]}]]
-    [:div
-     (section [:p "Messages"])
-     (section
-      [:p "Messages from Mom"]
-      [:ul.messages
-       [:li
-        [:div "Where are you? Have you found a job yet?!" ]
-        [:span "one day ago"]]])
-     (section (a "Back" #(go-to-location-handler :phone)))]))
+(defn messages-view [messages go-to-location-handler]
+  [:div
+   (section [:p "Messages"])
+   (section
+    [:p "Messages from Mom"]
+    [:ul.messages
+     [:li
+      [:div "Where are you? Have you found a job yet?!" ]
+      [:span "one day ago"]]])
+   (section (a "Back" #(go-to-location-handler :phone)))])
 
 (defn phone-view [go-to-location-handler]
   [:div
@@ -168,7 +164,8 @@
                 cash
                 items
                 play-by-play
-                mokedex]} game-state
+                mokedex
+                messages]} game-state
         top-level-battle-locations [:forest :canyon :pool]]
     [:div
      (title-view)
@@ -215,7 +212,7 @@
        (phone-view go-to-location-handler)
 
        (= location :messages)
-       (messages-view go-to-location-handler)
+       (messages-view messages go-to-location-handler)
 
        (= location :mokedex)
        (mokedex/view go-to-location-handler mokedex)
