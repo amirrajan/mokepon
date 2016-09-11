@@ -2,12 +2,14 @@
   (:require [cljs.test :refer-macros [deftest is testing run-tests use-fixtures]]
             [mokepon.tests.core :refer [has-play-by-play
                                         get-state
+                                        log
                                         make-enemy-attack-ready
                                         set-cash
                                         make-chosen-attack-ready
                                         reset-game]]
             [mokepon.monsters :as mon]
             [mokepon.rpg :as rpg]
+            [mokepon.shop :as shp]
             [mokepon.container :as tnr]))
 
 (use-fixtures :each {:before reset-game})

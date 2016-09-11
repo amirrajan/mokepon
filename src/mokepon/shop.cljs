@@ -27,3 +27,20 @@
   (into {}
         (map (fn [item] [(:id item) item])
              (shop-items))))
+
+(defn shop-buy-messages [item-name]
+  [(str "You take the "
+        item-name
+        " from the midget's saggy, squishy hand. "
+        "He smiles and gives you a tip of his top hat.")])
+
+(defn random-shop-buy-message [item-name]
+  (let [idx (-> (shop-buy-messages)
+                count
+                dec
+                rand)]
+    (.log js/console idx)
+    (get (shop-buy-messages) (.floor js/Math idx))))
+
+(defn shop-cant-afford-messages []
+  [])
