@@ -3,7 +3,6 @@
             [mokepon.tests.core :refer [has-play-by-play get-state make-enemy-attack-ready set-cash make-chosen-attack-ready reset-game]]
             [mokepon.monsters :as mon]
             [mokepon.rpg :as rpg]
-            [mokepon.items :as itm]
             [mokepon.container :as tnr]))
 
 (use-fixtures :each {:before reset-game})

@@ -340,7 +340,7 @@ Let's take a more focused look at block delimiters. Here is some html:
 ```html
 1   <div class="section">
 2    <p>
-3      You walk into the store. A midget stands behind the counter on a
+3      You walk into the shop. A midget stands behind the counter on a
 4      stool. He occasionally props himself up with locked arms and dangles
 5      his feet in the air.
 6    </p>
@@ -363,7 +363,7 @@ of the formatting. Here is the same html, but formatted differently:
 
 ```html
 1  <div class="section"><p>
-2      You walk into the store. A midget stands behind the counter on a
+2      You walk into the shop. A midget stands behind the counter on a
 3      stool. He occasionally props himself up with locked arms and dangles
 4      his feet in the air.<div></p>
 5    <div><a style="margin: 0; padding: 0"
@@ -387,7 +387,7 @@ second to internalize that the next part you'll see is hard (unfamiliar),
 
 ```clojure
 1  [:div.section
-2     [:p (str "You walk into the store. A midget stands behind the counter on a stool. "
+2     [:p (str "You walk into the shop. A midget stands behind the counter on a stool. "
 3              "He occasionally props himself up with locked arms and "
 4              "dangles his feet in the air.")]
 5     [:div [:a {:style {:margin "0"

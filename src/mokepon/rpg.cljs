@@ -262,9 +262,8 @@
         (mark-captured-in-mokedex dead-keys)
         (text-from-mom))))
 
-
-(defn buy-item [game-state item-id store-items-lookup]
-  (let [item (item-id store-items-lookup)
+(defn buy-item [game-state item-id shop-items-lookup]
+  (let [item (item-id shop-items-lookup)
         current-cash (:cash game-state)
         afford? (>= current-cash (:cost item))
         new-cash (- current-cash (:cost item))]

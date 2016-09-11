@@ -1,7 +1,7 @@
 (ns mokepon.container
   (:require [sablono.core :as sab]
             [mokepon.monsters :refer [chipu sulbabaur deogude tirsqule]]
-            [mokepon.items :refer [store-items store-items-lookup]]
+            [mokepon.shop :refer [shop-items shop-items-lookup]]
             [mokepon.locations :refer [location-info]]
             [alandipert.storage-atom :refer [local-storage]]
             [mokepon.rpg :refer [new-game
@@ -91,7 +91,7 @@
   (swap! (app-state)
          buy-item
          item-id
-         (store-items-lookup)))
+         (shop-items-lookup)))
 
 (defn throw-mokebox! [] (swap! (app-state) throw-mokebox))
 
@@ -210,8 +210,8 @@
 (defn location-available? [location]
   ((:available-if (location (location-info))) @(app-state)))
 
-(defn store-item-available? [item]
-  ((:available-if (item (store-items-lookup))) @(app-state)))
+(defn shop-item-available? [item]
+  ((:available-if (item (shop-items-lookup))) @(app-state)))
 
 (defn rpg-container []
   (sab/html
@@ -226,15 +226,15 @@
              attack!
              sleep-at-home!
              active-turn-threshold
-             (store-items)
-             (store-items-lookup)
+             (shop-items)
+             (shop-items-lookup)
              buy-item!
              throw-mokebox!
              choose-monster!
              use-candy!
              location-available?
              (location-info)
-             store-item-available?)))
+             shop-item-available?)))
 
 (defn render! []
   (.render js/React

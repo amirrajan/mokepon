@@ -2,7 +2,7 @@
   (:require [sablono.core :as sab]
             [mokepon.views.mokedex :as mokedex]
             [mokepon.views.battle :as battle]
-            [mokepon.views.store :as store]
+            [mokepon.views.shop :as shop]
             [mokepon.elements :refer [a disabled-a conditional-a section todo progress-bar]]))
 
 (defn team-view [team header empty-text]
@@ -113,7 +113,7 @@
 
     [:div
      (section [:p "You are being worthless outside."])
-     [:div (for [loc [:phone :home :store :canyon :forest :pool]]
+     [:div (for [loc [:phone :home :shop :canyon :forest :pool]]
              (when (location-available-handler loc)
                (adventure-view
                 (:description (loc location-info))
@@ -126,7 +126,7 @@
    [:h1 {:id "title"} "Moképon"]
    [:h2 {:id "tag-line"} "Catching 'em all just got real, yo"]))
 
-(defn status-view [cash items store-items-lookup team play-by-play]
+(defn status-view [cash items shop-items-lookup team play-by-play]
   [:div
    (team-view team "Your posse:" "No one. Cause you're worthless.")
    (section "Cash: " cash " Ƒiddy")
@@ -134,7 +134,7 @@
     [:div "Items:"]
     (if (empty? items)
       [:p "None. Cause you're worthless."]
-      [:ul (for [[k v] items] [:li (str (:name (k store-items-lookup))  ": " v)])]))
+      [:ul (for [[k v] items] [:li (str (:name (k shop-items-lookup))  ": " v)])]))
    (play-by-play-view play-by-play)])
 
 (defn rpg-view [game-state
@@ -148,15 +148,15 @@
                 attack-handler
                 sleep-at-home-handler
                 active-turn-threshold
-                store-items
-                store-items-lookup
+                shop-items
+                shop-items-lookup
                 buy-item-handler
                 throw-mokebox-handler
                 choose-monster-handler
                 candy-handler
                 location-available-handler
                 location-info
-                store-item-available-handler]
+                shop-item-available-handler]
   (let [{:keys [location
                 team
                 team-at-home
@@ -202,11 +202,11 @@
                   go-to-location-handler
                   sleep-at-home-handler)
 
-       (= location :store)
-       (store/view store-items
+       (= location :shop)
+       (shop/view shop-items
                    buy-item-handler
                    go-to-location-handler
-                   store-item-available-handler)
+                   shop-item-available-handler)
 
        (= location :phone)
        (phone-view go-to-location-handler)
@@ -220,4 +220,4 @@
        :else
        (section (str "Location " location " not handled.")
                 (a "Go back." #(go-to-location-handler :outside))))
-     (status-view cash items store-items-lookup team play-by-play)]))
+     (status-view cash items shop-items-lookup team play-by-play)]))

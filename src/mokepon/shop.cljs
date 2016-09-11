@@ -1,4 +1,4 @@
-(ns mokepon.items)
+(ns mokepon.shop)
 
 (defn captured-monsters-gt-eq [monster-count]
   (fn [game-state]
@@ -6,7 +6,7 @@
                        (get-in game-state [:mokedex :monsters])))
                        monster-count)))
 
-(defn store-items []
+(defn shop-items []
   [{:id :mokebox
     :name "Mokébox"
     :cost 10
@@ -23,7 +23,7 @@
     :cost 25
     :available-if (captured-monsters-gt-eq 4)}])
 
-(defn store-items-lookup []
+(defn shop-items-lookup []
   (into {}
         (map (fn [item] [(:id item) item])
-             (store-items))))
+             (shop-items))))

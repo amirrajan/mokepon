@@ -1,9 +1,9 @@
-(ns mokepon.views.store
+(ns mokepon.views.shop
   (:require [sablono.core :as sab]
             [mokepon.elements :refer [a disabled-a conditional-a section todo progress-bar]]))
 
-(defn store-item-view [item store-item-available-handler buy-item-handler]
-  (when (store-item-available-handler (:id item))
+(defn shop-item-view [item shop-item-available-handler buy-item-handler]
+  (when (shop-item-available-handler (:id item))
     [:div
      [:a
       {:style {:margin 0 :padding 0}
@@ -14,18 +14,18 @@
       {:style {:margin 0 :padding 0 :margin-bottom "10px" :font-size "smaller"}}
       (:description item)]]))
 
-(defn view [store-items
+(defn view [shop-items
             buy-item-handler
             go-to-location-handler
-            store-item-available-handler]
+            shop-item-available-handler]
   (section
-   [:p (str "You walk into the store. A midget stands behind the counter on a stool. "
+   [:p (str "You walk into the shop. A midget stands behind the counter on a stool. "
             "He occasionally props himself up with locked arms and dangles his feet in the air.")]
 
    [:hr]
    (section
-    (for [item store-items]
-      (store-item-view item
-                       store-item-available-handler
+    (for [item shop-items]
+      (shop-item-view item
+                       shop-item-available-handler
                        buy-item-handler)))
    (a "Head back." #(go-to-location-handler :outside))))

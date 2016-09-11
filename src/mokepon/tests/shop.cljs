@@ -1,4 +1,4 @@
-(ns mokepon.tests.store
+(ns mokepon.tests.shop
   (:require [cljs.test :refer-macros [deftest is testing run-tests use-fixtures]]
             [mokepon.tests.core :refer [has-play-by-play
                                         get-state
@@ -8,7 +8,6 @@
                                         reset-game]]
             [mokepon.monsters :as mon]
             [mokepon.rpg :as rpg]
-            [mokepon.items :as itm]
             [mokepon.container :as tnr]))
 
 (use-fixtures :each {:before reset-game})

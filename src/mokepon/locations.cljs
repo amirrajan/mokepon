@@ -19,7 +19,7 @@
    :home   {:description "Your mother's home stands in the distance. Smoke bellows from the chimney."
             :action "Go home."
             :available-if (fn [_] true)}
-   :store  {:description "There is a Moképon store with a half working neon sign flashing. Looks kinda shady."
+   :shop  {:description "There is a Moképon shop with a half working neon sign flashing. Looks kinda shady."
             :action "Go shop."
             :awesome-text "Hodor"
             :available-if (captured-monsters-gt-eq 1)}

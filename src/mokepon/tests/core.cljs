@@ -2,7 +2,6 @@
   (:require [cljs.test :refer-macros [deftest is testing run-tests use-fixtures]]
             [mokepon.monsters :as mon]
             [mokepon.rpg :as rpg]
-            [mokepon.items :as itm]
             [mokepon.container :as tnr]))
 
 (defn state [] @(tnr/app-state))

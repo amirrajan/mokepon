@@ -8,7 +8,6 @@
                                         reset-game]]
             [mokepon.monsters :as mon]
             [mokepon.rpg :as rpg]
-            [mokepon.items :as itm]
             [mokepon.container :as tnr]))
 
 (use-fixtures :each {:before reset-game})
