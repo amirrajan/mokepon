@@ -1,15 +1,17 @@
 // Compiled by ClojureScript 1.9.76 {:static-fns true, :optimize-constants true}
 goog.provide('mokepon.core');
 goog.require('cljs.core');
-goog.require('mokepon.tests.core');
-goog.require('mokepon.tests.battle');
+goog.require('mokepon.tests.shop');
+goog.require('mokepon.views.shop');
 goog.require('mokepon.tests.affinities');
-goog.require('mokepon.tests.store');
-goog.require('mokepon.tests.home');
-goog.require('mokepon.tests.mokedex');
+goog.require('mokepon.tests.messages');
 goog.require('mokepon.container');
-goog.require('mokepon.views.mokedex');
+goog.require('mokepon.tests.mokedex');
+goog.require('mokepon.tests.battle');
 goog.require('mokepon.views.battle');
+goog.require('mokepon.views.mokedex');
+goog.require('mokepon.tests.home');
+goog.require('mokepon.tests.core');
 mokepon.core.main_BANG_ = (function mokepon$core$main_BANG_(){
 cljs.core.enable_console_print_BANG_();
 
