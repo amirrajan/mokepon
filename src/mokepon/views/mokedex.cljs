@@ -19,7 +19,7 @@
           [:li
            [:div name]
            [:div {:class "info"}
-            [:div mokedex-text]
+            ;[:div mokedex-text]
             (captured-view captured)
             [:div (str "Type: " (type monster-type-string))]]]
 
