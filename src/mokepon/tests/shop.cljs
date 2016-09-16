@@ -18,10 +18,7 @@
   "purchasing item decrements cash"
   (set-cash 10)
   (tnr/buy-item! :mokebox)
-  (has-play-by-play
-    (str "You take the Mokébox "
-         "from the midget's saggy, squishy hand. "
-         "He smiles and gives you a tip of his top hat."))
+  (has-play-by-play "Bought Mokébox.")
   (is (= (tnr/item-count :mokebox) 1))
   (is (zero? (get-state :cash))))
 
@@ -30,7 +27,6 @@
   (set-cash 0)
   (tnr/buy-item! :mokebox)
   (has-play-by-play
-    (str "The midget bitch slaps you saying that you can't afford that. "
-         "He wonders if you were taught common core math."))
+    "Can't afford.")
   (is (zero? (tnr/item-count :mokebox)))
   (is (zero? (get-state :cash))))

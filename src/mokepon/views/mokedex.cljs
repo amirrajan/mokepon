@@ -28,8 +28,8 @@
 
 (defn view [go-to-location-handler mokedex]
   [:div
-   (section [:p "Mokedex"])
+   (section [:p "Mokédex"])
    (section
     [:ol.mokedex
      (for [monster (:monsters mokedex)] (mokedex-item monster))])
-   (section (a "Back." #(go-to-location-handler :phone)))])
+   (section (a "Back" #(go-to-location-handler :phone)))])

@@ -9,7 +9,7 @@
       {:style {:margin 0 :padding 0}
        :href "javascript:;"
        :on-click #(buy-item-handler (:id item))}
-      (str "Buy " (:name item) " (" (:cost item) " Ƒiddy)")]
+      (str "[Buy " (:name item) " - $" (:cost item) "]")]
      [:p
       {:style {:margin 0 :padding 0 :margin-bottom "10px" :font-size "smaller"}}
       (:description item)]]))
@@ -19,13 +19,14 @@
             go-to-location-handler
             shop-item-available-handler]
   (section
-   [:p (str "You walk into the shop. A midget stands behind the counter on a stool. "
-            "He occasionally props himself up with locked arms and dangles his feet in the air.")]
+   (section [:p "Shop"])
+   ;; [:p (str "You walk into the shop. A midget stands behind the counter on a stool. "
+   ;;          "He occasionally props himself up with locked arms and dangles his feet in the air.")]
 
-   [:hr]
+   ;; [:hr]
    (section
     (for [item shop-items]
       (shop-item-view item
                        shop-item-available-handler
                        buy-item-handler)))
-   (a "Head back." #(go-to-location-handler :outside))))
+   (a "Back" #(go-to-location-handler :outside))))

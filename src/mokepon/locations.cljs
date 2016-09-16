@@ -13,25 +13,25 @@
                        monster-count)))
 
 (defn location-info []
-  {:phone  {:description "Your smart phone bulges from your skinny jeans."
-            :action "Bust out phone."
+  {:phone  {:description ""
+            :action "Phone"
             :available-if (fn [_] true)}
-   :home   {:description "Your mother's home stands in the distance. Smoke bellows from the chimney."
-            :action "Go home."
+   :home   {:description ""
+            :action "Home"
             :available-if (fn [_] true)}
-   :shop  {:description "There is a Moképon shop with a half working neon sign flashing. Looks kinda shady."
-            :action "Go shop."
+   :shop  {:description ""
+            :action "Shop"
             :awesome-text "Hodor"
             :available-if (captured-monsters-gt-eq 1)}
-   :canyon {:description "There is a rock face jutting out. It looks freaking scary."
-            :action "Go to canyon."
-            :awesome-text "You are currently chillin' like a villian in the canyon."
+   :canyon {:description "Canyon"
+            :action "Canyon"
+            :awesome-text "Canyon"
             :available-if (captured-monsters-gt-eq 1)}
-   :forest {:description "There is a line of trees off in the distance."
-            :action "Go to forest."
-            :awesome-text "You are currently chillin' like a villian in the forest."
+   :forest {:description "Forest"
+            :action "Forest"
+            :awesome-text "Forest"
             :available-if (captured-monsters-gt-eq 1)}
-   :pool   {:description "The neighborhood pool hasn't been cleaned in a while. Smells like poop."
-            :action "Go to pool."
-            :awesome-text "You are currently chillin' like a villian in the pool. Gross."
+   :pool   {:description "Lake"
+            :action "Lake"
+            :awesome-text "Lake"
             :available-if (captured-monsters-gt-eq 1)}})

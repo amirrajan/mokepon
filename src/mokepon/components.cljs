@@ -16,15 +16,15 @@
 (defn ask-mommy-view [team team-at-home take-chipu-handler]
   (when (and (empty? team) (empty? team-at-home))
     (section
-     [:p "Your mom feels pity for your sorry ass."]
-     [:p "From her extended arm, a Chipu whimpers, hanging by the scruff of its neck."]
-     [:p "\"Make something of yourself, you worthless millenial!\" she says to you."]
-     (a "Take Chipu." take-chipu-handler))))
+     ;[:p "Your mom feels pity for your sorry ass."]
+     ;[:p "From her extended arm, a Chipu whimpers, hanging by the scruff of its neck."]
+     ;[:p "\"Make something of yourself, you worthless millenial!\" she says to you."]
+     (a "Take Chipu" take-chipu-handler))))
 
 (defn adventure-view [description action-text key go-to-location-handler]
   (section
-   [:p description]
-   (a action-text #(go-to-location-handler key))))
+   ;[:p description]
+   (a  (str action-text) #(go-to-location-handler key))))
 
 (defn play-by-play-view [play-by-play]
   (section (for [i (take 25 (reverse play-by-play))] [:div i])))
@@ -50,9 +50,9 @@
      (section [:p location-description])
      (section
       (if (empty? team)
-        (disabled-a "Go look for some trouble.")
-        (a "Go look for some trouble." find-trouble-handler))
-      (a "Head back." #(go-to-location-handler :outside)))]
+        (disabled-a "Battle")
+        (a "Battle" find-trouble-handler))
+      (a "Back" #(go-to-location-handler :outside)))]
     (battle/view team
                  choosable-monsters
                  chosen
@@ -73,13 +73,13 @@
                  go-to-location-handler
                  sleep-at-home-handler]
   [:div
-   (section [:p "You are being worthless at home."])
+   (section [:p "Home"])
    (ask-mommy-view team team-at-home take-chipu-handler)
-   (team-view team-at-home "Moképon chillin' at the crib:" "None.")
+   (team-view team-at-home "Team at home:" "None")
    (section
-    (a "Sleep."
+    (a "Sleep"
        sleep-at-home-handler)
-    (a "Head back." #(go-to-location-handler :outside)))])
+    (a "Back" #(go-to-location-handler :outside)))])
 
 (defn messages-view [messages go-to-location-handler]
   [:div
@@ -94,16 +94,16 @@
 
 (defn phone-view [go-to-location-handler]
   [:div
-   (section [:p "The soft glow of your phone, oh so nice."])
-   (adventure-view "There is an app on your phone called Mokedex."
-                   "Open Mokedex."
+   (section [:p "Phone"])
+   (adventure-view ""
+                   "Mokédex"
                    :mokedex
                    go-to-location-handler)
-   (adventure-view "Le Messages."
-                   "Open Messages."
+   (adventure-view ""
+                   "Messages"
                    :messages
                    go-to-location-handler)
-   (section (a "Put phone away." #(go-to-location-handler :outside)))])
+   (section (a "Back" #(go-to-location-handler :outside)))])
 
 (defn outside-view [location
                     team
@@ -112,7 +112,7 @@
                     location-info]
 
     [:div
-     (section [:p "You are being worthless outside."])
+     (section [:p "Outside"])
      [:div (for [loc [:phone :home :shop :canyon :forest :pool]]
              (when (location-available-handler loc)
                (adventure-view
@@ -122,18 +122,18 @@
                 go-to-location-handler)))]])
 
 (defn title-view []
-  (section
+  (comment section
    [:h1 {:id "title"} "Moképon"]
    [:h2 {:id "tag-line"} "Catching 'em all just got real, yo"]))
 
 (defn status-view [cash items shop-items-lookup team play-by-play]
   [:div
-   (team-view team "Your posse:" "No one. Cause you're worthless.")
-   (section "Cash: " cash " Ƒiddy")
+   (team-view team "Team:" "None")
+   (section "Cash: $" cash)
    (section
     [:div "Items:"]
     (if (empty? items)
-      [:p "None. Cause you're worthless."]
+      [:p "None"]
       [:ul (for [[k v] items] [:li (str (:name (k shop-items-lookup))  ": " v)])]))
    (play-by-play-view play-by-play)])
 

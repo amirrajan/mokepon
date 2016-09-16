@@ -4,10 +4,10 @@
 (def todo #(.alert js/window "todo"))
 
 (defn a [text on-click]
-  [:a {:href "javascript:;" :on-click on-click} text])
+  [:a {:href "javascript:;" :on-click on-click} (str "[" text "]")])
 
 (defn disabled-a [text]
-  [:a.disabled {:href "javascript:;"} text])
+  [:a.disabled {:href "javascript:;"} (str "[" text "]")])
 
 (defn conditional-a [predicate text on-click]
   (if predicate (a text on-click) (disabled-a text)))

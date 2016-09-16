@@ -4,9 +4,9 @@
 
 (defn battler-view [monster full-active-turn]
   (section
-   [:h2 (str (:name monster) " (hp: " (:hp monster) ")" )]
-   [:hr]
-   [:p (:battle-text monster)]
+   [:b {:style {:font-size :larger}} (str (:name monster) " (hp: " (:hp monster) ")" )]
+   ;[:hr]
+   ;[:p (:battle-text monster)]
    [:hr]
    (progress-bar (/ (:at monster) full-active-turn))))
 
@@ -20,14 +20,14 @@
                            choose-monster-handler
                            candy-handler]
   (section
-   (conditional-a chosen-can-attack? "Attack!" attack-handler)
+   (conditional-a chosen-can-attack? "Attack" attack-handler)
    (if (:candy items)
      (conditional-a (and (not battle-over?) (pos? (:candy items)))
-                    "Candy!"
+                    "Candy"
                     candy-handler))
    (if (:mokebox items)
      (conditional-a (and (not battle-over?) (pos? (:mokebox items)))
-                    "Throw Mokébox!"
+                    "Throw Mokébox"
                     throw-mokebox-handler))
    (if (and (not battle-over?) (> (count choosable-monsters) 1))
      (for [m choosable-monsters]
@@ -37,7 +37,7 @@
   (if battle-over?
     (section
      [:p "The fight has ended."]
-     (a "Head back." #(go-to-location-handler :outside)))))
+     (a "Back" #(go-to-location-handler :outside)))))
 
 (defn view [team
             choosable-monsters

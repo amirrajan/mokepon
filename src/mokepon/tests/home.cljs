@@ -23,7 +23,7 @@
 
   (tnr/sleep-at-home!)
 
-  (has-play-by-play "You've slept. Your posse has been healed.")
+  (has-play-by-play "Slept. Team has been healed.")
 
   (is (= (get-state :team)
          {:chipu {:hp 50   :max-hp 50}

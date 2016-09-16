@@ -20,7 +20,7 @@
                             monsters/tirsqule
                             monsters/sulbabaur
                             monsters/deogude]))}
-   :play-by-play ["You sit outside. You needed a break from your mother yelling at you."]})
+   :play-by-play [""]})
 
 (defn apply-to-all-values [f dict]
   (into {} (map (fn [[k v]] [k (f v)]) dict)))
@@ -136,14 +136,14 @@
             (conj-play-by-play
              "The Mokébox knocks out the "
              (get-in game-state [:battling :name])
-             ". It's been captured!")
+             ". It's been captured.")
             (mokedex-captured (get-in game-state [:battling :id])))
         :else
         (conj-play-by-play
          game-state-with-used-mokebox
-         "The Mokébox bounces off "
+         "The Mokébox bounces off the "
          (get-in game-state [:battling :name])
-         ". It's still too strong!"))
+         "."))
       :else
       game-state)))
 
@@ -184,7 +184,7 @@
 
 (defn attack-description [from to]
   (cond (is-dead? to)
-        [(damage-description from to) (str (:name to) " has fallen. Mauled and bloodied.")]
+        [(damage-description from to) (str (:name to) " has fallen.")]
         :else
         [(damage-description from to)]))
 
@@ -273,21 +273,19 @@
           (update-in [:items item-id]
                      #(inc (or (get-in game-state [:items item-id]) 0)))
           (conj-play-by-play
-           "You take the " (:name item) " from the midget's saggy, squishy hand. "
-           "He smiles and gives you a tip of his top hat."))
+           "Bought " (:name item) "."))
 
       (-> game-state
           (conj-play-by-play
-           "The midget bitch slaps you saying that you can't afford that. "
-           "He wonders if you were taught common core math.")))))
+           "Can't afford.")))))
 
 (defn heal-monster [monster]
   (assoc monster :hp (:max-hp monster)))
 
 (defn heal-team [game-state]
   (let [sleep-message (if (pos? (count (:team game-state)))
-                        "You've slept. Your posse has been healed."
-                        "You've slept.")]
+                        "Slept. Team has been healed."
+                        "Slept.")]
     (-> game-state
         (conj-play-by-play sleep-message)
         (assoc :team
