@@ -2,6 +2,7 @@
   (:require [cljs.test :refer-macros [deftest is testing run-tests use-fixtures]]
             [mokepon.tests.core :refer [has-play-by-play
                                         get-state
+                                        log-state
                                         make-enemy-attack-ready
                                         set-cash
                                         make-chosen-attack-ready
@@ -25,7 +26,16 @@
 
 
 (deftest losing-chipu-causes-angry-mom
-  "you'll get an angry messages from mommy if you have no team"
+  "you'll get an angry messages from mommy if you lose chipu in battle"
+
+  (reset! (tnr/app-state) (rpg/new-game))
+
+  (tnr/remove-dead-team-members!)
+
+  (is (= (get-state :messages 1 :text) nil))
+
+  (reset! (tnr/app-state) (rpg/new-game))
+  (tnr/take-chipu!)
 
   (swap! (tnr/app-state) assoc-in [:team :sulbabaur] mon/sulbabaur)
   (swap! (tnr/app-state)

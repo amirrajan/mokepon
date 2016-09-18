@@ -244,14 +244,15 @@
        (filter (fn [[_ v]] (is-dead? v)))
        (map (fn [[k _]] k))))
 
-(defn text-from-mom [game-state]
-  (if (empty? (get-in game-state [:team]))
+(defn text-from-mom [game-state dead-keys]
+  (cond
+    (some #{:chipu} dead-keys)
     (update-in game-state
                [:messages]
                #(conj % {:from :mom
                          :text "You lost all of your Moképon didn't you? Worthless. Come by and I'll give you another Chipu."
                          :day 0}))
-
+    :else
     game-state))
 
 (defn remove-dead-team-members [game-state]
@@ -261,7 +262,7 @@
                              #(apply dissoc % dead-keys))]
     (-> new-state
         (mark-captured-in-mokedex dead-keys)
-        (text-from-mom))))
+        (text-from-mom dead-keys))))
 
 (defn buy-item [game-state item-id shop-items-lookup]
   (let [item (item-id shop-items-lookup)
