@@ -11,9 +11,9 @@
    :cash 100
    :battling nil
    :items {}
-   :messages {:mom
-              [{:text "Where are you? Have you found a job yet?!"
-                :day 0}]}
+   :messages [{:from :mom
+               :text "Where are you? Have you found a job yet?!"
+               :day 0}]
    :mokedex {:monsters
              (into [] (map #(assoc % :captured false :encountered false)
                            [monsters/chipu
@@ -247,8 +247,9 @@
 (defn text-from-mom [game-state]
   (if (empty? (get-in game-state [:team]))
     (update-in game-state
-               [:messages :mom]
-               #(conj % {:text "You lost all of your Moképon didn't you? Worthless. Come by and I'll give you another Chipu."
+               [:messages]
+               #(conj % {:from :mom
+                         :text "You lost all of your Moképon didn't you? Worthless. Come by and I'll give you another Chipu."
                          :day 0}))
 
     game-state))

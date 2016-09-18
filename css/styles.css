@@ -60,8 +60,8 @@ ul.messages {
   padding-left: 25px;
 }
 
-ul.messages li span {
-  font-size: small;
+ul.messages li {
+  padding-bottom: 10px;
 }
 
 .wordwrap {

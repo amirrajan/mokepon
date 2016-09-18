@@ -80,15 +80,19 @@
        sleep-at-home-handler)
     (a "Back" #(go-to-location-handler :outside)))])
 
+(defn message-from []
+  {:mom "Mom" :midget "The Midget"})
+
 (defn messages-view [messages go-to-location-handler]
   [:div
    (section [:p "Messages"])
    (section
-    [:p "Messages from Mom"]
     [:ul.messages
-     [:li
-      [:div "Where are you? Have you found a job yet?!" ]
-      [:span "one day ago"]]])
+     (for [m messages] [:li
+                        [:div
+                         [:span (str ((:from m) (message-from)) ": " (:text m))]
+                         [:br]
+                         [:span {:style {:font-size :smaller}} "0 day(s) ago"]]])])
    (section (a "Back" #(go-to-location-handler :phone)))])
 
 (defn phone-view [go-to-location-handler]

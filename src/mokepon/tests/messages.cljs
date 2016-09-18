@@ -15,10 +15,13 @@
 (deftest first-message-from-mom
   "the game starts off with a message from mom"
 
-  (is (= (get-state :messages :mom 0 :text)
-         "Where are you? Have you found a job yet?!"))
+  (let [first-message (get-state :messages 0)]
+    (is (= (:text first-message)
+           "Where are you? Have you found a job yet?!"))
 
-  (is (=(get-state :messages :mom 0 :day) 0)))
+    (is (= (:from first-message) :mom))
+
+    (is (= (:day first-message) 0))))
 
 
 (deftest losing-chipu-causes-angry-mom
@@ -35,7 +38,7 @@
 
   (tnr/remove-dead-team-members!)
 
-  (is (= (get-state :messages :mom 1 :text)
+  (is (= (get-state :messages 1 :text)
          "You lost all of your Moképon didn't you? Worthless. Come by and I'll give you another Chipu."))
 
-  (is (=(get-state :messages :mom 1 :day) 0)))
+  (is (=(get-state :messages 1 :day) 0)))
