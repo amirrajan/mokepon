@@ -11,7 +11,11 @@
        :on-click #(buy-item-handler (:id item))}
       (str "[Buy " (:name item) " - $" (:cost item) "]")]
      [:p
-      {:style {:margin 0 :padding 0 :margin-bottom "10px" :font-size "smaller"}}
+      {:style {:margin 0
+               :padding 0
+               :margin-bottom "10px"
+               :font-size "90%"
+               :padding-left "3px"}}
       (:description item)]]))
 
 (defn view [shop-items
@@ -20,10 +24,6 @@
             shop-item-available-handler]
   (section
    (section [:p "Shop"])
-   ;; [:p (str "You walk into the shop. A midget stands behind the counter on a stool. "
-   ;;          "He occasionally props himself up with locked arms and dangles his feet in the air.")]
-
-   ;; [:hr]
    (section
     (for [item shop-items]
       (shop-item-view item

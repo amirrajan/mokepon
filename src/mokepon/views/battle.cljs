@@ -31,7 +31,7 @@
                     throw-mokebox-handler))
    (if (and (not battle-over?) (> (count choosable-monsters) 1))
      (for [m choosable-monsters]
-       (a (str "Choose " (:name (m team) )"!") #(choose-monster-handler m))))))
+       (a (str "Choose " (:name (m team) )) #(choose-monster-handler m))))))
 
 (defn battle-report-view [battle-over? go-to-location-handler]
   (if battle-over?

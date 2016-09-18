@@ -14,17 +14,12 @@
            (str (:name v) " (hp: " (:hp v) "/" (:max-hp v) ")")])]))
 
 (defn ask-mommy-view [team team-at-home take-chipu-handler]
-  (when (and (empty? team) (empty? team-at-home))
+  (when (not (:chipu team))
     (section
-     ;[:p "Your mom feels pity for your sorry ass."]
-     ;[:p "From her extended arm, a Chipu whimpers, hanging by the scruff of its neck."]
-     ;[:p "\"Make something of yourself, you worthless millenial!\" she says to you."]
      (a "Take Chipu" take-chipu-handler))))
 
 (defn adventure-view [description action-text key go-to-location-handler]
-  (section
-   ;[:p description]
-   (a  (str action-text) #(go-to-location-handler key))))
+  (a  (str action-text) #(go-to-location-handler key)))
 
 (defn play-by-play-view [play-by-play]
   (section (for [i (take 25 (reverse play-by-play))] [:div i])))
@@ -45,7 +40,8 @@
                      throw-mokebox-handler
                      choose-monster-handler
                      candy-handler]
-  (if (nil? battling)
+  (cond
+    (nil? battling)
     [:div
      (section [:p location-description])
      (section
@@ -53,19 +49,22 @@
         (disabled-a "Battle")
         (a "Battle" find-trouble-handler))
       (a "Back" #(go-to-location-handler :outside)))]
-    (battle/view team
-                 choosable-monsters
-                 chosen
-                 chosen-can-attack?
-                 battle-over?
-                 battling
-                 active-turn-threshold
-                 attack-handler
-                 go-to-location-handler
-                 items
-                 throw-mokebox-handler
-                 choose-monster-handler
-                 candy-handler)))
+    :else
+    [:div
+     (section [:p location-description])
+     (battle/view team
+                  choosable-monsters
+                  chosen
+                  chosen-can-attack?
+                  battle-over?
+                  battling
+                  active-turn-threshold
+                  attack-handler
+                  go-to-location-handler
+                  items
+                  throw-mokebox-handler
+                  choose-monster-handler
+                  candy-handler)]))
 
 (defn home-view [team
                  team-at-home
@@ -111,15 +110,16 @@
                     location-available-handler
                     location-info]
 
-    [:div
-     (section [:p "Outside"])
-     [:div (for [loc [:phone :home :shop :canyon :forest :pool]]
-             (when (location-available-handler loc)
-               (adventure-view
-                (:description (loc location-info))
-                (:action (loc location-info))
-                loc
-                go-to-location-handler)))]])
+  [:div
+   (section [:p "Outside"])
+   (section
+    (for [loc [:phone :home :shop :canyon :forest :pool]]
+      (when (location-available-handler loc)
+        (adventure-view
+         (:description (loc location-info))
+         (:action (loc location-info))
+         loc
+         go-to-location-handler))))])
 
 (defn title-view []
   (comment section
@@ -129,7 +129,6 @@
 (defn status-view [cash items shop-items-lookup team play-by-play]
   [:div
    (team-view team "Team:" "None")
-   (section "Cash: $" cash)
    (section
     [:div "Items:"]
     (if (empty? items)
@@ -168,7 +167,7 @@
                 messages]} game-state
         top-level-battle-locations [:forest :canyon :pool]]
     [:div
-     (title-view)
+     [:div {:style {:float "right" :font-weight :bold :font-size :larger}} "Cash: $" cash]
      (cond
        (= location :outside)
        (outside-view location

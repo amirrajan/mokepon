@@ -20,7 +20,7 @@
                             monsters/tirsqule
                             monsters/sulbabaur
                             monsters/deogude]))}
-   :play-by-play [""]})
+   :play-by-play ["You sit outside, unemployed."]})
 
 (defn apply-to-all-values [f dict]
   (into {} (map (fn [[k v]] [k (f v)]) dict)))

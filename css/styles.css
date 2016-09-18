@@ -15,8 +15,9 @@ body {
 a {
   text-decoration: none;
   display: block;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 8px;
+  padding-left: 0;
+  font-size: 110%;
 }
 
 a.disabled {
