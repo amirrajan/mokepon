@@ -130,7 +130,7 @@
    [:h1 {:id "title"} "Moképon"]
    [:h2 {:id "tag-line"} "Catching 'em all just got real, yo"]))
 
-(defn status-view [cash items shop-items-lookup team play-by-play]
+(defn status-view [items shop-items-lookup team play-by-play restart-game-handler]
   [:div
    (team-view team "Team:" "None")
    (section
@@ -138,7 +138,14 @@
     (if (empty? items)
       [:p "None"]
       [:ul (for [[k v] items] [:li (str (:name (k shop-items-lookup))  ": " v)])]))
-   (play-by-play-view play-by-play)])
+   (play-by-play-view play-by-play)
+   [:a {:style {:font-size :smaller
+                :margin 0
+                :text-align :center
+                :padding 5
+                :margin-top "100px"}
+        :on-click restart-game-handler
+        :href "javascript:;"} "[restart game]" ]])
 
 (defn rpg-view [game-state
                 take-chipu-handler
@@ -159,7 +166,8 @@
                 candy-handler
                 location-available-handler
                 location-info
-                shop-item-available-handler]
+                shop-item-available-handler
+                restart-game-handler]
   (let [{:keys [location
                 team
                 team-at-home
@@ -223,4 +231,4 @@
        :else
        (section (str "Location " location " not handled.")
                 (a "Go back." #(go-to-location-handler :outside))))
-     (status-view cash items shop-items-lookup team play-by-play)]))
+     (status-view items shop-items-lookup team play-by-play restart-game-handler)]))

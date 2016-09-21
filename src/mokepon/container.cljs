@@ -234,7 +234,8 @@
              use-candy!
              location-available?
              (location-info)
-             shop-item-available?)))
+             shop-item-available?
+             reset-game!)))
 
 (defn render! []
   (.render js/React
