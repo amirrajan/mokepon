@@ -22,6 +22,8 @@
                                  remove-dead-team-members
                                  take-chipu
                                  set-battle
+                                 new-message-count
+                                 mark-messages-as-read
                                  active-turn-threshold]]
             [mokepon.components :refer [rpg-view]]
             [clojure.string :as string]))
@@ -213,6 +215,13 @@
 (defn shop-item-available? [item]
   ((:available-if (item (shop-items-lookup))) @(app-state)))
 
+(defn app-state-new-message-count []
+  (new-message-count @(app-state)))
+
+(defn view-messages! []
+  (go-to-location! :messages)
+  (swap! (app-state) mark-messages-as-read))
+
 (defn rpg-container []
   (sab/html
    (rpg-view @(app-state)
@@ -235,7 +244,9 @@
              location-available?
              (location-info)
              shop-item-available?
-             reset-game!)))
+             reset-game!
+             (app-state-new-message-count)
+             view-messages!)))
 
 (defn render! []
   (.render js/React

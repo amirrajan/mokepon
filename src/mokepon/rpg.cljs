@@ -12,8 +12,9 @@
    :battling nil
    :items {}
    :messages [{:from :mom
-               :text "Where are you? Have you found a job yet?!"
-               :day 0}]
+               :text "Where are you? Have you found a job yet?! Come by the house. I have a Chipu for you. Maybe you can make some money with it."
+               :day 0
+               :seen? false}]
    :mokedex {:monsters
              (into [] (map #(assoc % :captured false :encountered false)
                            [monsters/chipu
@@ -251,7 +252,8 @@
                [:messages]
                #(conj % {:from :mom
                          :text "You lost all of your Moképon didn't you? Worthless. Come by and I'll give you another Chipu."
-                         :day 0}))
+                         :day 0
+                         :seen? false}))
     :else
     game-state))
 
@@ -330,3 +332,13 @@
       (set-battle game-state
                   first-team-member
                   monster-for-location))))
+
+(defn new-message-count [game-state]
+  (count (filter #(not (:seen? %)) (:messages game-state))))
+
+(defn mark-messages-as-read [game-state]
+  (update-in
+   game-state
+   [:messages]
+   (fn [messages]
+     (map #(assoc % :seen? true) messages))))

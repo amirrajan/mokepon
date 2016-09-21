@@ -18,7 +18,7 @@
 
   (let [first-message (get-state :messages 0)]
     (is (= (:text first-message)
-           "Where are you? Have you found a job yet?!"))
+           "Where are you? Have you found a job yet?! Come by the house. I have a Chipu for you. Maybe you can make some money with it."))
 
     (is (= (:from first-message) :mom))
 
@@ -48,7 +48,21 @@
 
   (tnr/remove-dead-team-members!)
 
-  (is (= (get-state :messages 1 :text)
-         "You lost all of your Moképon didn't you? Worthless. Come by and I'll give you another Chipu."))
+  (let [angry-message (get-state :messages 1)]
+    (is (= (get-state :messages 1 :text)
+           "You lost all of your Moképon didn't you? Worthless. Come by and I'll give you another Chipu."))
 
-  (is (=(get-state :messages 1 :day) 0)))
+    (is (=(get-state :messages 1 :day) 0))
+
+    (is (=(get-state :messages 1 :from) :mom))
+
+    (is (= (get-state :messages 1 :seen?) false))))
+
+(deftest checking-messages-marks-them-as-seen
+  (is (= (tnr/app-state-new-message-count) 1))
+
+  (tnr/view-messages!)
+
+  (is (= (get-state :location) :messages))
+
+  (is (= (tnr/app-state-new-message-count) 0)))

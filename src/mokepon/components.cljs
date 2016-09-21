@@ -95,7 +95,7 @@
                          [:span {:style {:font-size :smaller}} "0 day(s) ago"]]])])
    (section (a "Back" #(go-to-location-handler :phone)))])
 
-(defn phone-view [go-to-location-handler]
+(defn phone-view [go-to-location-handler view-messages-handler]
   [:div
    (section [:p "Phone"])
    (adventure-view ""
@@ -105,19 +105,25 @@
    (adventure-view ""
                    "Messages"
                    :messages
-                   go-to-location-handler)
+                   view-messages-handler)
    (section (a "Back" #(go-to-location-handler :outside)))])
 
 (defn outside-view [location
                     team
                     go-to-location-handler
                     location-available-handler
-                    location-info]
+                    location-info
+                    new-message-count]
 
   [:div
    (section [:p "Outside"])
    (section
-    (for [loc [:phone :home :shop :canyon :forest :pool]]
+    (adventure-view
+     ""
+     (if (pos? new-message-count) "Phone: You have new messages." "Phone")
+     :phone
+     go-to-location-handler)
+    (for [loc [:home :shop :canyon :forest :pool]]
       (when (location-available-handler loc)
         (adventure-view
          (:description (loc location-info))
@@ -167,7 +173,9 @@
                 location-available-handler
                 location-info
                 shop-item-available-handler
-                restart-game-handler]
+                restart-game-handler
+                new-message-count
+                view-messages-handler]
   (let [{:keys [location
                 team
                 team-at-home
@@ -186,7 +194,8 @@
                      team
                      go-to-location-handler
                      location-available-handler
-                     location-info)
+                     location-info
+                     new-message-count)
 
        (some #{location} top-level-battle-locations)
        (location-view (:awesome-text (location location-info))
@@ -220,7 +229,7 @@
                    shop-item-available-handler)
 
        (= location :phone)
-       (phone-view go-to-location-handler)
+       (phone-view go-to-location-handler view-messages-handler)
 
        (= location :messages)
        (messages-view messages go-to-location-handler)
