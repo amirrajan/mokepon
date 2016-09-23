@@ -11,6 +11,12 @@
    :cash 100
    :battling nil
    :items {}
+   :locations-seen {:phone  {:seen? false}
+                    :home   {:seen? false}
+                    :shop   {:seen? false}
+                    :canyon {:seen? false}
+                    :forest {:seen? false}
+                    :lake   {:seen? false}}
    :messages [{:from :mom
                :text "Where are you? Have you found a job yet?! Come by the house. I have a Chipu for you. Maybe you can make some money with it."
                :day 0

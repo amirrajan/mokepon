@@ -6,8 +6,8 @@
   (set! (.--webkit-transition (.-style elem)) "opacity 1000ms")
   (set! (.-opacity (.-style elem)) 1))
 
-(defn from-component-definition [component children]
-  (.createElement js/React component nil (sab/html children)))
+(defn from-component-definition [component props children]
+  (.createElement js/React component (clj->js props) (sab/html children)))
 
 (def fade-in-component-definition
   (.createClass
@@ -16,7 +16,6 @@
         (fn []
           (this-as
             this
-            (.log js/console (clj->js this))
             (.createElement js/React
                             "div"
                             nil
@@ -28,7 +27,10 @@
               (set! (.-opacity (.-style elem)) 0)
               (.requestAnimationFrame
                js/window
-               #(fade-in elem)))))}))
+               (fn []
+                 (when (.. this -props -callback)
+                   ((.. this -props -callback)))
+                 (fade-in elem))))))}))
 
 (def todo #(.alert js/window "todo"))
 

@@ -222,6 +222,12 @@
   (go-to-location! :messages)
   (swap! (app-state) mark-messages-as-read))
 
+(defn mark-location-as-seen! [loc]
+  (swap! (app-state) assoc-in [:locations-seen loc :seen?] true))
+
+(defn app-state-location-seen? [loc]
+  (get-in @(app-state) [:locations-seen loc :seen?]))
+
 (defn rpg-container []
   (sab/html
    (rpg-view @(app-state)
@@ -246,7 +252,9 @@
              shop-item-available?
              reset-game!
              (app-state-new-message-count)
-             view-messages!)))
+             view-messages!
+             mark-location-as-seen!
+             app-state-location-seen?)))
 
 (defn render! []
   (.render js/React

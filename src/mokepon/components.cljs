@@ -117,7 +117,9 @@
                     go-to-location-handler
                     location-available-handler
                     location-info
-                    new-message-count]
+                    new-message-count
+                    mark-location-as-seen-handler
+                    location-seen?-handler]
 
   [:div
    (section [:p "Outside"])
@@ -134,13 +136,22 @@
      go-to-location-handler)
     (for [loc [:shop :canyon :forest :pool]]
       (when (location-available-handler loc)
-        (from-component-definition
-         fade-in-component-definition
-         (adventure-view
-          (:description (loc location-info))
-          (:action (loc location-info))
-          loc
-          go-to-location-handler)))))])
+        (cond
+          (location-seen?-handler loc)
+          (adventure-view
+           (:description (loc location-info))
+           (:action (loc location-info))
+           loc
+           go-to-location-handler)
+          :else
+          (from-component-definition
+           fade-in-component-definition
+           {:id loc :callback mark-location-as-seen-handler}
+           (adventure-view
+            (:description (loc location-info))
+            (:action (loc location-info))
+            loc
+            go-to-location-handler))))))])
 
 (defn title-view []
   (comment section
@@ -186,7 +197,9 @@
                 shop-item-available-handler
                 restart-game-handler
                 new-message-count
-                view-messages-handler]
+                view-messages-handler
+                mark-location-as-seen-handler
+                location-seen?-handler]
   (let [{:keys [location
                 team
                 team-at-home
@@ -206,7 +219,9 @@
                      go-to-location-handler
                      location-available-handler
                      location-info
-                     new-message-count)
+                     new-message-count
+                     mark-location-as-seen-handler
+                     location-seen?-handler)
 
        (some #{location} top-level-battle-locations)
        (location-view (:awesome-text (location location-info))
