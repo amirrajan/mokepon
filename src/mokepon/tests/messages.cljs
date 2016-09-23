@@ -50,7 +50,7 @@
 
   (let [angry-message (get-state :messages 1)]
     (is (= (get-state :messages 1 :text)
-           "You lost all of your Moképon didn't you? Worthless. Come by and I'll give you another Chipu."))
+           "Did your Chipu get killed? Worthless. Come by and I'll give you another one."))
 
     (is (=(get-state :messages 1 :day) 0))
 

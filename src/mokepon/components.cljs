@@ -13,11 +13,6 @@
           [:li {:key (:name v)}
            (str (:name v) " (hp: " (:hp v) "/" (:max-hp v) ")")])]))
 
-(defn ask-mommy-view [team team-at-home take-chipu-handler]
-  (when (not (:chipu team))
-    (section
-     (a "Take Chipu" take-chipu-handler))))
-
 (defn adventure-view [description action-text key go-to-location-handler]
   (a  (str action-text) #(go-to-location-handler key)))
 
@@ -73,9 +68,10 @@
                  sleep-at-home-handler]
   [:div
    (section [:p "Home"])
-   (ask-mommy-view team team-at-home take-chipu-handler)
-   (team-view team-at-home "Team at home:" "None")
+   (comment team-view team-at-home "Team at home:" "None")
    (section
+    (when (not (:chipu team))
+      (a "Take Chipu" take-chipu-handler))
     (a "Sleep"
        sleep-at-home-handler)
     (a "Back" #(go-to-location-handler :outside)))])

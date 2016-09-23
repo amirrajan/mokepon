@@ -251,7 +251,7 @@
     (update-in game-state
                [:messages]
                #(conj % {:from :mom
-                         :text "You lost all of your Moképon didn't you? Worthless. Come by and I'll give you another Chipu."
+                         :text "Did your Chipu get killed? Worthless. Come by and I'll give you another one."
                          :day 0
                          :seen? false}))
     :else
