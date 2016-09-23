@@ -3,7 +3,14 @@
             [mokepon.views.mokedex :as mokedex]
             [mokepon.views.battle :as battle]
             [mokepon.views.shop :as shop]
-            [mokepon.elements :refer [a disabled-a conditional-a section todo progress-bar]]))
+            [mokepon.elements :refer [a
+                                      disabled-a
+                                      conditional-a
+                                      section
+                                      todo
+                                      from-component-definition
+                                      fade-in-component-definition
+                                      progress-bar]]))
 
 (defn team-view [team header empty-text]
   (section
@@ -66,15 +73,16 @@
                  take-chipu-handler
                  go-to-location-handler
                  sleep-at-home-handler]
-  [:div
-   (section [:p "Home"])
-   (comment team-view team-at-home "Team at home:" "None")
-   (section
-    (when (not (:chipu team))
-      (a "Take Chipu" take-chipu-handler))
-    (a "Sleep"
-       sleep-at-home-handler)
-    (a "Back" #(go-to-location-handler :outside)))])
+  (let [wat (sab/html [:p "Test"])]
+    [:div
+     (section [:p "Home"])
+     (comment team-view team-at-home "Team at home:" "None")
+     (section
+      (when (not (:chipu team))
+        (a "Take Chipu" take-chipu-handler))
+      (a "Sleep"
+         sleep-at-home-handler)
+      (a "Back" #(go-to-location-handler :outside)))]))
 
 (defn message-from []
   {:mom "Mom" :midget "The Midget"})
@@ -119,13 +127,20 @@
      (if (pos? new-message-count) "Phone: You have new messages." "Phone")
      :phone
      go-to-location-handler)
-    (for [loc [:home :shop :canyon :forest :pool]]
+    (adventure-view
+     (:description (:home location-info))
+     (:action (:home location-info))
+     :home
+     go-to-location-handler)
+    (for [loc [:shop :canyon :forest :pool]]
       (when (location-available-handler loc)
-        (adventure-view
-         (:description (loc location-info))
-         (:action (loc location-info))
-         loc
-         go-to-location-handler))))])
+        (from-component-definition
+         fade-in-component-definition
+         (adventure-view
+          (:description (loc location-info))
+          (:action (loc location-info))
+          loc
+          go-to-location-handler)))))])
 
 (defn title-view []
   (comment section
