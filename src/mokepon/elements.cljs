@@ -2,6 +2,7 @@
   (:require [sablono.core :as sab]))
 
 (defn fade-in [elem]
+  (.log js/console "fading in")
   (set! (.-transition (.-style elem)) "opacity 1000ms")
   (set! (.--webkit-transition (.-style elem)) "opacity 1000ms")
   (set! (.-opacity (.-style elem)) 1))
@@ -18,19 +19,22 @@
             this
             (.createElement js/React
                             "div"
-                            nil
+                            (clj->js {:style {:margin "0" :padding "0"}})
                             (.. this -props -children))))
         :componentDidMount
         (fn []
           (this-as this
             (let [elem (.getDOMNode this)]
               (set! (.-opacity (.-style elem)) 0)
-              (.requestAnimationFrame
+              (.setTimeout
                js/window
                (fn []
-                 (when (.. this -props -callback)
-                   ((.. this -props -callback)))
-                 (fade-in elem))))))}))
+                 (.requestAnimationFrame
+                  js/window
+                  (fn []
+                    (when (.. this -props -callback)
+                      (.setTimeout js/window (.. this -props -callback) 2000))
+                    (fade-in elem)))) 1000))))}))
 
 (def todo #(.alert js/window "todo"))
 

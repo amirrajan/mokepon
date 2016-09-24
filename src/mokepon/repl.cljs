@@ -2,6 +2,7 @@
 
 (comment
   (reset! (app-state) (mokepon.rpg/new-game))
+  (.log js/console (clj->js (get-in @(app-state) [:locations-seen])))
   (take-chipu!)
   (set-cash! 1000)
   (buy-item! :candy)

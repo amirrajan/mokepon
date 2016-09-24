@@ -146,7 +146,7 @@
           :else
           (from-component-definition
            fade-in-component-definition
-           {:id loc :callback mark-location-as-seen-handler}
+           {:id loc :callback #(mark-location-as-seen-handler loc)}
            (adventure-view
             (:description (loc location-info))
             (:action (loc location-info))
