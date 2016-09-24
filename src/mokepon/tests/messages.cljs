@@ -49,14 +49,14 @@
   (tnr/remove-dead-team-members!)
 
   (let [angry-message (get-state :messages 1)]
-    (is (= (get-state :messages 1 :text)
+    (is (= (angry-message :text)
            "Did your Chipu get killed? Worthless. Come by and I'll give you another one."))
 
-    (is (=(get-state :messages 1 :day) 0))
+    (is (= (:day angry-message) 0))
 
-    (is (=(get-state :messages 1 :from) :mom))
+    (is (= (:from angry-message) :mom))
 
-    (is (= (get-state :messages 1 :seen?) false))))
+    (is (= (:seen? angry-message) false))))
 
 (deftest checking-messages-marks-them-as-seen
   (is (= (tnr/app-state-new-message-count) 1))
@@ -66,3 +66,20 @@
   (is (= (get-state :location) :messages))
 
   (is (= (tnr/app-state-new-message-count) 0)))
+
+
+(deftest first-chipu-from-mom-yields-message-from-midget
+  "only the first chipu, not after deaths"
+  (reset! (tnr/app-state) (rpg/new-game))
+
+  (tnr/take-chipu!)
+
+  (let [midget-message (get-state :messages 1)]
+    (is (= (:text midget-message)
+           "Hey kid. Your mom told me that I can sell stuff to you. Come by."))
+
+    (is (= (:day midget-message) 0))
+
+    (is (= (:from midget-message) :midget))
+
+    (is (= (:seen? midget-message) false))))

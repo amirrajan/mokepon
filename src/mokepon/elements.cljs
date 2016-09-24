@@ -2,7 +2,6 @@
   (:require [sablono.core :as sab]))
 
 (defn fade-in [elem]
-  (.log js/console "fading in")
   (set! (.-transition (.-style elem)) "opacity 1000ms")
   (set! (.--webkit-transition (.-style elem)) "opacity 1000ms")
   (set! (.-opacity (.-style elem)) 1))
@@ -16,7 +15,7 @@
    #js {:render
         (fn []
           (this-as
-            this
+              this
             (.createElement js/React
                             "div"
                             (clj->js {:style {:margin "0" :padding "0"}})
