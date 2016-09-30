@@ -21,6 +21,5 @@
                         :source-paths ["src"]
                         :compiler {:output-to "mokepon.js"
                                    :output-dir "out"
-                                   :optimizations :advanced
                                    :main mokepon.core}}]}
   :figwheel {:css-dirs ["css"]})

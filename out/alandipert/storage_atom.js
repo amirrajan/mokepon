@@ -1,20 +1,16 @@
-// Compiled by ClojureScript 1.9.76 {:static-fns true, :optimize-constants true}
+// Compiled by ClojureScript 1.9.76 {}
 goog.provide('alandipert.storage_atom');
 goog.require('cljs.core');
 goog.require('cognitect.transit');
 goog.require('goog.Timer');
 goog.require('clojure.string');
-alandipert.storage_atom.transit_read_handlers = (function (){var G__31146 = cljs.core.PersistentArrayMap.EMPTY;
-return (cljs.core.atom.cljs$core$IFn$_invoke$arity$1 ? cljs.core.atom.cljs$core$IFn$_invoke$arity$1(G__31146) : cljs.core.atom.call(null,G__31146));
-})();
-alandipert.storage_atom.transit_write_handlers = (function (){var G__31147 = cljs.core.PersistentArrayMap.EMPTY;
-return (cljs.core.atom.cljs$core$IFn$_invoke$arity$1 ? cljs.core.atom.cljs$core$IFn$_invoke$arity$1(G__31147) : cljs.core.atom.call(null,G__31147));
-})();
+alandipert.storage_atom.transit_read_handlers = cljs.core.atom.call(null,cljs.core.PersistentArrayMap.EMPTY);
+alandipert.storage_atom.transit_write_handlers = cljs.core.atom.call(null,cljs.core.PersistentArrayMap.EMPTY);
 alandipert.storage_atom.clj__GT_json = (function alandipert$storage_atom$clj__GT_json(x){
-return cognitect.transit.write(cognitect.transit.writer.cljs$core$IFn$_invoke$arity$2(cljs.core.cst$kw$json,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$handlers,(cljs.core.deref.cljs$core$IFn$_invoke$arity$1 ? cljs.core.deref.cljs$core$IFn$_invoke$arity$1(alandipert.storage_atom.transit_write_handlers) : cljs.core.deref.call(null,alandipert.storage_atom.transit_write_handlers))], null)),x);
+return cognitect.transit.write.call(null,cognitect.transit.writer.call(null,new cljs.core.Keyword(null,"json","json",1279968570),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"handlers","handlers",79528781),cljs.core.deref.call(null,alandipert.storage_atom.transit_write_handlers)], null)),x);
 });
 alandipert.storage_atom.json__GT_clj = (function alandipert$storage_atom$json__GT_clj(x){
-return cognitect.transit.read(cognitect.transit.reader.cljs$core$IFn$_invoke$arity$2(cljs.core.cst$kw$json,new cljs.core.PersistentArrayMap(null, 1, [cljs.core.cst$kw$handlers,(cljs.core.deref.cljs$core$IFn$_invoke$arity$1 ? cljs.core.deref.cljs$core$IFn$_invoke$arity$1(alandipert.storage_atom.transit_read_handlers) : cljs.core.deref.call(null,alandipert.storage_atom.transit_read_handlers))], null)),x);
+return cognitect.transit.read.call(null,cognitect.transit.reader.call(null,new cljs.core.Keyword(null,"json","json",1279968570),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"handlers","handlers",79528781),cljs.core.deref.call(null,alandipert.storage_atom.transit_read_handlers)], null)),x);
 });
 
 /**
@@ -30,13 +26,13 @@ return this$.alandipert$storage_atom$IStorageBackend$_get$arity$2(this$,not_foun
 var x__19127__auto__ = (((this$ == null))?null:this$);
 var m__19128__auto__ = (alandipert.storage_atom._get[goog.typeOf(x__19127__auto__)]);
 if(!((m__19128__auto__ == null))){
-return (m__19128__auto__.cljs$core$IFn$_invoke$arity$2 ? m__19128__auto__.cljs$core$IFn$_invoke$arity$2(this$,not_found) : m__19128__auto__.call(null,this$,not_found));
+return m__19128__auto__.call(null,this$,not_found);
 } else {
 var m__19128__auto____$1 = (alandipert.storage_atom._get["_"]);
 if(!((m__19128__auto____$1 == null))){
-return (m__19128__auto____$1.cljs$core$IFn$_invoke$arity$2 ? m__19128__auto____$1.cljs$core$IFn$_invoke$arity$2(this$,not_found) : m__19128__auto____$1.call(null,this$,not_found));
+return m__19128__auto____$1.call(null,this$,not_found);
 } else {
-throw cljs.core.missing_protocol("IStorageBackend.-get",this$);
+throw cljs.core.missing_protocol.call(null,"IStorageBackend.-get",this$);
 }
 }
 }
@@ -52,13 +48,13 @@ return this$.alandipert$storage_atom$IStorageBackend$_commit_BANG_$arity$2(this$
 var x__19127__auto__ = (((this$ == null))?null:this$);
 var m__19128__auto__ = (alandipert.storage_atom._commit_BANG_[goog.typeOf(x__19127__auto__)]);
 if(!((m__19128__auto__ == null))){
-return (m__19128__auto__.cljs$core$IFn$_invoke$arity$2 ? m__19128__auto__.cljs$core$IFn$_invoke$arity$2(this$,value) : m__19128__auto__.call(null,this$,value));
+return m__19128__auto__.call(null,this$,value);
 } else {
 var m__19128__auto____$1 = (alandipert.storage_atom._commit_BANG_["_"]);
 if(!((m__19128__auto____$1 == null))){
-return (m__19128__auto____$1.cljs$core$IFn$_invoke$arity$2 ? m__19128__auto____$1.cljs$core$IFn$_invoke$arity$2(this$,value) : m__19128__auto____$1.call(null,this$,value));
+return m__19128__auto____$1.call(null,this$,value);
 } else {
-throw cljs.core.missing_protocol("IStorageBackend.-commit!",this$);
+throw cljs.core.missing_protocol.call(null,"IStorageBackend.-commit!",this$);
 }
 }
 }
@@ -78,10 +74,10 @@ alandipert.storage_atom.StorageBackend.prototype.alandipert$storage_atom$IStorag
 alandipert.storage_atom.StorageBackend.prototype.alandipert$storage_atom$IStorageBackend$_get$arity$2 = (function (this$,not_found){
 var self__ = this;
 var this$__$1 = this;
-var temp__4655__auto__ = self__.store.getItem(alandipert.storage_atom.clj__GT_json(self__.key));
+var temp__4655__auto__ = self__.store.getItem(alandipert.storage_atom.clj__GT_json.call(null,self__.key));
 if(cljs.core.truth_(temp__4655__auto__)){
 var existing = temp__4655__auto__;
-return alandipert.storage_atom.json__GT_clj(existing);
+return alandipert.storage_atom.json__GT_clj.call(null,existing);
 } else {
 return not_found;
 }
@@ -90,11 +86,11 @@ return not_found;
 alandipert.storage_atom.StorageBackend.prototype.alandipert$storage_atom$IStorageBackend$_commit_BANG_$arity$2 = (function (this$,value){
 var self__ = this;
 var this$__$1 = this;
-return self__.store.setItem(alandipert.storage_atom.clj__GT_json(self__.key),alandipert.storage_atom.clj__GT_json(value));
+return self__.store.setItem(alandipert.storage_atom.clj__GT_json.call(null,self__.key),alandipert.storage_atom.clj__GT_json.call(null,value));
 });
 
 alandipert.storage_atom.StorageBackend.getBasis = (function (){
-return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.cst$sym$store,cljs.core.cst$sym$key], null);
+return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"store","store",-1142205747,null),new cljs.core.Symbol(null,"key","key",124488940,null)], null);
 });
 
 alandipert.storage_atom.StorageBackend.cljs$lang$type = true;
@@ -102,7 +98,7 @@ alandipert.storage_atom.StorageBackend.cljs$lang$type = true;
 alandipert.storage_atom.StorageBackend.cljs$lang$ctorStr = "alandipert.storage-atom/StorageBackend";
 
 alandipert.storage_atom.StorageBackend.cljs$lang$ctorPrWriter = (function (this__19070__auto__,writer__19071__auto__,opt__19072__auto__){
-return cljs.core._write(writer__19071__auto__,"alandipert.storage-atom/StorageBackend");
+return cljs.core._write.call(null,writer__19071__auto__,"alandipert.storage-atom/StorageBackend");
 });
 
 alandipert.storage_atom.__GT_StorageBackend = (function alandipert$storage_atom$__GT_StorageBackend(store,key){
@@ -115,18 +111,15 @@ return (new alandipert.storage_atom.StorageBackend(store,key));
  *   replaced without being executed.
  */
 alandipert.storage_atom.debounce_factory = (function alandipert$storage_atom$debounce_factory(){
-var f = (cljs.core.atom.cljs$core$IFn$_invoke$arity$1 ? cljs.core.atom.cljs$core$IFn$_invoke$arity$1(null) : cljs.core.atom.call(null,null));
+var f = cljs.core.atom.call(null,null);
 return ((function (f){
 return (function (func,ttime){
-if(cljs.core.truth_((cljs.core.deref.cljs$core$IFn$_invoke$arity$1 ? cljs.core.deref.cljs$core$IFn$_invoke$arity$1(f) : cljs.core.deref.call(null,f)))){
-var G__31151_31154 = (cljs.core.deref.cljs$core$IFn$_invoke$arity$1 ? cljs.core.deref.cljs$core$IFn$_invoke$arity$1(f) : cljs.core.deref.call(null,f));
-goog.Timer.clear(G__31151_31154);
+if(cljs.core.truth_(cljs.core.deref.call(null,f))){
+goog.Timer.clear(cljs.core.deref.call(null,f));
 } else {
 }
 
-var G__31152 = f;
-var G__31153 = goog.Timer.callOnce(func,ttime);
-return (cljs.core.reset_BANG_.cljs$core$IFn$_invoke$arity$2 ? cljs.core.reset_BANG_.cljs$core$IFn$_invoke$arity$2(G__31152,G__31153) : cljs.core.reset_BANG_.call(null,G__31152,G__31153));
+return cljs.core.reset_BANG_.call(null,f,goog.Timer.callOnce(func,ttime));
 });
 ;})(f))
 });
@@ -135,82 +128,78 @@ return (cljs.core.reset_BANG_.cljs$core$IFn$_invoke$arity$2 ? cljs.core.reset_BA
  * new change occurs before the time is elapsed, the old change is
  * discarded an only the new one is committed.
  */
-alandipert.storage_atom.storage_delay = (cljs.core.atom.cljs$core$IFn$_invoke$arity$1 ? cljs.core.atom.cljs$core$IFn$_invoke$arity$1((10)) : cljs.core.atom.call(null,(10)));
+alandipert.storage_atom.storage_delay = cljs.core.atom.call(null,(10));
 alandipert.storage_atom._STAR_storage_delay_STAR_ = null;
 alandipert.storage_atom._STAR_watch_active_STAR_ = true;
 alandipert.storage_atom.store = (function alandipert$storage_atom$store(atom,backend){
-var existing = alandipert.storage_atom._get(backend,cljs.core.cst$kw$alandipert$storage_DASH_atom_SLASH_none);
-var debounce = alandipert.storage_atom.debounce_factory();
-if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(cljs.core.cst$kw$alandipert$storage_DASH_atom_SLASH_none,existing)){
-alandipert.storage_atom._commit_BANG_(backend,(cljs.core.deref.cljs$core$IFn$_invoke$arity$1 ? cljs.core.deref.cljs$core$IFn$_invoke$arity$1(atom) : cljs.core.deref.call(null,atom)));
+var existing = alandipert.storage_atom._get.call(null,backend,new cljs.core.Keyword("alandipert.storage-atom","none","alandipert.storage-atom/none",604942529));
+var debounce = alandipert.storage_atom.debounce_factory.call(null);
+if(cljs.core._EQ_.call(null,new cljs.core.Keyword("alandipert.storage-atom","none","alandipert.storage-atom/none",604942529),existing)){
+alandipert.storage_atom._commit_BANG_.call(null,backend,cljs.core.deref.call(null,atom));
 } else {
-(cljs.core.reset_BANG_.cljs$core$IFn$_invoke$arity$2 ? cljs.core.reset_BANG_.cljs$core$IFn$_invoke$arity$2(atom,existing) : cljs.core.reset_BANG_.call(null,atom,existing));
+cljs.core.reset_BANG_.call(null,atom,existing);
 }
 
-var G__31162 = atom;
-cljs.core.add_watch(G__31162,cljs.core.cst$kw$alandipert$storage_DASH_atom_SLASH_storage_DASH_watch,((function (G__31162,existing,debounce){
-return (function (p1__31157_SHARP_,p2__31158_SHARP_,p3__31155_SHARP_,p4__31156_SHARP_){
+var G__23930 = atom;
+cljs.core.add_watch.call(null,G__23930,new cljs.core.Keyword("alandipert.storage-atom","storage-watch","alandipert.storage-atom/storage-watch",1159565749),((function (G__23930,existing,debounce){
+return (function (p1__23927_SHARP_,p2__23928_SHARP_,p3__23925_SHARP_,p4__23926_SHARP_){
 if(cljs.core.truth_((function (){var and__18452__auto__ = alandipert.storage_atom._STAR_watch_active_STAR_;
 if(cljs.core.truth_(and__18452__auto__)){
-return cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(p3__31155_SHARP_,p4__31156_SHARP_);
+return cljs.core.not_EQ_.call(null,p3__23925_SHARP_,p4__23926_SHARP_);
 } else {
 return and__18452__auto__;
 }
 })())){
-var G__31163 = ((function (G__31162,existing,debounce){
+return debounce.call(null,((function (G__23930,existing,debounce){
 return (function (){
-return alandipert.storage_atom._commit_BANG_(backend,p4__31156_SHARP_);
-});})(G__31162,existing,debounce))
-;
-var G__31164 = (function (){var or__18464__auto__ = alandipert.storage_atom._STAR_storage_delay_STAR_;
+return alandipert.storage_atom._commit_BANG_.call(null,backend,p4__23926_SHARP_);
+});})(G__23930,existing,debounce))
+,(function (){var or__18464__auto__ = alandipert.storage_atom._STAR_storage_delay_STAR_;
 if(cljs.core.truth_(or__18464__auto__)){
 return or__18464__auto__;
 } else {
-return (cljs.core.deref.cljs$core$IFn$_invoke$arity$1 ? cljs.core.deref.cljs$core$IFn$_invoke$arity$1(alandipert.storage_atom.storage_delay) : cljs.core.deref.call(null,alandipert.storage_atom.storage_delay));
+return cljs.core.deref.call(null,alandipert.storage_atom.storage_delay);
 }
-})();
-return (debounce.cljs$core$IFn$_invoke$arity$2 ? debounce.cljs$core$IFn$_invoke$arity$2(G__31163,G__31164) : debounce.call(null,G__31163,G__31164));
+})());
 } else {
 return null;
 }
-});})(G__31162,existing,debounce))
+});})(G__23930,existing,debounce))
 );
 
-return G__31162;
+return G__23930;
 });
 alandipert.storage_atom.maybe_update_backend = (function alandipert$storage_atom$maybe_update_backend(atom,storage,k,default$,e){
 if((storage === e.storageArea)){
-if(cljs.core.empty_QMARK_(e.key)){
-var _STAR_watch_active_STAR_31170 = alandipert.storage_atom._STAR_watch_active_STAR_;
+if(cljs.core.empty_QMARK_.call(null,e.key)){
+var _STAR_watch_active_STAR_23934 = alandipert.storage_atom._STAR_watch_active_STAR_;
 alandipert.storage_atom._STAR_watch_active_STAR_ = false;
 
-try{return (cljs.core.reset_BANG_.cljs$core$IFn$_invoke$arity$2 ? cljs.core.reset_BANG_.cljs$core$IFn$_invoke$arity$2(atom,default$) : cljs.core.reset_BANG_.call(null,atom,default$));
-}finally {alandipert.storage_atom._STAR_watch_active_STAR_ = _STAR_watch_active_STAR_31170;
+try{return cljs.core.reset_BANG_.call(null,atom,default$);
+}finally {alandipert.storage_atom._STAR_watch_active_STAR_ = _STAR_watch_active_STAR_23934;
 }} else {
-try{var temp__4657__auto__ = alandipert.storage_atom.json__GT_clj(e.key);
+try{var temp__4657__auto__ = alandipert.storage_atom.json__GT_clj.call(null,e.key);
 if(cljs.core.truth_(temp__4657__auto__)){
 var sk = temp__4657__auto__;
-if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(sk,k)){
-var _STAR_watch_active_STAR_31172 = alandipert.storage_atom._STAR_watch_active_STAR_;
+if(cljs.core._EQ_.call(null,sk,k)){
+var _STAR_watch_active_STAR_23936 = alandipert.storage_atom._STAR_watch_active_STAR_;
 alandipert.storage_atom._STAR_watch_active_STAR_ = false;
 
-try{var G__31173 = atom;
-var G__31174 = (function (){var value = e.newValue;
-if(!(clojure.string.blank_QMARK_(value))){
-return alandipert.storage_atom.json__GT_clj(value);
+try{return cljs.core.reset_BANG_.call(null,atom,(function (){var value = e.newValue;
+if(!(clojure.string.blank_QMARK_.call(null,value))){
+return alandipert.storage_atom.json__GT_clj.call(null,value);
 } else {
 return default$;
 }
-})();
-return (cljs.core.reset_BANG_.cljs$core$IFn$_invoke$arity$2 ? cljs.core.reset_BANG_.cljs$core$IFn$_invoke$arity$2(G__31173,G__31174) : cljs.core.reset_BANG_.call(null,G__31173,G__31174));
-}finally {alandipert.storage_atom._STAR_watch_active_STAR_ = _STAR_watch_active_STAR_31172;
+})());
+}finally {alandipert.storage_atom._STAR_watch_active_STAR_ = _STAR_watch_active_STAR_23936;
 }} else {
 return null;
 }
 } else {
 return null;
 }
-}catch (e31171){var e__$1 = e31171;
+}catch (e23935){var e__$1 = e23935;
 return null;
 }}
 } else {
@@ -218,10 +207,10 @@ return null;
 }
 });
 alandipert.storage_atom.link_storage = (function alandipert$storage_atom$link_storage(atom,storage,k){
-var default$ = (cljs.core.deref.cljs$core$IFn$_invoke$arity$1 ? cljs.core.deref.cljs$core$IFn$_invoke$arity$1(atom) : cljs.core.deref.call(null,atom));
+var default$ = cljs.core.deref.call(null,atom);
 return window.addEventListener("storage",((function (default$){
-return (function (p1__31175_SHARP_){
-return alandipert.storage_atom.maybe_update_backend(atom,storage,k,default$,p1__31175_SHARP_);
+return (function (p1__23937_SHARP_){
+return alandipert.storage_atom.maybe_update_backend.call(null,atom,storage,k,default$,p1__23937_SHARP_);
 });})(default$))
 );
 });
@@ -238,24 +227,24 @@ window.dispatchEvent(event);
 return null;
 });
 alandipert.storage_atom.load_html_storage = (function alandipert$storage_atom$load_html_storage(storage,k){
-return (new alandipert.storage_atom.StorageBackend(storage,k)).alandipert$storage_atom$IStorageBackend$_get$arity$2(null,null);
+return alandipert.storage_atom._get.call(null,(new alandipert.storage_atom.StorageBackend(storage,k)),null);
 });
 alandipert.storage_atom.load_local_storage = (function alandipert$storage_atom$load_local_storage(k){
-return alandipert.storage_atom.load_html_storage(localStorage,k);
+return alandipert.storage_atom.load_html_storage.call(null,localStorage,k);
 });
 alandipert.storage_atom.load_session_storage = (function alandipert$storage_atom$load_session_storage(k){
-return alandipert.storage_atom.load_html_storage(sessionStorage,k);
+return alandipert.storage_atom.load_html_storage.call(null,sessionStorage,k);
 });
 alandipert.storage_atom.html_storage = (function alandipert$storage_atom$html_storage(atom,storage,k){
-alandipert.storage_atom.link_storage(atom,storage,k);
+alandipert.storage_atom.link_storage.call(null,atom,storage,k);
 
-return alandipert.storage_atom.store(atom,(new alandipert.storage_atom.StorageBackend(storage,k)));
+return alandipert.storage_atom.store.call(null,atom,(new alandipert.storage_atom.StorageBackend(storage,k)));
 });
 alandipert.storage_atom.local_storage = (function alandipert$storage_atom$local_storage(atom,k){
-return alandipert.storage_atom.html_storage(atom,localStorage,k);
+return alandipert.storage_atom.html_storage.call(null,atom,localStorage,k);
 });
 alandipert.storage_atom.session_storage = (function alandipert$storage_atom$session_storage(atom,k){
-return alandipert.storage_atom.html_storage(atom,sessionStorage,k);
+return alandipert.storage_atom.html_storage.call(null,atom,sessionStorage,k);
 });
 /**
  * Clear storage and also trigger an event on the current window
@@ -264,27 +253,29 @@ return alandipert.storage_atom.html_storage(atom,sessionStorage,k);
 alandipert.storage_atom.clear_html_storage_BANG_ = (function alandipert$storage_atom$clear_html_storage_BANG_(storage){
 storage.clear();
 
-return alandipert.storage_atom.dispatch_remove_event_BANG_(storage,"");
+return alandipert.storage_atom.dispatch_remove_event_BANG_.call(null,storage,"");
 });
 alandipert.storage_atom.clear_local_storage_BANG_ = (function alandipert$storage_atom$clear_local_storage_BANG_(){
-return alandipert.storage_atom.clear_html_storage_BANG_(localStorage);
+return alandipert.storage_atom.clear_html_storage_BANG_.call(null,localStorage);
 });
 alandipert.storage_atom.clear_session_storage_BANG_ = (function alandipert$storage_atom$clear_session_storage_BANG_(){
-return alandipert.storage_atom.clear_html_storage_BANG_(sessionStorage);
+return alandipert.storage_atom.clear_html_storage_BANG_.call(null,sessionStorage);
 });
 /**
  * Remove key from storage and also trigger an event on the current
  *   window so its atoms will be cleared as well.
  */
 alandipert.storage_atom.remove_html_storage_BANG_ = (function alandipert$storage_atom$remove_html_storage_BANG_(storage,k){
-var key = alandipert.storage_atom.clj__GT_json(k);
+var key = alandipert.storage_atom.clj__GT_json.call(null,k);
 storage.removeItem(key);
 
-return alandipert.storage_atom.dispatch_remove_event_BANG_(storage,key);
+return alandipert.storage_atom.dispatch_remove_event_BANG_.call(null,storage,key);
 });
 alandipert.storage_atom.remove_local_storage_BANG_ = (function alandipert$storage_atom$remove_local_storage_BANG_(k){
-return alandipert.storage_atom.remove_html_storage_BANG_(localStorage,k);
+return alandipert.storage_atom.remove_html_storage_BANG_.call(null,localStorage,k);
 });
 alandipert.storage_atom.remove_session_storage_BANG_ = (function alandipert$storage_atom$remove_session_storage_BANG_(k){
-return alandipert.storage_atom.remove_html_storage_BANG_(sessionStorage,k);
+return alandipert.storage_atom.remove_html_storage_BANG_.call(null,sessionStorage,k);
 });
+
+//# sourceMappingURL=storage_atom.js.map

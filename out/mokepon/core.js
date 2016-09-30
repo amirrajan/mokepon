@@ -1,4 +1,4 @@
-// Compiled by ClojureScript 1.9.76 {:static-fns true, :optimize-constants true}
+// Compiled by ClojureScript 1.9.76 {}
 goog.provide('mokepon.core');
 goog.require('cljs.core');
 goog.require('mokepon.tests.shop');
@@ -13,14 +13,16 @@ goog.require('mokepon.views.mokedex');
 goog.require('mokepon.tests.home');
 goog.require('mokepon.tests.core');
 mokepon.core.main_BANG_ = (function mokepon$core$main_BANG_(){
-cljs.core.enable_console_print_BANG_();
+cljs.core.enable_console_print_BANG_.call(null);
 
-cljs.core.swap_BANG_.cljs$core$IFn$_invoke$arity$4(mokepon.container.current_app_state,cljs.core.assoc,cljs.core.cst$kw$value,cljs.core.cst$kw$test);
+cljs.core.swap_BANG_.call(null,mokepon.container.current_app_state,cljs.core.assoc,new cljs.core.Keyword(null,"value","value",305978217),new cljs.core.Keyword(null,"test","test",577538877));
 
-mokepon.tests.core.run_tests();
+mokepon.tests.core.run_tests.call(null);
 
-cljs.core.swap_BANG_.cljs$core$IFn$_invoke$arity$4(mokepon.container.current_app_state,cljs.core.assoc,cljs.core.cst$kw$value,cljs.core.cst$kw$game);
+cljs.core.swap_BANG_.call(null,mokepon.container.current_app_state,cljs.core.assoc,new cljs.core.Keyword(null,"value","value",305978217),new cljs.core.Keyword(null,"game","game",-441523833));
 
-return mokepon.container.render_BANG_();
+return mokepon.container.render_BANG_.call(null);
 });
-mokepon.core.main_BANG_();
+mokepon.core.main_BANG_.call(null);
+
+//# sourceMappingURL=core.js.map
