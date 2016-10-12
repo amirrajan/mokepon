@@ -95,8 +95,7 @@
      (for [m messages] [:li
                         [:div
                          [:span (str ((:from m) (message-from)) ": " (:text m))]
-                         [:br]
-                         [:span {:style {:font-size :smaller}} "0 day(s) ago"]]])])
+                         [:br]]])])
    (section (a "Back" #(go-to-location-handler :phone)))])
 
 (defn phone-view [go-to-location-handler view-messages-handler]
