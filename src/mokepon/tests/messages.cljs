@@ -32,7 +32,7 @@
 
   (tnr/remove-dead-team-members!)
 
-  (is (= (get-state :messages 1 :text) nil))
+  (is (= (get-state :messages 2 :text) nil))
 
   (reset! (tnr/app-state) (rpg/new-game))
   (tnr/take-chipu!)
@@ -48,7 +48,7 @@
 
   (tnr/remove-dead-team-members!)
 
-  (let [angry-message (get-state :messages 1)]
+  (let [angry-message (get-state :messages 2)]
     (is (= (angry-message :text)
            "Did your Chipu get killed? Worthless. Come by and I'll give you another one."))
 
@@ -59,7 +59,7 @@
     (is (= (:seen? angry-message) false))))
 
 (deftest checking-messages-marks-them-as-seen
-  (is (= (tnr/app-state-new-message-count) 1))
+  (is (= (tnr/app-state-new-message-count) 2))
 
   (tnr/view-messages!)
 
