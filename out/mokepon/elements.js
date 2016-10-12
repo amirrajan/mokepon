@@ -53,14 +53,14 @@ return mokepon.elements.disabled_a.call(null,text);
 });
 mokepon.elements.section = (function mokepon$elements$section(var_args){
 var args__19546__auto__ = [];
-var len__19539__auto___23780 = arguments.length;
-var i__19540__auto___23781 = (0);
+var len__19539__auto___25870 = arguments.length;
+var i__19540__auto___25871 = (0);
 while(true){
-if((i__19540__auto___23781 < len__19539__auto___23780)){
-args__19546__auto__.push((arguments[i__19540__auto___23781]));
+if((i__19540__auto___25871 < len__19539__auto___25870)){
+args__19546__auto__.push((arguments[i__19540__auto___25871]));
 
-var G__23782 = (i__19540__auto___23781 + (1));
-i__19540__auto___23781 = G__23782;
+var G__25872 = (i__19540__auto___25871 + (1));
+i__19540__auto___25871 = G__25872;
 continue;
 } else {
 }
@@ -77,8 +77,8 @@ return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMP
 
 mokepon.elements.section.cljs$lang$maxFixedArity = (0);
 
-mokepon.elements.section.cljs$lang$applyTo = (function (seq23779){
-return mokepon.elements.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq23779));
+mokepon.elements.section.cljs$lang$applyTo = (function (seq25869){
+return mokepon.elements.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq25869));
 });
 
 mokepon.elements.progress_bar = (function mokepon$elements$progress_bar(percentage){

@@ -223,6 +223,7 @@
   (swap! (app-state) mark-messages-as-read))
 
 (defn mark-location-as-seen! [loc]
+  (.log js/console "tell me have you seen her")
   (swap! (app-state) assoc-in [:locations-seen loc :seen?] true))
 
 (defn app-state-location-seen? [loc]

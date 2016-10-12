@@ -11,6 +11,7 @@
    :cash 100
    :battling nil
    :items {}
+   :shop-unlocked false
    :locations-seen {:phone  {:seen? false}
                     :home   {:seen? false}
                     :shop   {:seen? false}
@@ -111,7 +112,8 @@
     (cond mokedex-index
           (update-in game-state
                      path
-                     #(assoc % :captured true
+                     #(assoc %
+                             :captured true
                              :encountered true))
           :else
           (do
@@ -121,8 +123,25 @@
 (defn mark-captured-in-mokedex [game-state monster-ids]
   (reduce mokedex-captured game-state monster-ids))
 
+(defn add-text-message [game-state from text]
+  (update-in (assoc game-state :shop-unlocked true)
+               [:messages]
+               #(conj % {:from from
+                         :text text
+                         :day 0
+                         :seen? false})))
+
+(defn unlock-shop [game-state]
+  (cond (not (:shop-unlocked game-state))
+        (add-text-message game-state
+                          :midget
+                          "Hey kid. Your mom told me that I can sell stuff to you. Come by.")
+        :else
+        game-state))
+
 (defn take-chipu [game-state]
-  (mokedex-captured (assoc-in game-state [:team :chipu] monsters/chipu) :chipu))
+  (unlock-shop
+   (mokedex-captured (assoc-in game-state [:team :chipu] monsters/chipu) :chipu)))
 
 (defn throw-mokebox [game-state]
   (let [battling (:battling game-state)
@@ -254,12 +273,9 @@
 (defn text-from-mom [game-state dead-keys]
   (cond
     (some #{:chipu} dead-keys)
-    (update-in game-state
-               [:messages]
-               #(conj % {:from :mom
-                         :text "Did your Chipu get killed? Worthless. Come by and I'll give you another one."
-                         :day 0
-                         :seen? false}))
+    (add-text-message game-state
+                      :mom
+                      "Did your Chipu get killed? Worthless. Come by and I'll give you another one.")
     :else
     game-state))
 

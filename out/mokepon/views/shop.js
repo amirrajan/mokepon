@@ -13,25 +13,25 @@ return null;
 }
 });
 mokepon.views.shop.view = (function mokepon$views$shop$view(shop_items,buy_item_handler,go_to_location_handler,shop_item_available_handler){
-return mokepon.elements.section.call(null,mokepon.elements.section.call(null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"p","p",151049309),"Shop"], null)),mokepon.elements.section.call(null,(function (){var iter__19244__auto__ = (function mokepon$views$shop$view_$_iter__23789(s__23790){
+return mokepon.elements.section.call(null,mokepon.elements.section.call(null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"p","p",151049309),"Shop"], null)),mokepon.elements.section.call(null,(function (){var iter__19244__auto__ = (function mokepon$views$shop$view_$_iter__25879(s__25880){
 return (new cljs.core.LazySeq(null,(function (){
-var s__23790__$1 = s__23790;
+var s__25880__$1 = s__25880;
 while(true){
-var temp__4657__auto__ = cljs.core.seq.call(null,s__23790__$1);
+var temp__4657__auto__ = cljs.core.seq.call(null,s__25880__$1);
 if(temp__4657__auto__){
-var s__23790__$2 = temp__4657__auto__;
-if(cljs.core.chunked_seq_QMARK_.call(null,s__23790__$2)){
-var c__19242__auto__ = cljs.core.chunk_first.call(null,s__23790__$2);
+var s__25880__$2 = temp__4657__auto__;
+if(cljs.core.chunked_seq_QMARK_.call(null,s__25880__$2)){
+var c__19242__auto__ = cljs.core.chunk_first.call(null,s__25880__$2);
 var size__19243__auto__ = cljs.core.count.call(null,c__19242__auto__);
-var b__23792 = cljs.core.chunk_buffer.call(null,size__19243__auto__);
-if((function (){var i__23791 = (0);
+var b__25882 = cljs.core.chunk_buffer.call(null,size__19243__auto__);
+if((function (){var i__25881 = (0);
 while(true){
-if((i__23791 < size__19243__auto__)){
-var item = cljs.core._nth.call(null,c__19242__auto__,i__23791);
-cljs.core.chunk_append.call(null,b__23792,mokepon.views.shop.shop_item_view.call(null,item,shop_item_available_handler,buy_item_handler));
+if((i__25881 < size__19243__auto__)){
+var item = cljs.core._nth.call(null,c__19242__auto__,i__25881);
+cljs.core.chunk_append.call(null,b__25882,mokepon.views.shop.shop_item_view.call(null,item,shop_item_available_handler,buy_item_handler));
 
-var G__23793 = (i__23791 + (1));
-i__23791 = G__23793;
+var G__25883 = (i__25881 + (1));
+i__25881 = G__25883;
 continue;
 } else {
 return true;
@@ -39,13 +39,13 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__23792),mokepon$views$shop$view_$_iter__23789.call(null,cljs.core.chunk_rest.call(null,s__23790__$2)));
+return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__25882),mokepon$views$shop$view_$_iter__25879.call(null,cljs.core.chunk_rest.call(null,s__25880__$2)));
 } else {
-return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__23792),null);
+return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__25882),null);
 }
 } else {
-var item = cljs.core.first.call(null,s__23790__$2);
-return cljs.core.cons.call(null,mokepon.views.shop.shop_item_view.call(null,item,shop_item_available_handler,buy_item_handler),mokepon$views$shop$view_$_iter__23789.call(null,cljs.core.rest.call(null,s__23790__$2)));
+var item = cljs.core.first.call(null,s__25880__$2);
+return cljs.core.cons.call(null,mokepon.views.shop.shop_item_view.call(null,item,shop_item_available_handler,buy_item_handler),mokepon$views$shop$view_$_iter__25879.call(null,cljs.core.rest.call(null,s__25880__$2)));
 }
 } else {
 return null;
