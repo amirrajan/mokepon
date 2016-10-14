@@ -1,6 +1,7 @@
 (ns mokepon.rpg
   (:require [mokepon.locations :refer [location-monsters]]
             [mokepon.monsters :as monsters]
+            [mokepon.shop :as shop]
             [clojure.string :as string]))
 
 (defn new-game []
@@ -95,6 +96,14 @@
 (defn item-count [game-state item-key]
   (or (get-in game-state [:items item-key]) 0))
 
+(defn add-text-message [game-state from text]
+  (update-in (assoc game-state :shop-unlocked true)
+               [:messages]
+               #(conj % {:from from
+                         :text text
+                         :day 0
+                         :seen? false})))
+
 (defn use-candy [game-state]
   (when-let [has-candy? (pos? (item-count game-state :candy))]
     (-> game-state
@@ -104,10 +113,14 @@
         (conj-play-by-play (:name (chosen-monster game-state))
                            " has eated the delicious candy and was healed for 10 hp."))))
 
+(defn index-of-monster-id [game-state monster-id]
+  (let [mokedex-monsters (get-in game-state [:mokedex :monsters])
+        mokedex-index (index-of #(= monster-id (:id %)) mokedex-monsters)]
+    mokedex-index))
+
 (defn mokedex-captured [game-state monster-id]
-  (let [team-monster (get-in game-state [:team monster-id])
-        mokedex-monsters (get-in game-state [:mokedex :monsters])
-        mokedex-index (index-of #(= monster-id (:id %)) mokedex-monsters)
+  (let [mokedex-index (index-of-monster-id game-state monster-id)
+
         path [:mokedex :monsters mokedex-index]]
     (cond mokedex-index
           (update-in game-state
@@ -123,13 +136,7 @@
 (defn mark-captured-in-mokedex [game-state monster-ids]
   (reduce mokedex-captured game-state monster-ids))
 
-(defn add-text-message [game-state from text]
-  (update-in (assoc game-state :shop-unlocked true)
-               [:messages]
-               #(conj % {:from from
-                         :text text
-                         :day 0
-                         :seen? false})))
+
 
 (defn unlock-shop [game-state]
   (cond (not (:shop-unlocked game-state))
@@ -143,6 +150,15 @@
   (unlock-shop
    (mokedex-captured (assoc-in game-state [:team :chipu] monsters/chipu) :chipu)))
 
+(defn text-for-unlocked-items [game-state from-shop-items]
+  (if (= from-shop-items (shop/available-shop-items game-state))
+
+    game-state
+
+    (add-text-message game-state
+                      :midget
+                      "Hey kid. I got some new wares for sale. Come by.")))
+
 (defn throw-mokebox [game-state]
   (let [battling (:battling game-state)
         {:keys [max-hp hp]} battling
@@ -151,6 +167,7 @@
         captured? (> capture-chance roll)
         has-mokebox? (get-in game-state [:items :mokebox])
         game-state-with-used-mokebox (update-in game-state [:items :mokebox] dec)
+        previous-available-items (shop/available-shop-items game-state)
         new-team (assoc (:team game-state) (:id battling) battling)]
     (cond
       has-mokebox?
@@ -163,7 +180,8 @@
              "The Mokébox knocks out the "
              (get-in game-state [:battling :name])
              ". It's been captured.")
-            (mokedex-captured (get-in game-state [:battling :id])))
+            (mokedex-captured (get-in game-state [:battling :id]))
+            (text-for-unlocked-items previous-available-items))
         :else
         (conj-play-by-play
          game-state-with-used-mokebox
@@ -280,12 +298,14 @@
     game-state))
 
 (defn remove-dead-team-members [game-state]
-  (let [dead-keys (dead-team-member-keys game-state)
+  (let [previous-shop-items (shop/available-shop-items game-state)
+        dead-keys (dead-team-member-keys game-state)
         new-state (update-in game-state
                              [:team]
                              #(apply dissoc % dead-keys))]
     (-> new-state
         (mark-captured-in-mokedex dead-keys)
+        (text-for-unlocked-items previous-shop-items)
         (text-from-mom dead-keys))))
 
 (defn buy-item [game-state item-id shop-items-lookup]
