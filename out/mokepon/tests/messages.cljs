@@ -8,6 +8,7 @@
                                         make-chosen-attack-ready
                                         reset-game]]
             [mokepon.monsters :as mon]
+            [mokepon.shop :as shop]
             [mokepon.rpg :as rpg]
             [mokepon.container :as tnr]))
 
@@ -35,6 +36,7 @@
   (is (= (get-state :messages 2 :text) nil))
 
   (reset! (tnr/app-state) (rpg/new-game))
+
   (tnr/take-chipu!)
 
   (swap! (tnr/app-state) assoc-in [:team :sulbabaur] mon/sulbabaur)
@@ -83,3 +85,28 @@
     (is (= (:from midget-message) :midget))
 
     (is (= (:seen? midget-message) false))))
+
+(deftest shop-owner-texts-of-new-items
+  (let [previous-shop-items
+        (shop/available-shop-items @(tnr/app-state))]
+    (swap! (tnr/app-state)
+           rpg/mark-captured-in-mokedex
+           [:chipu
+            :sulbabaur
+            :deogude
+            :tirsqule])
+
+    (swap! (tnr/app-state)
+           rpg/text-for-unlocked-items
+           previous-shop-items
+           (shop/shop-items))
+
+    (let [midget-message (get-state :messages 2)]
+      (is (= (:text midget-message)
+             "Hey kid. I got some new wares for sale. Come by."))
+
+      (is (= (:day midget-message) 0))
+
+      (is (= (:from midget-message) :midget))
+
+      (is (= (:seen? midget-message) false)))))

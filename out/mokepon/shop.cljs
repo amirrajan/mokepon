@@ -23,6 +23,14 @@
     :cost 25
     :available-if (captured-monsters-gt-eq 4)}])
 
+(defn shop-item-available? [game-state item]
+  ((:available-if item) game-state))
+
+(defn available-shop-items [game-state]
+  (->> (shop-items)
+       (filter #(shop-item-available? game-state %))
+       (map :id)))
+
 (defn shop-items-lookup []
   (into {}
         (map (fn [item] [(:id item) item])

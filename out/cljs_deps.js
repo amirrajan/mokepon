@@ -28,12 +28,12 @@ goog.addDependency("../com/cognitect/transit.js", ['com.cognitect.transit'], ['c
 goog.addDependency("../cognitect/transit.js", ['cognitect.transit'], ['com.cognitect.transit.eq', 'cljs.core', 'com.cognitect.transit.types', 'com.cognitect.transit', 'goog.math.Long']);
 goog.addDependency("../alandipert/storage_atom.js", ['alandipert.storage_atom'], ['goog.Timer', 'cljs.core', 'cognitect.transit', 'clojure.string']);
 goog.addDependency("../mokepon/locations.js", ['mokepon.locations'], ['mokepon.monsters', 'cljs.core']);
-goog.addDependency("../mokepon/rpg.js", ['mokepon.rpg'], ['mokepon.monsters', 'cljs.core', 'mokepon.locations', 'clojure.string']);
+goog.addDependency("../mokepon/rpg.js", ['mokepon.rpg'], ['mokepon.monsters', 'cljs.core', 'mokepon.shop', 'mokepon.locations', 'clojure.string']);
 goog.addDependency("../mokepon/container.js", ['mokepon.container'], ['mokepon.components', 'mokepon.monsters', 'cljs.core', 'mokepon.shop', 'alandipert.storage_atom', 'sablono.core', 'mokepon.locations', 'mokepon.rpg', 'clojure.string']);
 goog.addDependency("../mokepon/tests/core.js", ['mokepon.tests.core'], ['mokepon.monsters', 'cljs.core', 'cljs.test', 'mokepon.container', 'mokepon.rpg']);
 goog.addDependency("../mokepon/tests/shop.js", ['mokepon.tests.shop'], ['mokepon.monsters', 'cljs.core', 'mokepon.shop', 'cljs.test', 'mokepon.container', 'mokepon.rpg', 'mokepon.tests.core']);
 goog.addDependency("../mokepon/tests/affinities.js", ['mokepon.tests.affinities'], ['mokepon.monsters', 'cljs.core', 'cljs.test', 'mokepon.container', 'mokepon.rpg', 'mokepon.tests.core']);
-goog.addDependency("../mokepon/tests/messages.js", ['mokepon.tests.messages'], ['mokepon.monsters', 'cljs.core', 'cljs.test', 'mokepon.container', 'mokepon.rpg', 'mokepon.tests.core']);
+goog.addDependency("../mokepon/tests/messages.js", ['mokepon.tests.messages'], ['mokepon.monsters', 'cljs.core', 'mokepon.shop', 'cljs.test', 'mokepon.container', 'mokepon.rpg', 'mokepon.tests.core']);
 goog.addDependency("../mokepon/tests/mokedex.js", ['mokepon.tests.mokedex'], ['mokepon.monsters', 'cljs.core', 'cljs.test', 'mokepon.container', 'mokepon.rpg', 'mokepon.tests.core']);
 goog.addDependency("../mokepon/tests/battle.js", ['mokepon.tests.battle'], ['mokepon.monsters', 'cljs.core', 'cljs.test', 'mokepon.container', 'mokepon.rpg', 'mokepon.tests.core']);
 goog.addDependency("../mokepon/tests/home.js", ['mokepon.tests.home'], ['mokepon.monsters', 'cljs.core', 'cljs.test', 'mokepon.container', 'mokepon.rpg', 'mokepon.tests.core']);
