@@ -36,7 +36,6 @@
                      battling
                      go-to-location-handler
                      attack-handler
-                     go-to-location-handler
                      active-turn-threshold
                      items
                      throw-mokebox-handler
@@ -173,96 +172,3 @@
                 :margin-top "100px"}
         :on-click restart-game-handler
         :href "javascript:;"} "[restart game]" ]])
-
-(defn rpg-view [game-state
-                take-chipu-handler
-                go-to-location-handler
-                find-trouble-handler
-                choosable-monsters
-                chosen
-                chosen-can-attack?
-                battle-over?
-                attack-handler
-                sleep-at-home-handler
-                active-turn-threshold
-                shop-items
-                shop-items-lookup
-                buy-item-handler
-                throw-mokebox-handler
-                choose-monster-handler
-                candy-handler
-                location-available-handler
-                location-info
-                shop-item-available-handler
-                restart-game-handler
-                new-message-count
-                view-messages-handler
-                mark-location-as-seen-handler
-                location-seen?-handler]
-  (let [{:keys [location
-                team
-                team-at-home
-                battling
-                cash
-                items
-                play-by-play
-                mokedex
-                messages]} game-state
-        top-level-battle-locations [:forest :canyon :pool]]
-    [:div
-     [:div {:style {:float "right" :font-weight :bold :font-size :larger}} "Cash: $" cash]
-     (cond
-       (= location :outside)
-       (outside-view location
-                     team
-                     go-to-location-handler
-                     location-available-handler
-                     location-info
-                     new-message-count
-                     mark-location-as-seen-handler
-                     location-seen?-handler)
-
-       (some #{location} top-level-battle-locations)
-       (location-view (:awesome-text (location location-info))
-                      team
-                      find-trouble-handler
-                      choosable-monsters
-                      chosen
-                      chosen-can-attack?
-                      battle-over?
-                      battling
-                      go-to-location-handler
-                      attack-handler
-                      go-to-location-handler
-                      active-turn-threshold
-                      items
-                      throw-mokebox-handler
-                      choose-monster-handler
-                      candy-handler)
-
-       (= location :home)
-       (home-view team
-                  team-at-home
-                  take-chipu-handler
-                  go-to-location-handler
-                  sleep-at-home-handler)
-
-       (= location :shop)
-       (shop/view shop-items
-                   buy-item-handler
-                   go-to-location-handler
-                   shop-item-available-handler)
-
-       (= location :phone)
-       (phone-view go-to-location-handler view-messages-handler)
-
-       (= location :messages)
-       (messages-view messages go-to-location-handler)
-
-       (= location :mokedex)
-       (mokedex/view go-to-location-handler mokedex)
-
-       :else
-       (section (str "Location " location " not handled.")
-                (a "Go back." #(go-to-location-handler :outside))))
-     (status-view items shop-items-lookup team play-by-play restart-game-handler)]))

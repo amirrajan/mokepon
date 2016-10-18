@@ -16,6 +16,9 @@
                         :figwheel true
                         :compiler {:output-to "mokepon-dev.js"
                                    :output-dir "out-dev"
+                                   :optimizations :none
+                                   :source-map true
+                                   :pretty-print true
                                    :main mokepon.core}}
                        {:id "prod"
                         :source-paths ["src"]
