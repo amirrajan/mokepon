@@ -1,10 +1,14 @@
 // Compiled by ClojureScript 1.9.76 {}
 goog.provide('mokepon.container');
 goog.require('cljs.core');
+goog.require('mokepon.views.mokedex');
 goog.require('mokepon.components');
+goog.require('mokepon.elements');
 goog.require('mokepon.monsters');
+goog.require('mokepon.views.shop');
 goog.require('mokepon.shop');
 goog.require('alandipert.storage_atom');
+goog.require('mokepon.views.battle');
 goog.require('sablono.core');
 goog.require('clojure.string');
 goog.require('mokepon.locations');
@@ -39,14 +43,14 @@ return cljs.core.reset_BANG_.call(null,mokepon.container.app_state.call(null),mo
 });
 mokepon.container.get_state = (function mokepon$container$get_state(var_args){
 var args__19546__auto__ = [];
-var len__19539__auto___23736 = arguments.length;
-var i__19540__auto___23737 = (0);
+var len__19539__auto___23750 = arguments.length;
+var i__19540__auto___23751 = (0);
 while(true){
-if((i__19540__auto___23737 < len__19539__auto___23736)){
-args__19546__auto__.push((arguments[i__19540__auto___23737]));
+if((i__19540__auto___23751 < len__19539__auto___23750)){
+args__19546__auto__.push((arguments[i__19540__auto___23751]));
 
-var G__23738 = (i__19540__auto___23737 + (1));
-i__19540__auto___23737 = G__23738;
+var G__23752 = (i__19540__auto___23751 + (1));
+i__19540__auto___23751 = G__23752;
 continue;
 } else {
 }
@@ -63,8 +67,8 @@ return cljs.core.get_in.call(null,cljs.core.deref.call(null,mokepon.container.ap
 
 mokepon.container.get_state.cljs$lang$maxFixedArity = (0);
 
-mokepon.container.get_state.cljs$lang$applyTo = (function (seq23735){
-return mokepon.container.get_state.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq23735));
+mokepon.container.get_state.cljs$lang$applyTo = (function (seq23749){
+return mokepon.container.get_state.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq23749));
 });
 
 mokepon.container.log = (function mokepon$container$log(o){
@@ -72,14 +76,14 @@ return console.log(cljs.core.clj__GT_js.call(null,o));
 });
 mokepon.container.log_state = (function mokepon$container$log_state(var_args){
 var args__19546__auto__ = [];
-var len__19539__auto___23740 = arguments.length;
-var i__19540__auto___23741 = (0);
+var len__19539__auto___23754 = arguments.length;
+var i__19540__auto___23755 = (0);
 while(true){
-if((i__19540__auto___23741 < len__19539__auto___23740)){
-args__19546__auto__.push((arguments[i__19540__auto___23741]));
+if((i__19540__auto___23755 < len__19539__auto___23754)){
+args__19546__auto__.push((arguments[i__19540__auto___23755]));
 
-var G__23742 = (i__19540__auto___23741 + (1));
-i__19540__auto___23741 = G__23742;
+var G__23756 = (i__19540__auto___23755 + (1));
+i__19540__auto___23755 = G__23756;
 continue;
 } else {
 }
@@ -96,8 +100,8 @@ return mokepon.container.log.call(null,cljs.core.apply.call(null,mokepon.contain
 
 mokepon.container.log_state.cljs$lang$maxFixedArity = (0);
 
-mokepon.container.log_state.cljs$lang$applyTo = (function (seq23739){
-return mokepon.container.log_state.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq23739));
+mokepon.container.log_state.cljs$lang$applyTo = (function (seq23753){
+return mokepon.container.log_state.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq23753));
 });
 
 mokepon.container.team_count = (function mokepon$container$team_count(){
@@ -107,8 +111,8 @@ mokepon.container.clear_battle_BANG_ = (function mokepon$container$clear_battle_
 return cljs.core.swap_BANG_.call(null,mokepon.container.app_state.call(null),cljs.core.assoc,new cljs.core.Keyword(null,"chosen-key","chosen-key",-1773168355),null,new cljs.core.Keyword(null,"battling","battling",-129800115),null);
 });
 mokepon.container.decrement_item_BANG_ = (function mokepon$container$decrement_item_BANG_(item_key){
-return cljs.core.swap_BANG_.call(null,mokepon.container.app_state.call(null),cljs.core.update_in,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"items","items",1031954938),item_key], null),(function (p1__23743_SHARP_){
-return ((function (){var or__18464__auto__ = p1__23743_SHARP_;
+return cljs.core.swap_BANG_.call(null,mokepon.container.app_state.call(null),cljs.core.update_in,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"items","items",1031954938),item_key], null),(function (p1__23757_SHARP_){
+return ((function (){var or__18464__auto__ = p1__23757_SHARP_;
 if(cljs.core.truth_(or__18464__auto__)){
 return or__18464__auto__;
 } else {
@@ -127,14 +131,14 @@ return (0);
 });
 mokepon.container.add_to_play_by_play = (function mokepon$container$add_to_play_by_play(var_args){
 var args__19546__auto__ = [];
-var len__19539__auto___23746 = arguments.length;
-var i__19540__auto___23747 = (0);
+var len__19539__auto___23760 = arguments.length;
+var i__19540__auto___23761 = (0);
 while(true){
-if((i__19540__auto___23747 < len__19539__auto___23746)){
-args__19546__auto__.push((arguments[i__19540__auto___23747]));
+if((i__19540__auto___23761 < len__19539__auto___23760)){
+args__19546__auto__.push((arguments[i__19540__auto___23761]));
 
-var G__23748 = (i__19540__auto___23747 + (1));
-i__19540__auto___23747 = G__23748;
+var G__23762 = (i__19540__auto___23761 + (1));
+i__19540__auto___23761 = G__23762;
 continue;
 } else {
 }
@@ -151,22 +155,22 @@ return cljs.core.update.call(null,app_state,new cljs.core.Keyword(null,"play-by-
 
 mokepon.container.add_to_play_by_play.cljs$lang$maxFixedArity = (1);
 
-mokepon.container.add_to_play_by_play.cljs$lang$applyTo = (function (seq23744){
-var G__23745 = cljs.core.first.call(null,seq23744);
-var seq23744__$1 = cljs.core.next.call(null,seq23744);
-return mokepon.container.add_to_play_by_play.cljs$core$IFn$_invoke$arity$variadic(G__23745,seq23744__$1);
+mokepon.container.add_to_play_by_play.cljs$lang$applyTo = (function (seq23758){
+var G__23759 = cljs.core.first.call(null,seq23758);
+var seq23758__$1 = cljs.core.next.call(null,seq23758);
+return mokepon.container.add_to_play_by_play.cljs$core$IFn$_invoke$arity$variadic(G__23759,seq23758__$1);
 });
 
 mokepon.container.add_to_play_by_play_BANG_ = (function mokepon$container$add_to_play_by_play_BANG_(var_args){
 var args__19546__auto__ = [];
-var len__19539__auto___23750 = arguments.length;
-var i__19540__auto___23751 = (0);
+var len__19539__auto___23764 = arguments.length;
+var i__19540__auto___23765 = (0);
 while(true){
-if((i__19540__auto___23751 < len__19539__auto___23750)){
-args__19546__auto__.push((arguments[i__19540__auto___23751]));
+if((i__19540__auto___23765 < len__19539__auto___23764)){
+args__19546__auto__.push((arguments[i__19540__auto___23765]));
 
-var G__23752 = (i__19540__auto___23751 + (1));
-i__19540__auto___23751 = G__23752;
+var G__23766 = (i__19540__auto___23765 + (1));
+i__19540__auto___23765 = G__23766;
 continue;
 } else {
 }
@@ -183,8 +187,8 @@ return cljs.core.swap_BANG_.call(null,mokepon.container.app_state.call(null),mok
 
 mokepon.container.add_to_play_by_play_BANG_.cljs$lang$maxFixedArity = (0);
 
-mokepon.container.add_to_play_by_play_BANG_.cljs$lang$applyTo = (function (seq23749){
-return mokepon.container.add_to_play_by_play_BANG_.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq23749));
+mokepon.container.add_to_play_by_play_BANG_.cljs$lang$applyTo = (function (seq23763){
+return mokepon.container.add_to_play_by_play_BANG_.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq23763));
 });
 
 mokepon.container.choose_monster_BANG_ = (function mokepon$container$choose_monster_BANG_(team_key){
@@ -289,12 +293,12 @@ mokepon.container.attack = (function mokepon$container$attack(app_state,battling
 return cljs.core.assoc.call(null,app_state,new cljs.core.Keyword(null,"battling","battling",-129800115),battling,new cljs.core.Keyword(null,"team","team",1355747699),cljs.core.assoc.call(null,new cljs.core.Keyword(null,"team","team",1355747699).cljs$core$IFn$_invoke$arity$1(app_state),new cljs.core.Keyword(null,"chosen-key","chosen-key",-1773168355).cljs$core$IFn$_invoke$arity$1(app_state),chosen),new cljs.core.Keyword(null,"play-by-play","play-by-play",-670955732),play_by_play,new cljs.core.Keyword(null,"cash","cash",181122222),(new cljs.core.Keyword(null,"cash","cash",181122222).cljs$core$IFn$_invoke$arity$1(app_state) + cash_reward));
 });
 mokepon.container.attack_BANG_ = (function mokepon$container$attack_BANG_(){
-var map__23755 = mokepon.rpg.apply_player_attack.call(null,mokepon.container.app_state_chosen_monster.call(null),mokepon.container.app_state_battling.call(null),mokepon.container.get_state.call(null,new cljs.core.Keyword(null,"play-by-play","play-by-play",-670955732)));
-var map__23755__$1 = ((((!((map__23755 == null)))?((((map__23755.cljs$lang$protocol_mask$partition0$ & (64))) || (map__23755.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__23755):map__23755);
-var battling = cljs.core.get.call(null,map__23755__$1,new cljs.core.Keyword(null,"battling","battling",-129800115));
-var chosen = cljs.core.get.call(null,map__23755__$1,new cljs.core.Keyword(null,"chosen","chosen",-1422409985));
-var play_by_play = cljs.core.get.call(null,map__23755__$1,new cljs.core.Keyword(null,"play-by-play","play-by-play",-670955732));
-var cash_reward = cljs.core.get.call(null,map__23755__$1,new cljs.core.Keyword(null,"cash-reward","cash-reward",-1354225094));
+var map__23769 = mokepon.rpg.apply_player_attack.call(null,mokepon.container.app_state_chosen_monster.call(null),mokepon.container.app_state_battling.call(null),mokepon.container.get_state.call(null,new cljs.core.Keyword(null,"play-by-play","play-by-play",-670955732)));
+var map__23769__$1 = ((((!((map__23769 == null)))?((((map__23769.cljs$lang$protocol_mask$partition0$ & (64))) || (map__23769.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__23769):map__23769);
+var battling = cljs.core.get.call(null,map__23769__$1,new cljs.core.Keyword(null,"battling","battling",-129800115));
+var chosen = cljs.core.get.call(null,map__23769__$1,new cljs.core.Keyword(null,"chosen","chosen",-1422409985));
+var play_by_play = cljs.core.get.call(null,map__23769__$1,new cljs.core.Keyword(null,"play-by-play","play-by-play",-670955732));
+var cash_reward = cljs.core.get.call(null,map__23769__$1,new cljs.core.Keyword(null,"cash-reward","cash-reward",-1354225094));
 return cljs.core.swap_BANG_.call(null,mokepon.container.app_state.call(null),mokepon.container.attack,battling,chosen,play_by_play,cash_reward);
 });
 mokepon.container.set_battle_BANG_ = (function mokepon$container$set_battle_BANG_(chosen_key,battling){
@@ -342,9 +346,29 @@ mokepon.container.app_state_location_seen_QMARK_ = (function mokepon$container$a
 return cljs.core.get_in.call(null,cljs.core.deref.call(null,mokepon.container.app_state.call(null)),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"locations-seen","locations-seen",-63123011),loc,new cljs.core.Keyword(null,"seen?","seen?",-1677689856)], null));
 });
 mokepon.container.rpg_container = (function mokepon$container$rpg_container(){
-return sablono.interpreter.interpret.call(null,mokepon.components.rpg_view.call(null,cljs.core.deref.call(null,mokepon.container.app_state.call(null)),mokepon.container.take_chipu_BANG_,mokepon.container.go_to_location_BANG_,(function (){
+return sablono.interpreter.interpret.call(null,(function (){var map__23773 = cljs.core.deref.call(null,mokepon.container.app_state.call(null));
+var map__23773__$1 = ((((!((map__23773 == null)))?((((map__23773.cljs$lang$protocol_mask$partition0$ & (64))) || (map__23773.cljs$core$ISeq$))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__23773):map__23773);
+var location = cljs.core.get.call(null,map__23773__$1,new cljs.core.Keyword(null,"location","location",1815599388));
+var team = cljs.core.get.call(null,map__23773__$1,new cljs.core.Keyword(null,"team","team",1355747699));
+var team_at_home = cljs.core.get.call(null,map__23773__$1,new cljs.core.Keyword(null,"team-at-home","team-at-home",-1793865184));
+var battling = cljs.core.get.call(null,map__23773__$1,new cljs.core.Keyword(null,"battling","battling",-129800115));
+var cash = cljs.core.get.call(null,map__23773__$1,new cljs.core.Keyword(null,"cash","cash",181122222));
+var items = cljs.core.get.call(null,map__23773__$1,new cljs.core.Keyword(null,"items","items",1031954938));
+var play_by_play = cljs.core.get.call(null,map__23773__$1,new cljs.core.Keyword(null,"play-by-play","play-by-play",-670955732));
+var mokedex = cljs.core.get.call(null,map__23773__$1,new cljs.core.Keyword(null,"mokedex","mokedex",-1954142182));
+var messages = cljs.core.get.call(null,map__23773__$1,new cljs.core.Keyword(null,"messages","messages",345434482));
+var top_level_battle_locations = new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"forest","forest",278860306),new cljs.core.Keyword(null,"canyon","canyon",-310776600),new cljs.core.Keyword(null,"pool","pool",-1814211613)], null);
+return new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"style","style",-496642736),new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"float","float",-1732389368),"right",new cljs.core.Keyword(null,"font-weight","font-weight",2085804583),new cljs.core.Keyword(null,"bold","bold",-116809535),new cljs.core.Keyword(null,"font-size","font-size",-1847940346),new cljs.core.Keyword(null,"larger","larger",1304935444)], null)], null),"Cash: $",cash], null),((cljs.core._EQ_.call(null,location,new cljs.core.Keyword(null,"outside","outside",-13164995)))?mokepon.components.outside_view.call(null,location,team,mokepon.container.go_to_location_BANG_,mokepon.container.location_available_QMARK_,mokepon.locations.location_info.call(null),mokepon.container.app_state_new_message_count.call(null),mokepon.container.mark_location_as_seen_BANG_,mokepon.container.app_state_location_seen_QMARK_):(cljs.core.truth_(cljs.core.some.call(null,cljs.core.PersistentHashSet.fromArray([location], true),top_level_battle_locations))?mokepon.components.location_view.call(null,new cljs.core.Keyword(null,"awesome-text","awesome-text",-462971013).cljs$core$IFn$_invoke$arity$1(location.call(null,mokepon.locations.location_info.call(null))),team,((function (map__23773,map__23773__$1,location,team,team_at_home,battling,cash,items,play_by_play,mokedex,messages,top_level_battle_locations){
+return (function (){
 return mokepon.container.find_trouble_BANG_.call(null,true);
-}),mokepon.rpg.choosable_monsters.call(null,mokepon.container.get_state.call(null,new cljs.core.Keyword(null,"team","team",1355747699))),mokepon.container.app_state_chosen_monster.call(null),mokepon.container.chosen_can_attack_QMARK_.call(null),mokepon.rpg.battle_over_QMARK_.call(null,mokepon.container.app_state_chosen_monster.call(null),mokepon.container.app_state_battling.call(null)),mokepon.container.attack_BANG_,mokepon.container.sleep_at_home_BANG_,mokepon.rpg.active_turn_threshold,mokepon.shop.shop_items.call(null),mokepon.shop.shop_items_lookup.call(null),mokepon.container.buy_item_BANG_,mokepon.container.throw_mokebox_BANG_,mokepon.container.choose_monster_BANG_,mokepon.container.use_candy_BANG_,mokepon.container.location_available_QMARK_,mokepon.locations.location_info.call(null),mokepon.container.shop_item_available_QMARK_,mokepon.container.reset_game_BANG_,mokepon.container.app_state_new_message_count.call(null),mokepon.container.view_messages_BANG_,mokepon.container.mark_location_as_seen_BANG_,mokepon.container.app_state_location_seen_QMARK_));
+});})(map__23773,map__23773__$1,location,team,team_at_home,battling,cash,items,play_by_play,mokedex,messages,top_level_battle_locations))
+,mokepon.rpg.choosable_monsters.call(null,mokepon.container.get_state.call(null,new cljs.core.Keyword(null,"team","team",1355747699))),mokepon.container.app_state_chosen_monster.call(null),mokepon.container.chosen_can_attack_QMARK_.call(null),mokepon.rpg.battle_over_QMARK_.call(null,mokepon.container.app_state_chosen_monster.call(null),mokepon.container.app_state_battling.call(null)),battling,mokepon.container.go_to_location_BANG_,mokepon.container.attack_BANG_,mokepon.rpg.active_turn_threshold,items,mokepon.container.throw_mokebox_BANG_,mokepon.container.choose_monster_BANG_,mokepon.container.use_candy_BANG_):((cljs.core._EQ_.call(null,location,new cljs.core.Keyword(null,"home","home",-74557309)))?mokepon.components.home_view.call(null,team,team_at_home,mokepon.container.take_chipu_BANG_,mokepon.container.go_to_location_BANG_,mokepon.container.sleep_at_home_BANG_):((cljs.core._EQ_.call(null,location,new cljs.core.Keyword(null,"shop","shop",-823644406)))?mokepon.views.shop.view.call(null,mokepon.shop.shop_items.call(null),mokepon.container.buy_item_BANG_,mokepon.container.go_to_location_BANG_,mokepon.container.shop_item_available_QMARK_):((cljs.core._EQ_.call(null,location,new cljs.core.Keyword(null,"phone","phone",-763596057)))?mokepon.components.phone_view.call(null,mokepon.container.go_to_location_BANG_,mokepon.container.view_messages_BANG_):((cljs.core._EQ_.call(null,location,new cljs.core.Keyword(null,"messages","messages",345434482)))?mokepon.components.messages_view.call(null,messages,mokepon.container.go_to_location_BANG_):((cljs.core._EQ_.call(null,location,new cljs.core.Keyword(null,"mokedex","mokedex",-1954142182)))?mokepon.views.mokedex.view.call(null,mokepon.container.go_to_location_BANG_,mokedex):mokepon.elements.section.call(null,[cljs.core.str("Location "),cljs.core.str(location),cljs.core.str(" not handled.")].join(''),mokepon.elements.a.call(null,"Go back.",((function (map__23773,map__23773__$1,location,team,team_at_home,battling,cash,items,play_by_play,mokedex,messages,top_level_battle_locations){
+return (function (){
+return mokepon.container.go_to_location_BANG_.call(null,new cljs.core.Keyword(null,"outside","outside",-13164995));
+});})(map__23773,map__23773__$1,location,team,team_at_home,battling,cash,items,play_by_play,mokedex,messages,top_level_battle_locations))
+))
+))))))),mokepon.components.status_view.call(null,items,mokepon.shop.shop_items_lookup.call(null),team,play_by_play,mokepon.container.reset_game_BANG_)], null);
+})());
 });
 mokepon.container.render_BANG_ = (function mokepon$container$render_BANG_(){
 return React.render(mokepon.container.rpg_container.call(null),document.getElementById("app"));

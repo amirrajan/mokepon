@@ -1,31 +1,21 @@
 (ns mokepon.container
   (:require [sablono.core :as sab]
+            [alandipert.storage-atom :refer [local-storage]]
             [mokepon.monsters :refer [chipu sulbabaur deogude tirsqule]]
             [mokepon.shop :refer [shop-items shop-items-lookup]]
             [mokepon.locations :refer [location-info]]
-            [alandipert.storage-atom :refer [local-storage]]
-            [mokepon.rpg :refer [new-game
-                                 is-dead?
-                                 battle-over?
-                                 tick-battle
-                                 apply-player-attack
-                                 can-attack?
-                                 heal-team
-                                 choosable-monsters
-                                 buy-item
-                                 use-candy
-                                 find-trouble
-                                 reset-team-at
-                                 choose-monster
-                                 chosen-monster
-                                 throw-mokebox
-                                 remove-dead-team-members
-                                 take-chipu
-                                 set-battle
-                                 new-message-count
-                                 mark-messages-as-read
-                                 active-turn-threshold]]
-            [mokepon.components :refer [rpg-view]]
+            [mokepon.elements :refer [a section]]
+            [mokepon.views.mokedex :as mokedex]
+            [mokepon.views.battle :as battle]
+            [mokepon.views.shop :as shop]
+            [mokepon.rpg :refer [new-game is-dead? battle-over?
+                                 tick-battle apply-player-attack can-attack?
+                                 heal-team choosable-monsters buy-item
+                                 use-candy find-trouble reset-team-at
+                                 choose-monster chosen-monster throw-mokebox
+                                 remove-dead-team-members take-chipu set-battle
+                                 new-message-count mark-messages-as-read active-turn-threshold]]
+            [mokepon.components :as com]
             [clojure.string :as string]))
 
 (defn alert [message] #(.alert js/window message))
@@ -230,31 +220,72 @@
 
 (defn rpg-container []
   (sab/html
-   (rpg-view @(app-state)
-             take-chipu!
-             go-to-location!
-             #(find-trouble! true)
-             (choosable-monsters (get-state :team))
-             (app-state-chosen-monster)
-             (chosen-can-attack?)
-             (battle-over? (app-state-chosen-monster) (app-state-battling))
-             attack!
-             sleep-at-home!
-             active-turn-threshold
-             (shop-items)
-             (shop-items-lookup)
-             buy-item!
-             throw-mokebox!
-             choose-monster!
-             use-candy!
-             location-available?
-             (location-info)
-             shop-item-available?
-             reset-game!
-             (app-state-new-message-count)
-             view-messages!
-             mark-location-as-seen!
-             app-state-location-seen?)))
+   (let [{:keys [location
+                 team
+                 team-at-home
+                 battling
+                 cash
+                 items
+                 play-by-play
+                 mokedex
+                 messages]} @(app-state)
+         top-level-battle-locations [:forest :canyon :pool]]
+     [:div
+      [:div {:style {:float "right" :font-weight :bold :font-size :larger}} "Cash: $" cash]
+      (cond
+        (= location :outside)
+        (com/outside-view location
+                          team
+                          go-to-location!
+                          location-available?
+                          (location-info)
+                          (app-state-new-message-count)
+                          mark-location-as-seen!
+                          app-state-location-seen?)
+
+        (some #{location} top-level-battle-locations)
+        (com/location-view (:awesome-text (location (location-info)))
+                           team
+                           #(find-trouble! true)
+                           (choosable-monsters (get-state :team))
+                           (app-state-chosen-monster)
+                           (chosen-can-attack?)
+                           (battle-over? (app-state-chosen-monster) (app-state-battling))
+                           battling
+                           go-to-location!
+                           attack!
+                           active-turn-threshold
+                           items
+                           throw-mokebox!
+                           choose-monster!
+                           use-candy!)
+
+        (= location :home)
+        (com/home-view team
+                       team-at-home
+                       take-chipu!
+                       go-to-location!
+                       sleep-at-home!)
+
+        (= location :shop)
+        (shop/view (shop-items)
+                   buy-item!
+                   go-to-location!
+                   shop-item-available?)
+
+        (= location :phone)
+        (com/phone-view go-to-location! view-messages!)
+
+        (= location :messages)
+        (com/messages-view messages go-to-location!)
+
+        (= location :mokedex)
+        (mokedex/view go-to-location! mokedex)
+
+        :else
+        (section (str "Location " location " not handled.")
+                 (a "Go back." #(go-to-location! :outside))))
+      (com/status-view items (shop-items-lookup) team play-by-play reset-game!)])))
 
 (defn render! []
   (.render js/React
