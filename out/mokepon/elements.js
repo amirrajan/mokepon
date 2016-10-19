@@ -1,6 +1,8 @@
 // Compiled by ClojureScript 1.9.76 {}
 goog.provide('mokepon.elements');
 goog.require('cljs.core');
+goog.require('cljsjs.react');
+goog.require('cljsjs.react.dom');
 goog.require('sablono.core');
 mokepon.elements.fade_in = (function mokepon$elements$fade_in(elem){
 elem.style.transition = "opacity 1000ms";
@@ -10,14 +12,14 @@ elem.style._webkit_transition = "opacity 1000ms";
 return elem.style.opacity = (1);
 });
 mokepon.elements.from_component_definition = (function mokepon$elements$from_component_definition(component,props,children){
-return React.createElement(component,cljs.core.clj__GT_js.call(null,props),sablono.interpreter.interpret.call(null,children));
+return React.createElement.call(null,component,cljs.core.clj__GT_js.call(null,props),sablono.interpreter.interpret.call(null,children));
 });
-mokepon.elements.fade_in_component_definition = React.createClass({"render": (function (){
+mokepon.elements.fade_in_component_definition = React.createClass.call(null,{"render": (function (){
 var this$ = this;
-return React.createElement("div",cljs.core.clj__GT_js.call(null,new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"style","style",-496642736),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"margin","margin",-995903681),"0",new cljs.core.Keyword(null,"padding","padding",1660304693),"0"], null)], null)),this$.props.children);
+return React.createElement.call(null,"div",cljs.core.clj__GT_js.call(null,new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"style","style",-496642736),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"margin","margin",-995903681),"0",new cljs.core.Keyword(null,"padding","padding",1660304693),"0"], null)], null)),this$.props.children);
 }), "componentDidMount": (function (){
 var this$ = this;
-var elem = this$.getDOMNode();
+var elem = ReactDOM.findDOMNode.call(null,this$);
 elem.style.opacity = (0);
 
 return window.setTimeout(((function (elem,this$){
@@ -53,14 +55,14 @@ return mokepon.elements.disabled_a.call(null,text);
 });
 mokepon.elements.section = (function mokepon$elements$section(var_args){
 var args__19546__auto__ = [];
-var len__19539__auto___25870 = arguments.length;
-var i__19540__auto___25871 = (0);
+var len__19539__auto___25763 = arguments.length;
+var i__19540__auto___25764 = (0);
 while(true){
-if((i__19540__auto___25871 < len__19539__auto___25870)){
-args__19546__auto__.push((arguments[i__19540__auto___25871]));
+if((i__19540__auto___25764 < len__19539__auto___25763)){
+args__19546__auto__.push((arguments[i__19540__auto___25764]));
 
-var G__25872 = (i__19540__auto___25871 + (1));
-i__19540__auto___25871 = G__25872;
+var G__25765 = (i__19540__auto___25764 + (1));
+i__19540__auto___25764 = G__25765;
 continue;
 } else {
 }
@@ -77,8 +79,8 @@ return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMP
 
 mokepon.elements.section.cljs$lang$maxFixedArity = (0);
 
-mokepon.elements.section.cljs$lang$applyTo = (function (seq25869){
-return mokepon.elements.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq25869));
+mokepon.elements.section.cljs$lang$applyTo = (function (seq25762){
+return mokepon.elements.section.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq25762));
 });
 
 mokepon.elements.progress_bar = (function mokepon$elements$progress_bar(percentage){

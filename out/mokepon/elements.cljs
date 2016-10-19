@@ -1,5 +1,8 @@
 (ns mokepon.elements
-  (:require [sablono.core :as sab]))
+  (:require
+   [cljsjs.react :as React]
+   [cljsjs.react.dom :as ReactDOM]
+   [sablono.core :as html :refer-macros [html]]))
 
 (defn fade-in [elem]
   (set! (.-transition (.-style elem)) "opacity 1000ms")
@@ -7,23 +10,22 @@
   (set! (.-opacity (.-style elem)) 1))
 
 (defn from-component-definition [component props children]
-  (.createElement js/React component (clj->js props) (sab/html children)))
+  (React.createElement component (clj->js props) (html children)))
 
 (def fade-in-component-definition
-  (.createClass
-   js/React
+  (React.createClass
    #js {:render
         (fn []
           (this-as
               this
-            (.createElement js/React
-                            "div"
-                            (clj->js {:style {:margin "0" :padding "0"}})
-                            (.. this -props -children))))
+            (React.createElement
+             "div"
+             (clj->js {:style {:margin "0" :padding "0"}})
+             (.. this -props -children))))
         :componentDidMount
         (fn []
           (this-as this
-            (let [elem (.getDOMNode this)]
+            (let [elem (ReactDOM.findDOMNode this)]
               (set! (.-opacity (.-style elem)) 0)
               (.setTimeout
                js/window

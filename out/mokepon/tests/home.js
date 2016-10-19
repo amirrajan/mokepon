@@ -33,7 +33,7 @@ return cljs.core._conj.call(null,cljs.core.List.EMPTY,x__19298__auto__);
 }
 
 return result__23054__auto__;
-}catch (e23992){var t__23091__auto__ = e23992;
+}catch (e26404){var t__23091__auto__ = e26404;
 return cljs.test.do_report.call(null,new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null,"type","type",1174270348),new cljs.core.Keyword(null,"error","error",-978969032),new cljs.core.Keyword(null,"expected","expected",1583670997),cljs.core.list(new cljs.core.Symbol(null,"=","=",-1501502141,null),cljs.core.list(new cljs.core.Symbol(null,"get-state","get-state",-1081972112,null),new cljs.core.Keyword(null,"team","team",1355747699)),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"chipu","chipu",516526769),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"hp","hp",-1541237831),(50),new cljs.core.Keyword(null,"max-hp","max-hp",-1065196696),(50)], null),new cljs.core.Keyword(null,"deogude","deogude",1813060744),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"hp","hp",-1541237831),(100),new cljs.core.Keyword(null,"max-hp","max-hp",-1065196696),(100)], null)], null)),new cljs.core.Keyword(null,"actual","actual",107306363),t__23091__auto__,new cljs.core.Keyword(null,"message","message",-406056002),null], null));
 }});
 

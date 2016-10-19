@@ -2,10 +2,12 @@
   (:require-macros [sablono.core :refer [defelem gen-input-fields]])
   (:require [clojure.string :refer [upper-case]]
             [goog.string :as gstring]
+            [sablono.normalize :as normalize]
             [sablono.util :refer [as-str to-uri]]
             [sablono.interpreter :as interpreter]
             [goog.dom :as dom]
-            [cljsjs.react]))
+            [cljsjs.react]
+            [cljsjs.react.dom]))
 
 (defn wrap-attrs
   "Add an optional attribute argument to a function that returns a element vector."
@@ -21,18 +23,6 @@
 (defn- update-arglists [arglists]
   (for [args arglists]
     (vec (cons 'attr-map? args))))
-
-(defn render
-  "Render `element` as HTML string."
-  [element]
-  (if element
-    (js/React.renderToString element)))
-
-(defn render-static
-  "Render `element` as HTML string, without React internal attributes."
-  [element]
-  (if element
-    (js/React.renderToStaticMarkup element)))
 
 (defn include-css
   "Include a list of external stylesheet files."
@@ -98,7 +88,7 @@
   [:input {:type type
            :name (make-name name)
            :id (make-id name)
-           :value value}])
+           :value (or value js/undefined)}])
 
 (gen-input-fields)
 
@@ -112,7 +102,7 @@
    [:input {:type "checkbox"
             :name (make-name name)
             :id   (make-id name)
-            :value value
+            :value (or value js/undefined)
             :checked checked?}]))
 
 (defelem radio-button
@@ -123,7 +113,7 @@
    [:input {:type "radio"
             :name (make-name group)
             :id   (make-id (str (as-str group) "-" (as-str value)))
-            :value value
+            :value (or value js/undefined)
             :checked checked?}]))
 
 (defn- hash-key [x]
@@ -167,7 +157,7 @@
    [:textarea
     {:name (make-name name)
      :id (make-id name)
-     :value value}]))
+     :value (or value js/undefined)}]))
 
 (defelem label
   "Creates a label for an input field with the supplied name."
