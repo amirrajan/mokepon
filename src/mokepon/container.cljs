@@ -1,5 +1,7 @@
 (ns mokepon.container
-  (:require [sablono.core :as sab]
+  (:require [cljsjs.react :as React]
+            [cljsjs.react.dom :as ReactDOM]
+            [sablono.core :as html :refer-macros [html]]
             [alandipert.storage-atom :refer [local-storage]]
             [mokepon.monsters :refer [chipu sulbabaur deogude tirsqule]]
             [mokepon.shop :refer [shop-items shop-items-lookup]]
@@ -219,7 +221,7 @@
   (get-in @(app-state) [:locations-seen loc :seen?]))
 
 (defn rpg-container []
-  (sab/html
+  (html
    (let [{:keys [location
                  team
                  team-at-home
@@ -288,7 +290,7 @@
       (com/status-view items (shop-items-lookup) team play-by-play reset-game!)])))
 
 (defn render! []
-  (.render js/React
+  (ReactDOM.render
            (rpg-container)
            (.getElementById js/document "app")))
 

@@ -1,6 +1,7 @@
 (ns mokepon.container)
 
 (comment
+  (cljsjs/react)
   (reset! (app-state) (mokepon.rpg/new-game))
   (.log js/console (clj->js (get-in @(app-state) [:locations-seen])))
   (take-chipu!)

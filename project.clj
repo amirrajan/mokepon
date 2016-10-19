@@ -1,7 +1,9 @@
-(defproject mokepon "0.1.0-SNAPSHOT"
+(defproject mokepon "0.1.0"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.76"]
-                 [sablono "0.3.6"]
+                 [cljsjs/react "15.2.1-1"]
+                 [cljsjs/react-dom "15.2.1-1"]
+                 [sablono "0.7.5"]
                  [alandipert/storage-atom "2.0.1"]]
   :plugins [[lein-figwheel "0.5.0-1"]
             [lein-cljsbuild "1.1.3"]]
