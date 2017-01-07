@@ -42,6 +42,12 @@
 (defn a [text on-click]
   [:a {:href "javascript:;" :on-click on-click} (str "[" text "]")])
 
+(defn important-a [text on-click]
+  [:a {:href "javascript:;"
+       :on-click on-click
+       :style {:color "#AA0000" :font-weight "bold"}}
+   (str "[" text "]")])
+
 (defn disabled-a [text]
   [:a.disabled {:href "javascript:;"} (str "[" text "]")])
 

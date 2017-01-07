@@ -275,7 +275,9 @@
                    shop-item-available?)
 
         (= location :phone)
-        (com/phone-view go-to-location! view-messages!)
+        (com/phone-view (app-state-new-message-count)
+                        go-to-location!
+                        view-messages!)
 
         (= location :messages)
         (com/messages-view messages go-to-location!)

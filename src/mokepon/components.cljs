@@ -4,6 +4,7 @@
             [mokepon.views.battle :as battle]
             [mokepon.views.shop :as shop]
             [mokepon.elements :refer [a
+                                      important-a
                                       disabled-a
                                       conditional-a
                                       section
@@ -20,8 +21,10 @@
           [:li {:key (:name v)}
            (str (:name v) " (hp: " (:hp v) "/" (:max-hp v) ")")])]))
 
-(defn adventure-view [description action-text key go-to-location-handler]
-  (a  (str action-text) #(go-to-location-handler key)))
+(defn location-link [description action-text key important? go-to-location-handler]
+  (if important?
+    (important-a (str action-text) #(go-to-location-handler key))
+    (a (str action-text) #(go-to-location-handler key))))
 
 (defn play-by-play-view [play-by-play]
   (section (for [i (take 25 (reverse play-by-play))] [:div i])))
@@ -97,16 +100,20 @@
                          [:br]]])])
    (section (a "Back" #(go-to-location-handler :phone)))])
 
-(defn phone-view [go-to-location-handler view-messages-handler]
+(defn phone-view [new-messages-count
+                  go-to-location-handler
+                  view-messages-handler]
   [:div
    (section [:p "Phone"])
-   (adventure-view ""
+   (location-link ""
                    "Mokédex"
                    :mokedex
+                   false
                    go-to-location-handler)
-   (adventure-view ""
-                   "Messages"
+   (location-link ""
+                  (str "Messages" (when (pos? new-messages-count) (str ": " new-messages-count)))
                    :messages
+                   (pos? new-messages-count)
                    view-messages-handler)
    (section (a "Back" #(go-to-location-handler :outside)))])
 
@@ -122,33 +129,37 @@
   [:div
    (section [:p "Outside"])
    (section
-    (adventure-view
+    (location-link
      ""
      (if (pos? new-message-count) "Phone: You have new messages." "Phone")
      :phone
+     (pos? new-message-count)
      go-to-location-handler)
-    (adventure-view
+    (location-link
      (:description (:home location-info))
      (:action (:home location-info))
      :home
+     false
      go-to-location-handler)
     (for [loc [:shop :canyon :forest :pool]]
       (when (location-available-handler loc)
         (cond
           (location-seen?-handler loc)
-          (adventure-view
+          (location-link
            (:description (loc location-info))
            (:action (loc location-info))
            loc
+           false
            go-to-location-handler)
           :else
           (from-component-definition
            fade-in-component-definition
            {:id loc :callback #(mark-location-as-seen-handler loc)}
-           (adventure-view
+           (location-link
             (:description (loc location-info))
             (:action (loc location-info))
             loc
+            false
             go-to-location-handler))))))])
 
 (defn title-view []
