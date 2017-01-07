@@ -10,6 +10,7 @@
   (buy-item! :mokebox)
   (go-to-location! :home)
   (go-to-location! :phone)
+  (go-to-location! :shop)
   (go-to-location! :mokedex)
   (go-to-location! :outside)
   (go-to-location! :pool)

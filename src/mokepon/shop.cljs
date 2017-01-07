@@ -10,12 +10,12 @@
   [{:id :mokebox
     :name "Mokébox"
     :cost 10
-    :description "Catches Moképon."
+    :description "Catches Moképon. The weaker the beast, the better the chance of it getting knocked out by this box."
     :available-if (fn [_] true)}
    {:id :candy
     :name "Candy"
     :cost 5
-    :description "Heals Moképon."
+    :description "Heals Moképon for 10 hp."
     :available-if (fn [_] true)}
    {:id :battery
     :name "Battery"
