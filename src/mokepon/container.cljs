@@ -116,6 +116,21 @@
 
 (defn app-state-battling [] (:battling @(app-state)))
 
+(defn attack [app-state battling chosen play-by-play cash-reward]
+  (assoc app-state
+    :battling battling
+    :team (assoc (:team app-state) (:chosen-key app-state) chosen)
+    :play-by-play play-by-play
+    :cash (+ (:cash app-state) cash-reward)))
+
+(defn attack! []
+  (let [{:keys [battling chosen play-by-play cash-reward]}
+        (apply-player-attack
+         (app-state-chosen-monster)
+         (app-state-battling)
+         (get-state :play-by-play))]
+    (swap! (app-state) attack battling chosen play-by-play cash-reward)))
+
 (defn tick-battle! []
   (if-not (battle-over?
             (app-state-chosen-monster)
@@ -150,7 +165,6 @@
 
       (reset-team-at!)))
 
-
 (defn take-chipu! []
   (swap! (app-state) take-chipu))
 
@@ -162,21 +176,6 @@
          :battling nil
          :chosen-key nil
          :battle-count-down nil))
-
-(defn attack [app-state battling chosen play-by-play cash-reward]
-  (assoc app-state
-    :battling battling
-    :team (assoc (:team app-state) (:chosen-key app-state) chosen)
-    :play-by-play play-by-play
-    :cash (+ (:cash app-state) cash-reward)))
-
-(defn attack! []
-  (let [{:keys [battling chosen play-by-play cash-reward]}
-        (apply-player-attack
-         (app-state-chosen-monster)
-         (app-state-battling)
-         (get-state :play-by-play))]
-    (swap! (app-state) attack battling chosen play-by-play cash-reward)))
 
 (defn set-battle! [chosen-key battling]
   (swap! (app-state)
