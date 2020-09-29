@@ -176,7 +176,7 @@ you. But, you should really read up on the benefits of functional
 programming (and in this case, take some time to watch the three hours
 worth of video). If you're _still_ hesitant on spending three hours
 of your life watching videos, this
-[blog entry](http://leongersing.tumblr.com/post/11561298378/my-perception-of-coffeescript)
+[blog entry](https://web.archive.org/web/20160304051309/http://leongersing.tumblr.com/post/11561298378/my-perception-of-coffeescript)
 by Leon Gersing goes into detail about forcing JavaScript to be a
 class oriented language. Specifically:
 
